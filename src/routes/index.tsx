@@ -1,19 +1,25 @@
-import { createRouteData, useRouteData } from "solid-start";
-import { db } from "~/db";
+import { useRouteData } from "solid-start";
+import { createServerAction$ } from "solid-start/server";
+import { logout, useUserSession } from "~/utils/auth";
 
 export function routeData() {
-  return createRouteData(async () => {
-    const users = await db.user.findMany({});
-    return JSON.stringify(users);
-  });
+  return useUserSession();
 }
 
 export default function Home() {
   const user = useRouteData<typeof routeData>();
+  const [, { Form }] = createServerAction$((f: FormData, { request }) =>
+    logout(request)
+  );
 
   return (
     <main>
-      <h1>Hello {user()}!</h1>
+      <h1>Hello {user()?.username}!</h1>
+      <Form>
+        <button name="logout" type="submit">
+          Logout
+        </button>
+      </Form>
     </main>
   );
 }

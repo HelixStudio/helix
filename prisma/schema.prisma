@@ -3,12 +3,13 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = "file:./dev.db"
+  provider = "postgresql"
+  url      = env("SUPABASE_URL")
 }
 
 model User {
   id       String @id @default(uuid())
   username String @unique
+  email String @unique
   password String
 }
