@@ -16,7 +16,11 @@ export type AuthError = {
 export const register = async (
   credentials: UserCredentials
 ): Promise<AuthError | User> => {
-  // TODO: fix
+  const email_regex = /^\S+@\S+\.\S+$/;
+  if (credentials.email == "" || !email_regex.test(credentials.email)) {
+    return { message: "Email is wrong!" };
+  }
+  // TODO: hash password
   return db.user.create({
     data: {
       username: credentials.username,

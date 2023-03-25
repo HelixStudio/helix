@@ -27,7 +27,7 @@ export default function Login() {
   const [loggingIn, { Form }] = createServerAction$(async (form: FormData) => {
     const UserFormCredentials = z.object({
       username: z.string().min(3),
-      email: z.string().email(),
+      email: z.string().email().nullable(),
       password: z.string().min(6),
     });
 
@@ -37,7 +37,7 @@ export default function Login() {
     const password = form.get("password") as string;
     const redirectTo = (form.get("redirectTo") as string) || "/";
 
-    if (!UserFormCredentials.parse({ username, email, password }))
+    if (!UserFormCredentials.safeParse({ username, email, password }))
       throw new FormError("Fields invalid");
 
     switch (loginType) {
@@ -67,7 +67,6 @@ export default function Login() {
 
   return (
     <main>
-      <h1>Login</h1>
       <Form>
         <input
           type="hidden"
@@ -75,7 +74,7 @@ export default function Login() {
           value={params.redirectTo ?? "/"}
         />
         <fieldset>
-          <legend>Login or Register?</legend>
+          <legend>Login or Register</legend>
           <label>
             <input type="radio" name="loginType" value="login" checked={true} />
             Login
@@ -83,31 +82,31 @@ export default function Login() {
           <label>
             <input type="radio" name="loginType" value="register" /> Register
           </label>
+          <div>
+            <label for="username-input">*Username</label>
+            <input name="username" required={true} />
+          </div>
+          <div>
+            <label for="email-input">Email</label>
+            <input name="email" type="email" />
+          </div>
+          <Show when={loggingIn.error?.fieldErrors?.username}>
+            <p role="alert">{loggingIn.error.fieldErrors.username}</p>
+          </Show>
+          <div>
+            <label for="password-input">*Password</label>
+            <input name="password" type="password" required={true} />
+          </div>
+          <Show when={loggingIn.error?.fieldErrors?.password}>
+            <p role="alert">{loggingIn.error.fieldErrors.password}</p>
+          </Show>
+          <Show when={loggingIn.error}>
+            <p role="alert" id="error-message">
+              {loggingIn.error.message}
+            </p>
+          </Show>
+          <button type="submit">{"Login"}</button>
         </fieldset>
-        <div>
-          <label for="username-input">Username</label>
-          <input name="username" placeholder="kody" />
-        </div>
-        <div>
-          <label for="email-input">Email</label>
-          <input name="email" placeholder="kody@example.com" />
-        </div>
-        <Show when={loggingIn.error?.fieldErrors?.username}>
-          <p role="alert">{loggingIn.error.fieldErrors.username}</p>
-        </Show>
-        <div>
-          <label for="password-input">Password</label>
-          <input name="password" type="password" placeholder="twixrox" />
-        </div>
-        <Show when={loggingIn.error?.fieldErrors?.password}>
-          <p role="alert">{loggingIn.error.fieldErrors.password}</p>
-        </Show>
-        <Show when={loggingIn.error}>
-          <p role="alert" id="error-message">
-            {loggingIn.error.message}
-          </p>
-        </Show>
-        <button type="submit">{"Login"}</button>
       </Form>
     </main>
   );
