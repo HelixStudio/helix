@@ -5,7 +5,7 @@ import { defineConfig } from "vite";
 export default defineConfig({
   plugins: [
     solid({
-      adapter: vercel(),
+      adapter: vercel({ edge: true }),
     }),
   ],
   ssr: { external: ["@prisma/client"] },

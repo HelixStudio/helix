@@ -18,7 +18,7 @@
     "prisma": "^4.9.0",
     "solid-js": "^1.6.11",
     "solid-start": "^0.2.23",
-    "solid-start-vercel": "0.1.0-alpha.40",
+    "solid-start-vercel": "^0.2.23",
     "undici": "^5.15.1",
     "zod": "^3.21.4"
   },
