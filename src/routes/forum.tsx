@@ -1,14 +1,20 @@
-import { useRouteData } from "solid-start";
-import { createServerAction$ } from "solid-start/server";
+import { createRouteData, Outlet, useRouteData } from "solid-start";
+import { createServerAction$, redirect } from "solid-start/server";
 import NavBar from "~/components/NavBar";
 import { logout, useUserSession } from "~/utils/auth";
+import { db } from "~/utils/db";
 
 export function routeData() {
-  return useUserSession();
+  return createRouteData(async () => {
+    return {
+      user: useUserSession(),
+      communities: await db.community.findMany({}),
+    };
+  });
 }
 
-export default function HomePage() {
-  const user = useRouteData<typeof routeData>();
+export default function ForumLayout() {
+  const data = useRouteData<typeof routeData>();
   const [, { Form }] = createServerAction$((f: FormData, { request }) =>
     logout(request)
   );
@@ -17,14 +23,15 @@ export default function HomePage() {
     <main>
       <NavBar />
       <div style={{ display: "flex", "align-items": "center" }}>
-        <p>Hello {user()?.username}!</p>
+        <p>logged in as {data()?.user()?.username}</p>
         <Form>
           <button name="logout" type="submit" style={{ "margin-left": "1rem" }}>
             Logout
           </button>
         </Form>
+        <hr />
       </div>
-      home page
+      <Outlet />
     </main>
   );
 }

@@ -10,6 +10,24 @@ datasource db {
 model User {
   id       String @id @default(uuid())
   username String @unique
-  email String @unique
+  email    String @unique
   password String
+  posts    Post[]
+}
+
+model Community {
+  id          String @id @default(uuid())
+  name        String @unique
+  description String
+  posts       Post[]
+}
+
+model Post {
+  id           String @id @default(uuid())
+  author       User @relation(fields: [authorId], references: [id])
+  authorId     String
+  community    Community @relation(fields: [communityId], references: [id])
+  communityId  String
+  title        String
+  content      String
 }

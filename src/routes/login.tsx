@@ -20,7 +20,7 @@ export function routeData() {
   });
 }
 
-export default function Login() {
+export default function LoginPage() {
   const data = useRouteData<typeof routeData>();
   const params = useParams();
 
