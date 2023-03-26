@@ -17,7 +17,7 @@ export default function HomePage() {
     <main>
       <NavBar />
       <div style={{ display: "flex", "align-items": "center" }}>
-        <p>Hello {user()?.username}!</p>
+        <p>Hello, {user()?.username}!</p>
         <Form>
           <button name="logout" type="submit" style={{ "margin-left": "1rem" }}>
             Logout
