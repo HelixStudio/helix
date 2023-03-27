@@ -1,9 +1,12 @@
+import { createMemo } from "solid-js";
 import { useRouteData } from "solid-start";
 import { createServerAction$ } from "solid-start/server";
 import { logout, useUserSession } from "~/utils/auth";
 
 export function userData() {
-  return useUserSession();
+  return createMemo(() => {
+    return useUserSession();
+  });
 }
 
 export default function HomePage() {
@@ -15,7 +18,7 @@ export default function HomePage() {
   return (
     <main>
       <div style={{ display: "flex", "align-items": "center" }}>
-        <p>Hello, {user()?.username}!</p>
+        <p>Hello, {user()?.()?.username}!</p>
         <Form>
           <button name="logout" type="submit" style={{ "margin-left": "1rem" }}>
             Logout

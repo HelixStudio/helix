@@ -8,7 +8,7 @@ export default function ForumPage() {
   return (
     <div>
       <p>Communities:</p>
-      <For each={data()?.communities}>
+      <For each={data()?.()?.communities}>
         {(community) => (
           <li>
             <A href={`/forum/${community.name}`}>{community.name}</A>
