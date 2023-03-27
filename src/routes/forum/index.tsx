@@ -1,12 +1,13 @@
 import { For } from "solid-js";
 import { A, useRouteData } from "solid-start";
-import { routeData } from "../forum";
+import { forumData } from "../forum";
 
 export default function ForumPage() {
-  const data = useRouteData<typeof routeData>();
+  const data = useRouteData<typeof forumData>();
 
   return (
     <div>
+      <p>Communities:</p>
       <For each={data()?.communities}>
         {(community) => (
           <li>

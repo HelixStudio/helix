@@ -3,15 +3,13 @@ import { Suspense } from "solid-js";
 import {
   Body,
   ErrorBoundary,
-  FileRoutes,
   Head,
   Html,
   Meta,
-  Routes,
   Scripts,
   Title,
 } from "solid-start";
-import "./root.css";
+import Router from "./components/Router";
 
 export default function Root() {
   return (
@@ -24,9 +22,7 @@ export default function Root() {
       <Body>
         <ErrorBoundary>
           <Suspense fallback={<div>Loading</div>}>
-            <Routes>
-              <FileRoutes />
-            </Routes>
+            <Router />
           </Suspense>
         </ErrorBoundary>
         <Scripts />

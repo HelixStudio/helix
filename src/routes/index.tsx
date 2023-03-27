@@ -1,21 +1,19 @@
 import { useRouteData } from "solid-start";
 import { createServerAction$ } from "solid-start/server";
-import NavBar from "~/components/NavBar";
 import { logout, useUserSession } from "~/utils/auth";
 
-export function routeData() {
+export function userData() {
   return useUserSession();
 }
 
 export default function HomePage() {
-  const user = useRouteData<typeof routeData>();
+  const user = useRouteData<typeof userData>();
   const [, { Form }] = createServerAction$((f: FormData, { request }) =>
     logout(request)
   );
 
   return (
     <main>
-      <NavBar />
       <div style={{ display: "flex", "align-items": "center" }}>
         <p>Hello, {user()?.username}!</p>
         <Form>
