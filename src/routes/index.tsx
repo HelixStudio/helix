@@ -18,14 +18,15 @@ export default function HomePage() {
   return (
     <main>
       <div style={{ display: "flex", "align-items": "center" }}>
-        <p>Hello, {user()?.()?.username}!</p>
+        <p class="font-bold underline text-orange-500">
+          Hello, {user()?.()?.username}!
+        </p>
         <Form>
           <button name="logout" type="submit" style={{ "margin-left": "1rem" }}>
             Logout
           </button>
         </Form>
       </div>
-      home page
     </main>
   );
 }
