@@ -4,9 +4,11 @@ import "tailwindcss/tailwind.css";
 
 export default function BaseLayout() {
   return (
-    <div>
+    <div class="flex flex-row w-screen">
       <NavBar />
-      <Outlet />
+      <div class="flex flex-col m-0 h-full w-full overflow-hidden ml-16">
+        <Outlet />
+      </div>
     </div>
   );
 }

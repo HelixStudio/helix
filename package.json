@@ -19,6 +19,7 @@
     "@solidjs/meta": "^0.28.2",
     "@solidjs/router": "^0.8.1",
     "prisma": "^4.9.0",
+    "solid-icons": "^1.0.4",
     "solid-js": "^1.6.11",
     "solid-start": "^0.2.23",
     "solid-start-vercel": "^0.2.23",

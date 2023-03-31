@@ -16,7 +16,7 @@ export function forumData() {
 
 export default function ForumLayout() {
   return (
-    <main>
+    <main class="bg-gray-800 text-white h-screen">
       <Outlet />
     </main>
   );
