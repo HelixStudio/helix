@@ -9,7 +9,7 @@ export default function ForumPage() {
   return (
     <div class="m-3 items-center">
       <h2 class="text-3xl font-bold tracking-tight sm:text-4xl">Forum</h2>
-      <p class="mt-4 text-gray-100 max-w-3xl pb-6">
+      <p class="mt-4 text-gray-100 pb-6">
         Helix is a simple forum where anyone can post comments and share images.
         There are communities dedicated to a variety of topics, from coding,
         math and video games to photography. Users do not need to register an

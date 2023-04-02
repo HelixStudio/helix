@@ -17,7 +17,9 @@ export function forumData() {
 export default function ForumLayout() {
   return (
     <main class="bg-gray-800 text-white h-screen">
-      <Outlet />
+      <div class="ml-auto mr-auto max-w-5xl">
+        <Outlet />
+      </div>
     </main>
   );
 }
