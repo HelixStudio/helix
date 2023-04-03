@@ -1,7 +1,7 @@
 import { PrismaClient, User } from "@prisma/client";
 import { createServerData$, redirect } from "solid-start/server";
-import { db } from "./db";
 import { getUser, storage } from "./session";
+import { getDB } from "./db";
 
 export type UserCredentials = {
   username: string;
@@ -21,7 +21,7 @@ export const register = async (
     return { message: "Email is wrong!" };
   }
   // TODO: hash password
-  return db.user.create({
+  return getDB()!.user.create({
     data: {
       username: credentials.username,
       email: credentials.email,
@@ -33,7 +33,7 @@ export const register = async (
 export const login = async (
   credentials: UserCredentials
 ): Promise<AuthError | User> => {
-  const user = await db.user.findUnique({
+  const user = await getDB()!.user.findUnique({
     where: { username: credentials.username },
   });
   if (!user)
@@ -59,7 +59,7 @@ export const logout = async (request: Request): Promise<Response> => {
 
 export const useUserSession = () =>
   createServerData$(async (_, { request }) => {
-    const user = await getUser(db, request);
+    const user = await getUser(getDB()!, request);
 
     if (!user) {
       throw redirect("/login");

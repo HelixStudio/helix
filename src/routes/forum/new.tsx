@@ -1,9 +1,22 @@
-import { useRouteData, useSearchParams } from "solid-start";
+import { createRouteData, useRouteData, useSearchParams } from "solid-start";
 import { createServerAction$, redirect } from "solid-start/server";
 import { ButtonForm } from "~/components/Button";
-import { forumData } from "../forum";
 import { getUserId } from "~/utils/session";
-import { db } from "~/utils/db";
+import { createMemo } from "solid-js";
+import { useUserSession } from "~/utils/auth";
+import { getDB } from "~/utils/db";
+
+export function forumData() {
+  return createMemo(() =>
+    createRouteData(async () => {
+      const db = getDB()!;
+      return {
+        user: useUserSession(),
+        communities: await db.community.findMany({}),
+      };
+    })
+  );
+}
 
 export default function WriteNewPostPage() {
   const [searchParams] = useSearchParams();
@@ -11,6 +24,8 @@ export default function WriteNewPostPage() {
 
   const [creating, { Form }] = createServerAction$(
     async (form: FormData, { request }) => {
+      const db = getDB()!;
+
       const title = form.get("title") as string;
       const content = form.get("content") as string;
       const authorId = await getUserId(request);

@@ -4,16 +4,16 @@ import {
   createServerData$,
   redirect,
 } from "solid-start/server";
-import { db } from "~/utils/db";
 import { createUserSession, getUser } from "~/utils/session";
 import { z } from "zod";
 import { AuthError, login, register } from "~/utils/auth";
 import { Show } from "solid-js";
 import { User } from "@prisma/client";
+import { getDB } from "~/utils/db";
 
 export function routeData() {
   return createServerData$(async (_, { request }) => {
-    if (await getUser(db, request)) {
+    if (await getUser(getDB()!, request)) {
       throw redirect("/");
     }
     return {};
@@ -49,7 +49,9 @@ export default function LoginPage() {
         return createUserSession(`${(user as User).id}`, redirectTo);
       }
       case "register": {
-        const userExists = await db.user.findUnique({ where: { username } });
+        const userExists = await getDB()!.user.findUnique({
+          where: { username },
+        });
         if (userExists) {
           throw new FormError(`User with username ${username} already exists`);
         }

@@ -1,53 +1,162 @@
-import { createResource, For } from "solid-js";
-import { useParams } from "solid-start";
+import { OcArrowdown2, OcArrowup2 } from "solid-icons/oc";
+import { For } from "solid-js";
+import {
+  RouteDataArgs,
+  createRouteData,
+  useParams,
+  useRouteData,
+} from "solid-start";
+import { createServerAction$, createServerData$ } from "solid-start/server";
 import { ButtonLink } from "~/components/Button";
-import { db } from "~/utils/db";
+import { useUserSession } from "~/utils/auth";
+import { removeItem } from "~/utils/data_structs";
+import { getDB } from "~/utils/db";
 
 interface PostPreviewProps {
+  id: string;
   title: string;
   description: string;
+  score: number;
+  likedBy: string[];
+  dislikedBy: string[];
+  uid: string;
 }
 
 function PostPreview(props: PostPreviewProps) {
+  const [_, votePost] = createServerAction$(
+    async (args: {
+      oldPost: PostPreviewProps;
+      addAmount: number;
+      uid: string;
+    }) => {
+      const db = getDB()!;
+      const oldPost = args.oldPost;
+      if (oldPost == null) return;
+      if (args.addAmount > 0) {
+        if (!oldPost.likedBy.includes(args.uid)) {
+          oldPost.likedBy.push(args.uid);
+        } else {
+          oldPost.likedBy = removeItem(oldPost.likedBy, args.uid);
+          args.addAmount *= -1;
+        }
+        if (oldPost.dislikedBy.includes(args.uid)) {
+          oldPost.dislikedBy = removeItem(oldPost.dislikedBy, args.uid);
+          args.addAmount++;
+        }
+      } else {
+        if (!oldPost.dislikedBy.includes(args.uid)) {
+          oldPost.dislikedBy.push(args.uid);
+        } else {
+          oldPost.dislikedBy = removeItem(oldPost.dislikedBy, args.uid);
+          args.addAmount *= -1;
+        }
+        if (oldPost.likedBy.includes(args.uid)) {
+          oldPost.likedBy = removeItem(oldPost.likedBy, args.uid);
+          args.addAmount--;
+        }
+      }
+      await db.post.update({
+        where: {
+          id: oldPost.id,
+        },
+        data: {
+          score: oldPost.score + args.addAmount,
+          likedBy: oldPost.likedBy,
+          dislikedBy: oldPost.dislikedBy,
+        },
+      });
+    }
+  );
+
   return (
     <div>
-      <a
-        href="#"
-        class="block p-5 bg-white border border-gray-200
+      <div
+        // href="#"
+        class="items-center p-5 bg-white border border-gray-200
          rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800
          mb-5 dark:border-gray-700 dark:hover:bg-gray-700
-         transition-all duration-150"
+         transition-all  duration-150 flex justify-between
+         hover:cursor-pointer"
       >
-        <h5
-          class="mb-2 text-2xl font-bold tracking-tight 
+        <div>
+          <h5
+            class="mb-2 text-2xl font-bold tracking-tight 
           text-gray-900 dark:text-white"
-        >
-          {props.title}
-        </h5>
-        <p class="font-normal text-gray-700 dark:text-gray-400">
-          {props.description}
-        </p>
-      </a>
+          >
+            {props.title}
+          </h5>
+          <p class="font-normal text-gray-700 dark:text-gray-400">
+            {props.description}
+          </p>
+        </div>
+        <div class="flex flex-col items-center gap-1">
+          <button
+            onClick={async () =>
+              await votePost({
+                oldPost: props,
+                addAmount: 1,
+                uid: props.uid,
+              })
+            }
+          >
+            <OcArrowup2
+              class={
+                props.likedBy.includes(props.uid)
+                  ? "bg-pink-400 rounded-xl"
+                  : ""
+              }
+              size={20}
+            />
+          </button>
+          <p>{props.score}</p>
+          <button
+            onClick={async () =>
+              await votePost({
+                oldPost: props,
+                addAmount: -1,
+                uid: props.uid,
+              })
+            }
+          >
+            <OcArrowdown2
+              class={
+                props.dislikedBy.includes(props.uid)
+                  ? "bg-blue-400 rounded-xl"
+                  : ""
+              }
+              size={20}
+            />
+          </button>{" "}
+        </div>
+      </div>
     </div>
   );
 }
 
-export default function CommunityPage() {
-  const params = useParams<{ name: string }>();
-  const [data] = createResource(
-    () => params.name,
-    async () => {
+export function communityRouteData({ params }: RouteDataArgs) {
+  return createServerData$(
+    async (name: string) => {
+      const db = getDB()!;
+      if (db == undefined) {
+        console.error("DB is undefined.");
+      }
       const community = await db.community.findFirst({
-        where: { name: params.name },
+        where: { name: name },
       });
       const posts = await db.post.findMany({
         where: { communityId: community?.id },
         take: 10,
-        // orderBy: {} TODO: order by created_at
+        orderBy: { createdAt: "desc" },
       });
       return { community, posts };
-    }
+    },
+    { key: () => params.name }
   );
+}
+
+export default function CommunityPage() {
+  const data = useRouteData<typeof communityRouteData>();
+  const user = useUserSession();
 
   return (
     <div class="m-3 items-center">
@@ -69,7 +178,15 @@ export default function CommunityPage() {
       <For each={data()?.posts}>
         {(post) => (
           <div>
-            <PostPreview title={post.title} description={post.content} />
+            <PostPreview
+              score={post.score}
+              title={post.title}
+              description={post.content}
+              id={post.id}
+              likedBy={post.likedBy}
+              dislikedBy={post.dislikedBy}
+              uid={user()?.id!}
+            />
           </div>
         )}
       </For>
