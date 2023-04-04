@@ -24,8 +24,10 @@
     "solid-js": "^1.6.11",
     "solid-start": "^0.2.23",
     "solid-start-vercel": "^0.2.23",
+    "solid-zustand": "^1.5.0",
     "undici": "^5.15.1",
-    "zod": "^3.21.4"
+    "zod": "^3.21.4",
+    "zustand": "^4.3.7"
   },
   "engines": {
     "node": ">=16"

@@ -8,8 +8,7 @@ import BaseLayout from "./BaseLayout";
 import NotFound from "~/routes/[...404]";
 import WriteNewPostPage from "~/routes/forum/new";
 import CommunityPage, { communityRouteData } from "~/routes/forum/[name]";
-
-// const SpecificCommunityPage = lazy(() => import("~/routes/forum/[name]"));
+import ViewPost, { postRouteData } from "~/routes/forum/post/[id]";
 
 export default function Router() {
   return (
@@ -24,9 +23,9 @@ export default function Router() {
           <Route
             path="/:name"
             element={CommunityPage}
-            // element={SpecificCommunityPage}
             data={communityRouteData}
           />
+          <Route path="/post/:id" element={ViewPost} data={postRouteData} />
         </Route>
       </Route>
     </Routes>

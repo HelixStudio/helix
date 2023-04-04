@@ -3009,6 +3009,11 @@ solid-start@^0.2.23:
     vite-plugin-solid "^2.6.1"
     wait-on "^6.0.1"
 
+solid-zustand@^1.5.0:
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/solid-zustand/-/solid-zustand-1.5.0.tgz#516dd1a9d1b1c96f9937c045903f439028ff5c0e"
+  integrity sha512-SkbYulMm1ASWAad8y7/o4ZAdL4JhK7TnaVk5y/N8PmnowVyGJDClILUfB9/pVBlzEb/oQkfvOH86VgHV4saA4w==
+
 source-map-js@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/source-map-js/-/source-map-js-1.0.2.tgz#adbc361d9c62df380125e7f161f71c826f1e490c"
@@ -3252,6 +3257,11 @@ update-browserslist-db@^1.0.10:
     escalade "^3.1.1"
     picocolors "^1.0.0"
 
+use-sync-external-store@1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/use-sync-external-store/-/use-sync-external-store-1.2.0.tgz#7dbefd6ef3fe4e767a0cf5d7287aacfb5846928a"
+  integrity sha512-eEgnFxGQ1Ife9bzYs6VLi8/4X6CObHMw9Qr9tPY43iKwsPw8xE8+EFsf/2cFZ5S3esXgpWgtSCtLNS41F+sKPA==
+
 util-deprecate@^1.0.1, util-deprecate@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/util-deprecate/-/util-deprecate-1.0.2.tgz#450d4dc9fa70de732762fbd2d4a28981419a0ccf"
@@ -3402,3 +3412,10 @@ zod@^3.21.4:
   version "3.21.4"
   resolved "https://registry.yarnpkg.com/zod/-/zod-3.21.4.tgz#10882231d992519f0a10b5dd58a38c9dabbb64db"
   integrity sha512-m46AKbrzKVzOzs/DZgVnG5H55N1sv1M8qZU3A8RIKbs3mrACDNeIOeilDymVb2HdmP8uwshOCF4uJ8uM9rCqJw==
+
+zustand@^4.3.7:
+  version "4.3.7"
+  resolved "https://registry.yarnpkg.com/zustand/-/zustand-4.3.7.tgz#501b1f0393a7f1d103332e45ab574be5747fedce"
+  integrity sha512-dY8ERwB9Nd21ellgkBZFhudER8KVlelZm8388B5nDAXhO/+FZDhYMuRnqDgu5SYyRgz/iaf8RKnbUs/cHfOGlQ==
+  dependencies:
+    use-sync-external-store "1.2.0"

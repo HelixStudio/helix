@@ -2,6 +2,7 @@ import { PrismaClient, User } from "@prisma/client";
 import { createServerData$, redirect } from "solid-start/server";
 import { getUser, storage } from "./session";
 import { getDB } from "./db";
+import { loadUser, useUserStore } from "./stores/userStore";
 
 export type UserCredentials = {
   username: string;
@@ -45,11 +46,13 @@ export const login = async (
   if (credentials.password !== user.password)
     return { message: "Password is wrong!" };
 
+  loadUser(user);
   return user;
 };
 
 export const logout = async (request: Request): Promise<Response> => {
   const session = await storage.getSession(request.headers.get("Cookie"));
+  useUserStore.getState().setLoggedOut();
   return redirect("/login", {
     headers: {
       "Set-Cookie": await storage.destroySession(session),
@@ -57,13 +60,20 @@ export const logout = async (request: Request): Promise<Response> => {
   });
 };
 
+export const useUserSessionIntern = async (request: Request) => {
+  const user = await getUser(getDB()!, request);
+
+  if (!user) {
+    useUserStore.getState().setLoggedOut();
+    throw redirect("/login");
+  }
+
+  loadUser(user);
+
+  return user;
+};
+
 export const useUserSession = () =>
   createServerData$(async (_, { request }) => {
-    const user = await getUser(getDB()!, request);
-
-    if (!user) {
-      throw redirect("/login");
-    }
-
-    return user;
+    return await useUserSessionIntern(request);
   });

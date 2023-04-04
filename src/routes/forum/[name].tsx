@@ -1,6 +1,7 @@
 import { OcArrowdown2, OcArrowup2 } from "solid-icons/oc";
 import { For } from "solid-js";
 import {
+  A,
   RouteDataArgs,
   createRouteData,
   useParams,
@@ -12,7 +13,7 @@ import { useUserSession } from "~/utils/auth";
 import { removeItem } from "~/utils/data_structs";
 import { getDB } from "~/utils/db";
 
-interface PostPreviewProps {
+export interface PostPreviewProps {
   id: string;
   title: string;
   description: string;
@@ -22,63 +23,62 @@ interface PostPreviewProps {
   uid: string;
 }
 
-function PostPreview(props: PostPreviewProps) {
-  const [_, votePost] = createServerAction$(
-    async (args: {
-      oldPost: PostPreviewProps;
-      addAmount: number;
-      uid: string;
-    }) => {
-      const db = getDB()!;
-      const oldPost = args.oldPost;
-      if (oldPost == null) return;
-      if (args.addAmount > 0) {
-        if (!oldPost.likedBy.includes(args.uid)) {
-          oldPost.likedBy.push(args.uid);
-        } else {
-          oldPost.likedBy = removeItem(oldPost.likedBy, args.uid);
-          args.addAmount *= -1;
-        }
-        if (oldPost.dislikedBy.includes(args.uid)) {
-          oldPost.dislikedBy = removeItem(oldPost.dislikedBy, args.uid);
-          args.addAmount++;
-        }
-      } else {
-        if (!oldPost.dislikedBy.includes(args.uid)) {
-          oldPost.dislikedBy.push(args.uid);
-        } else {
-          oldPost.dislikedBy = removeItem(oldPost.dislikedBy, args.uid);
-          args.addAmount *= -1;
-        }
-        if (oldPost.likedBy.includes(args.uid)) {
-          oldPost.likedBy = removeItem(oldPost.likedBy, args.uid);
-          args.addAmount--;
-        }
-      }
-      await db.post.update({
-        where: {
-          id: oldPost.id,
-        },
-        data: {
-          score: oldPost.score + args.addAmount,
-          likedBy: oldPost.likedBy,
-          dislikedBy: oldPost.dislikedBy,
-        },
-      });
+export const votePost = async (args: {
+  oldPost: PostPreviewProps;
+  addAmount: number;
+  uid: string;
+}) => {
+  const db = getDB()!;
+  const oldPost = args.oldPost;
+  if (oldPost == null) return;
+  if (args.addAmount > 0) {
+    if (!oldPost.likedBy.includes(args.uid)) {
+      oldPost.likedBy.push(args.uid);
+    } else {
+      oldPost.likedBy = removeItem(oldPost.likedBy, args.uid);
+      args.addAmount *= -1;
     }
-  );
+    if (oldPost.dislikedBy.includes(args.uid)) {
+      oldPost.dislikedBy = removeItem(oldPost.dislikedBy, args.uid);
+      args.addAmount++;
+    }
+  } else {
+    if (!oldPost.dislikedBy.includes(args.uid)) {
+      oldPost.dislikedBy.push(args.uid);
+    } else {
+      oldPost.dislikedBy = removeItem(oldPost.dislikedBy, args.uid);
+      args.addAmount *= -1;
+    }
+    if (oldPost.likedBy.includes(args.uid)) {
+      oldPost.likedBy = removeItem(oldPost.likedBy, args.uid);
+      args.addAmount--;
+    }
+  }
+  await db.post.update({
+    where: {
+      id: oldPost.id,
+    },
+    data: {
+      score: oldPost.score + args.addAmount,
+      likedBy: oldPost.likedBy,
+      dislikedBy: oldPost.dislikedBy,
+    },
+  });
+};
+
+function PostPreview(props: PostPreviewProps) {
+  const [_, votePostAction] = createServerAction$(votePost);
 
   return (
     <div>
       <div
-        // href="#"
-        class="items-center p-5 bg-white border border-gray-200
+        class="items-center bg-white border border-gray-200
          rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800
          mb-5 dark:border-gray-700 dark:hover:bg-gray-700
          transition-all  duration-150 flex justify-between
          hover:cursor-pointer"
       >
-        <div>
+        <A class="p-5 w-full" href={`/forum/post/${props.id}`}>
           <h5
             class="mb-2 text-2xl font-bold tracking-tight 
           text-gray-900 dark:text-white"
@@ -88,11 +88,11 @@ function PostPreview(props: PostPreviewProps) {
           <p class="font-normal text-gray-700 dark:text-gray-400">
             {props.description}
           </p>
-        </div>
+        </A>
         <div class="flex flex-col items-center gap-1">
           <button
             onClick={async () =>
-              await votePost({
+              await votePostAction({
                 oldPost: props,
                 addAmount: 1,
                 uid: props.uid,
@@ -111,7 +111,7 @@ function PostPreview(props: PostPreviewProps) {
           <p>{props.score}</p>
           <button
             onClick={async () =>
-              await votePost({
+              await votePostAction({
                 oldPost: props,
                 addAmount: -1,
                 uid: props.uid,
@@ -126,7 +126,7 @@ function PostPreview(props: PostPreviewProps) {
               }
               size={20}
             />
-          </button>{" "}
+          </button>
         </div>
       </div>
     </div>
