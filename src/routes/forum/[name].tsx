@@ -68,6 +68,7 @@ export const votePost = async (args: {
 
 function PostPreview(props: PostPreviewProps) {
   const [_, votePostAction] = createServerAction$(votePost);
+  const maxDescPreview = 30;
 
   return (
     <div>
@@ -86,7 +87,9 @@ function PostPreview(props: PostPreviewProps) {
             {props.title}
           </h5>
           <p class="font-normal text-gray-700 dark:text-gray-400">
-            {props.description}
+            {props.description.length > maxDescPreview
+              ? props.description.substring(0, maxDescPreview) + "..."
+              : props.description}
           </p>
         </A>
         <div class="flex flex-col items-center gap-1">

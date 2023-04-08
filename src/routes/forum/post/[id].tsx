@@ -31,10 +31,10 @@ export default function ViewPost() {
 
   return (
     <Show when={!data.loading || data() != null} fallback={<LoadingScreen />}>
-      <div>
+      <div class="bg-gray-900 px-5 py-2 rounded-es-xl rounded-ee-xl">
         <div>
           <h5
-            class="mb-2 text-2xl font-bold tracking-tight 
+            class="mt-3 mb-3 text-2xl font-bold tracking-tight 
           text-gray-900 dark:text-white"
           >
             {data()?.post?.title}
@@ -43,7 +43,7 @@ export default function ViewPost() {
             {data()?.post?.content}
           </p>
         </div>
-        <div class="flex flex-col items-center gap-1">
+        <div class="flex flex-row items-center gap-5 mt-3">
           <button
             onClick={async () =>
               await votePostAction({
