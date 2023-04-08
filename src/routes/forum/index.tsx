@@ -3,6 +3,7 @@ import { useRouteData } from "solid-start";
 import Link from "~/components/Link";
 import { getDB } from "~/utils/db";
 import { createServerData$ } from "solid-start/server";
+import { ButtonLink } from "~/components/Button";
 
 export function forumRouteData() {
   return createServerData$(async () => {
@@ -23,7 +24,13 @@ export default function ForumPage() {
         account before participating in the community. Feel free to click on a
         board below that interests you and jump right in!
       </p>
-      <p class="text-2xl">Available communities:</p>
+      <div class="flex flex-row justify-between items-center">
+        <p class="text-2xl">Available communities:</p>
+        <ButtonLink
+          href={`/forum/create-community`}
+          text="Create a community"
+        />
+      </div>
       <For each={communities()}>
         {(community) => (
           <li class="pt-3 text-xl">

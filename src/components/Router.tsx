@@ -9,6 +9,7 @@ import NotFound from "~/routes/[...404]";
 import WriteNewPostPage from "~/routes/forum/new";
 import CommunityPage, { communityRouteData } from "~/routes/forum/[name]";
 import ViewPost, { postRouteData } from "~/routes/forum/post/[id]";
+import CreateCommunityPage from "~/routes/forum/create-community";
 
 export default function Router() {
   return (
@@ -19,7 +20,8 @@ export default function Router() {
         <Route path="/" element={HomePage} data={userData} />
         <Route path="/forum" element={ForumLayout}>
           <Route path="" element={ForumPage} data={forumRouteData} />
-          <Route path="/new" element={WriteNewPostPage} data={forumRouteData} />
+          <Route path="/new" element={WriteNewPostPage} />
+          <Route path="/create-community" element={CreateCommunityPage} />
           <Route
             path="/:name"
             element={CommunityPage}

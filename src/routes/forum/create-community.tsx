@@ -1,44 +1,22 @@
-import { createRouteData, useRouteData, useSearchParams } from "solid-start";
-import { createServerAction$, redirect } from "solid-start/server";
+import { redirect } from "solid-start";
+import { createServerAction$ } from "solid-start/server";
 import { ButtonForm } from "~/components/Button";
-import { getUserId } from "~/utils/session";
-import { createMemo } from "solid-js";
-import { useUserSession } from "~/utils/auth";
 import { getDB } from "~/utils/db";
+import { getUserId } from "~/utils/session";
 
-export function forumData() {
-  return createMemo(() =>
-    createRouteData(async () => {
-      const db = getDB()!;
-      return {
-        user: useUserSession(),
-        communities: await db.community.findMany({}),
-      };
-    })
-  );
-}
-
-export default function WriteNewPostPage() {
-  const [searchParams] = useSearchParams();
-  // searchParams.id -> community id
-
+export default function CreateCommunityPage() {
   const [creating, { Form }] = createServerAction$(
     async (form: FormData, { request }) => {
       const db = getDB()!;
 
-      const title = form.get("title") as string;
-      const content = form.get("content") as string;
-      const authorId = await getUserId(request);
-      const communityId = form.get("id") as string;
+      const name = form.get("name") as string; // TODO: can't include spaces
+      const description = form.get("description") as string;
+      const authorId = await getUserId(request); // TODO: add author id
 
-      if (authorId == null) throw redirect("/login");
-
-      await db.post.create({
+      await db.community.create({
         data: {
-          content: content,
-          title: title,
-          authorId: authorId,
-          communityId: communityId,
+          name: name,
+          description: description,
         },
       });
 
@@ -48,42 +26,38 @@ export default function WriteNewPostPage() {
 
   return (
     <div class="m-3 items-center">
-      <p class="text-3xl font-bold tracking-tight sm:text-4xl">Create a post</p>
+      <p class="text-3xl font-bold tracking-tight sm:text-4xl">
+        Create a community
+      </p>
       <Form class="mt-4">
         <div class="space-y-12">
           <div class="border-b border-gray-900/10 pb-12">
             <div class="sm:col-span-3">
               <label
-                for="title"
+                for="name"
                 class="block text-sm font-medium leading-6 text-gray-100"
               >
-                Title
+                Community name
               </label>
               <div class="mt-2">
                 <input
-                  type="text"
-                  name="title"
+                  type="name"
+                  name="name"
                   class="block pl-3 w-full rounded-md border-0 text-gray-100 shadow-sm ring-2 ring-inset ring-gray-600 bg-gray-800
                   placeholder:text-gray-400 focus:ring-3 sm:py-1.5 sm:text-sm sm:leading-6"
                 />
               </div>
             </div>
-            <input
-              type="text"
-              name="id"
-              value={searchParams.id}
-              class="hidden"
-            />
             <div class="col-span-full">
               <label
-                for="content"
+                for="description"
                 class="block text-sm font-medium leading-6 text-gray-100 mt-3"
               >
-                Content
+                Description (can include rules)
               </label>
               <div class="mt-2">
                 <textarea
-                  name="content"
+                  name="description"
                   rows="3"
                   class="block pl-3 w-full rounded-md border-0 text-gray-100 shadow-sm ring-2 ring-inset ring-gray-600 bg-gray-800
                   placeholder:text-gray-400 focus:ring-3 sm:py-1.5 sm:text-sm sm:leading-6"
