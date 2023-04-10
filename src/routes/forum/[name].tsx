@@ -92,7 +92,7 @@ function PostPreview(props: PostPreviewProps) {
               : props.description}
           </p>
         </A>
-        <div class="flex flex-col items-center gap-1">
+        <div class="flex flex-col items-center gap-1 mr-5">
           <button
             onClick={async () =>
               await votePostAction({

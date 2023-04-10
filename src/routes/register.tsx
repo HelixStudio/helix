@@ -20,23 +20,28 @@ export function routeData() {
   });
 }
 
-export default function LoginPage() {
+export default function RegisterPage() {
   const data = useRouteData<typeof routeData>();
   const params = useParams();
 
   const [loggingIn, { Form }] = createServerAction$(async (form: FormData) => {
     const UserFormCredentials = z.object({
       username: z.string().min(3),
+      email: z.string().email(),
       password: z.string().min(6),
     });
 
     const username = form.get("username") as string;
+    const email = form.get("email") as string;
     const password = form.get("password") as string;
 
-    if (!UserFormCredentials.safeParse({ username, password }))
-      throw new FormError("Fields invalid");
-
-    const user = await login({ username, email: "", password });
+    const userExists = await getDB()!.user.findUnique({
+      where: { username },
+    });
+    if (userExists) {
+      throw new FormError(`User with username ${username} already exists`);
+    }
+    const user = await register({ username, email, password });
     if ((user as AuthError).message) {
       throw new FormError((user as AuthError).message);
     }
@@ -49,15 +54,15 @@ export default function LoginPage() {
         <div class="w-full max-w-md space-y-8">
           <div>
             <h2 class="mt-6 text-center text-3xl font-bold tracking-tight">
-              Sign in to your account
+              Create a new account
             </h2>
             <p class="mt-2 text-center text-sm">
               or{" "}
               <A
-                href="/register"
+                href="/login"
                 class="font-medium transition-all text-pink-300 hover:text-pink-200"
               >
-                create a new account
+                log in into your account
               </A>
             </p>
           </div>
@@ -72,9 +77,24 @@ export default function LoginPage() {
                   id="username"
                   name="username"
                   type="text"
+                  autocomplete="off"
                   required
                   class="relative block w-full rounded-t-md border-0 py-1.5 ring-2 ring-inset ring-gray-700 placeholder:text-gray-100 bg-gray-700 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-pink-400 sm:text-sm sm:leading-6"
                   placeholder="Username"
+                />
+              </div>
+              <div>
+                <label for="email" class="sr-only">
+                  Email
+                </label>
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  autocomplete="off"
+                  required
+                  class="relative block w-full border-0 py-1.5 ring-2 ring-inset ring-gray-700 placeholder:text-gray-100 bg-gray-700 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-pink-400 sm:text-sm sm:leading-6"
+                  placeholder="Email"
                 />
               </div>
               <div>
@@ -86,6 +106,7 @@ export default function LoginPage() {
                   name="password"
                   type="password"
                   autocomplete="current-password"
+                  autocomplete="off"
                   required
                   class="relative block w-full rounded-b-md border-0 py-1.5 ring-2 ring-inset ring-gray-700 placeholder:text-gray-100 bg-gray-700 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-pink-400 sm:text-sm sm:leading-6"
                   placeholder="Password"
@@ -112,7 +133,7 @@ export default function LoginPage() {
                     />
                   </svg>
                 </span>
-                Sign in
+                Register
               </button>
             </div>
           </Form>
