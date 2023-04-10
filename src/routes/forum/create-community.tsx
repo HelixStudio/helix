@@ -43,7 +43,7 @@ export default function CreateCommunityPage() {
                 <input
                   type="name"
                   name="name"
-                  class="block pl-3 w-full rounded-md border-0 text-gray-100 shadow-sm ring-2 ring-inset ring-gray-600 bg-gray-800
+                  class="block focus:ring-pink-400 pl-3 w-full rounded-md border-0 text-gray-100 shadow-sm ring-2 ring-inset ring-gray-600 bg-gray-800
                   placeholder:text-gray-400 focus:ring-3 sm:py-1.5 sm:text-sm sm:leading-6"
                 />
               </div>
@@ -59,7 +59,7 @@ export default function CreateCommunityPage() {
                 <textarea
                   name="description"
                   rows="3"
-                  class="block pl-3 w-full rounded-md border-0 text-gray-100 shadow-sm ring-2 ring-inset ring-gray-600 bg-gray-800
+                  class="block focus:ring-pink-400 pl-3 w-full rounded-md border-0 text-gray-100 shadow-sm ring-2 ring-inset ring-gray-600 bg-gray-800
                   placeholder:text-gray-400 focus:ring-3 sm:py-1.5 sm:text-sm sm:leading-6"
                 ></textarea>
               </div>
