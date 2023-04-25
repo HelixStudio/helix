@@ -5,7 +5,7 @@ import { getDB } from "~/utils/db";
 
 export default function ForumLayout() {
   return (
-    <main class="bg-gray-800 text-white min-h-screen">
+    <main class="bg-secondary-800 text-white min-h-screen">
       <div class="ml-auto mr-auto max-w-5xl">
         <Outlet />
       </div>

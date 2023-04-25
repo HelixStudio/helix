@@ -44,7 +44,7 @@ export default function LoginPage() {
   });
 
   return (
-    <main class="bg-gray-800 text-white min-h-screen">
+    <main class="bg-secondary-800 text-white min-h-screen">
       <div class="flex min-h-full items-center justify-center px-4 py-12 sm:px-6 lg:px-8">
         <div class="w-full max-w-md space-y-8">
           <div>
@@ -55,7 +55,7 @@ export default function LoginPage() {
               or{" "}
               <A
                 href="/register"
-                class="font-medium transition-all text-pink-300 hover:text-pink-200"
+                class="font-medium transition-all text-primary-300 hover:text-primary-200"
               >
                 create a new account
               </A>
@@ -73,7 +73,7 @@ export default function LoginPage() {
                   name="username"
                   type="text"
                   required
-                  class="relative block w-full rounded-t-md border-0 py-1.5 ring-2 ring-inset ring-gray-700 placeholder:text-gray-100 bg-gray-700 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-pink-400 sm:text-sm sm:leading-6"
+                  class="relative block w-full rounded-t-md border-0 py-1.5 ring-2 ring-inset ring-secondary-700 placeholder:text-secondary-100 bg-secondary-700 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-primary-400 sm:text-sm sm:leading-6"
                   placeholder="Username"
                 />
               </div>
@@ -87,7 +87,7 @@ export default function LoginPage() {
                   type="password"
                   autocomplete="current-password"
                   required
-                  class="relative block w-full rounded-b-md border-0 py-1.5 ring-2 ring-inset ring-gray-700 placeholder:text-gray-100 bg-gray-700 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-pink-400 sm:text-sm sm:leading-6"
+                  class="relative block w-full rounded-b-md border-0 py-1.5 ring-2 ring-inset ring-secondary-700 placeholder:text-secondary-100 bg-secondary-700 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-primary-400 sm:text-sm sm:leading-6"
                   placeholder="Password"
                 />
               </div>
@@ -96,11 +96,11 @@ export default function LoginPage() {
             <div>
               <button
                 type="submit"
-                class="group relative flex w-full justify-center rounded-md transition-all bg-pink-500 px-3 py-2 text-sm font-semibold text-white hover:bg-pink-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                class="group relative flex w-full justify-center rounded-md transition-all bg-primary-500 px-3 py-2 text-sm font-semibold text-white hover:bg-primary-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
                 <span class="absolute inset-y-0 left-0 flex items-center pl-3">
                   <svg
-                    class="h-5 w-5 text-pink-400 group-hover:text-pink-300 transition-all"
+                    class="h-5 w-5 text-primary-400 group-hover:text-primary-300 transition-all"
                     viewBox="0 0 20 20"
                     fill="currentColor"
                     aria-hidden="true"

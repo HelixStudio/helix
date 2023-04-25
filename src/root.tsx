@@ -10,6 +10,7 @@ import {
   Title,
 } from "solid-start";
 import Router from "./components/Router";
+import "./root.scss";
 
 export default function Root() {
   return (

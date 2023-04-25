@@ -7,7 +7,10 @@ interface LinkProps {
 
 export default function Link(props: LinkProps) {
   return (
-    <A href={props.href} class="font-medium text-pink-400 hover:text-pink-300">
+    <A
+      href={props.href}
+      class="font-medium text-primary-400 hover:text-primary-300"
+    >
       {props.text}
     </A>
   );

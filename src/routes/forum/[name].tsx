@@ -73,20 +73,22 @@ function PostPreview(props: PostPreviewProps) {
   return (
     <div>
       <div
-        class="items-center bg-white border border-gray-200
-         rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800
-         mb-5 dark:border-gray-700 dark:hover:bg-gray-700
+        class="items-center bg-white border border-secondary-200
+         rounded-lg shadow hover:bg-secondary-100 dark:bg-secondary-800
+         mb-5 dark:border-secondary-700 dark:hover:bg-secondary-700
          transition-all  duration-150 flex justify-between
          hover:cursor-pointer"
       >
         <A class="p-5 w-full" href={`/forum/post/${props.id}`}>
           <h5
             class="mb-2 text-2xl font-bold tracking-tight 
-          text-gray-900 dark:text-white"
+          text-secondary-900 text-white"
           >
             {props.title}
           </h5>
-          <p class="font-normal text-gray-700 dark:text-gray-400">
+          <p class="font-normal text-gray-300">
+            {" "}
+            {/* TODO: fix white */}
             {props.description.length > maxDescPreview
               ? props.description.substring(0, maxDescPreview) + "..."
               : props.description}
@@ -105,7 +107,7 @@ function PostPreview(props: PostPreviewProps) {
             <OcArrowup2
               class={
                 props.likedBy.includes(props.uid)
-                  ? "bg-pink-400 rounded-xl"
+                  ? "bg-primary-400 rounded-xl"
                   : ""
               }
               size={20}
@@ -168,7 +170,7 @@ export default function CommunityPage() {
           <h2 class="text-3xl font-bold tracking-tight sm:text-4xl">
             {data()?.community?.name}
           </h2>
-          <p class="mt-4 text-gray-100 max-w-3xl pb-6">
+          <p class="mt-4 text-secondary-100 max-w-3xl pb-6">
             {data()?.community?.description}
           </p>
         </div>

@@ -31,17 +31,12 @@ export default function ViewPost() {
 
   return (
     <Show when={!data.loading || data() != null} fallback={<LoadingScreen />}>
-      <div class="bg-gray-900 px-5 py-2 rounded-es-xl rounded-ee-xl">
+      <div class="bg-secondary-900 px-5 py-2 rounded-es-xl rounded-ee-xl">
         <div>
-          <h5
-            class="mt-3 mb-3 text-2xl font-bold tracking-tight 
-          text-gray-900 dark:text-white"
-          >
+          <h5 class="mt-3 mb-3 text-2xl font-bold tracking-tight text-white">
             {data()?.post?.title}
           </h5>
-          <p class="font-normal text-gray-700 dark:text-gray-400">
-            {data()?.post?.content}
-          </p>
+          <p class="font-normal">{data()?.post?.content}</p>
         </div>
         <div class="flex flex-row items-center gap-5 mt-3">
           <button
@@ -56,7 +51,7 @@ export default function ViewPost() {
             <OcArrowup2
               class={
                 data()?.post?.likedBy.includes(data()?.user?.id!)
-                  ? "bg-pink-400 rounded-xl"
+                  ? "bg-primary-400 rounded-xl"
                   : ""
               }
               size={20}
