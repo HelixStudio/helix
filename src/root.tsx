@@ -8,13 +8,22 @@ import {
   Meta,
   Scripts,
   Title,
+  useRouteData,
 } from "solid-start";
 import Router from "./components/Router";
 import "./root.scss";
+import { loadTheme, userData } from "./routes/settings";
+import { isClient } from "./utils/db";
+import { useUserSessionOrFail } from "./utils/auth";
 
 export default function Root() {
+  // const user = useUserSessionOrFail();
+  // if (isClient() && user() != null && user() != undefined) {
+  // loadTheme(user()?.theme!);
+  // alert(user()?.theme);
+  // }
   return (
-    <Html lang="en">
+    <Html lang="en" class="zinc-bg green-fg">
       <Head>
         <Title>Helix</Title>
         <Meta charset="utf-8" />

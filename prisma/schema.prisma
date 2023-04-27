@@ -15,6 +15,7 @@ model User {
   email     String   @unique
   password  String
   posts     Post[]
+  theme     String   @default("zinc green")
 }
 
 model Community {

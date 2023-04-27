@@ -2,6 +2,7 @@ import { createMemo } from "solid-js";
 import { useRouteData } from "solid-start";
 import { createServerAction$ } from "solid-start/server";
 import { logout, useUserSession } from "~/utils/auth";
+import { loadTheme } from "./settings";
 
 export function userData() {
   return createMemo(() => {
@@ -14,6 +15,7 @@ export default function HomePage() {
   const [, { Form }] = createServerAction$((f: FormData, { request }) =>
     logout(request)
   );
+  loadTheme(user()?.()?.theme!);
 
   return (
     <main class="bg-secondary-800 text-white h-screen">

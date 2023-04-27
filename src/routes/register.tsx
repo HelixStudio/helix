@@ -105,7 +105,6 @@ export default function RegisterPage() {
                   id="password"
                   name="password"
                   type="password"
-                  autocomplete="current-password"
                   autocomplete="off"
                   required
                   class="relative block w-full rounded-b-md border-0 py-1.5 ring-2 ring-inset ring-secondary-700 placeholder:text-secondary-100 bg-secondary-700 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-primary-400 sm:text-sm sm:leading-6"

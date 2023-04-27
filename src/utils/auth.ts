@@ -1,8 +1,9 @@
 import { PrismaClient, User } from "@prisma/client";
 import { createServerData$, redirect } from "solid-start/server";
 import { getUser, storage } from "./session";
-import { getDB } from "./db";
+import { getDB, isClient } from "./db";
 import { loadUser, useUserStore } from "./stores/userStore";
+import { loadTheme } from "~/routes/settings";
 
 export type UserCredentials = {
   username: string;
@@ -60,7 +61,7 @@ export const logout = async (request: Request): Promise<Response> => {
   });
 };
 
-export const useUserSessionIntern = async (request: Request) => {
+export const useUserSessionIntern = async (request: Request): Promise<User> => {
   const user = await getUser(getDB()!, request);
 
   if (!user) {
@@ -73,7 +74,21 @@ export const useUserSessionIntern = async (request: Request) => {
   return user;
 };
 
-export const useUserSession = () =>
-  createServerData$(async (_, { request }) => {
+export const useUserSession = () => {
+  const res = createServerData$(async (_, { request }) => {
     return await useUserSessionIntern(request);
   });
+  // if (isClient()) {
+  //   const theme = localStorage.getItem("theme");
+  //   if (theme != null) loadTheme(theme);
+  // }
+  // TODO: check on every page, check user's db theme, fix loading theme
+  return res;
+};
+
+export const useUserSessionOrFail = () => {
+  return createServerData$(async (_, { request }) => {
+    const user = await getUser(getDB()!, request);
+    return user;
+  });
+};

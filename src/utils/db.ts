@@ -1,6 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 
-const isClient = () => {
+export const isClient = () => {
   return typeof window != "undefined" && window.document;
 };
 

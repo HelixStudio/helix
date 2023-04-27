@@ -2,11 +2,83 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --primary-300: #f9a8d4;
-  --primary-400: #f472b6;
-  --primary-500: #ec4899;
-  --secondary-700: #3f3f46;
-  --secondary-800: #27272a;
-  --secondary-900: #18181b;
+.matrix {
+  --secondary-700: theme(colors.zinc.700);
+  --secondary-800: theme(colors.zinc.800);
+  --secondary-900: theme(colors.zinc.900);
+  --primary-300: theme(colors.green.300);
+  --primary-400: theme(colors.green.400);
+  --primary-500: theme(colors.green.500);
+}
+
+.zinc-bg {
+  --secondary-700: theme(colors.zinc.700);
+  --secondary-800: theme(colors.zinc.800);
+  --secondary-900: theme(colors.zinc.900);
+}
+
+.gray-bg {
+  --secondary-700: theme(colors.gray.700);
+  --secondary-800: theme(colors.gray.800);
+  --secondary-900: theme(colors.gray.900);
+}
+
+.pink-bg {
+  --secondary-700: theme(colors.pink.800);
+  --secondary-800: theme(colors.pink.900);
+  --secondary-900: theme(colors.pink.950);
+}
+
+.green-bg {
+  --secondary-700: theme(colors.green.800);
+  --secondary-800: theme(colors.green.900);
+  --secondary-900: theme(colors.green.950);
+}
+
+.orange-bg {
+  --secondary-700: theme(colors.orange.800);
+  --secondary-800: theme(colors.orange.900);
+  --secondary-900: theme(colors.orange.950);
+}
+
+.red-bg {
+  --secondary-700: theme(colors.red.800);
+  --secondary-800: theme(colors.red.900);
+  --secondary-900: theme(colors.red.950);
+}
+
+.yellow-bg {
+  --secondary-700: theme(colors.yellow.800);
+  --secondary-800: theme(colors.yellow.900);
+  --secondary-900: theme(colors.yellow.950);
+}
+
+.pink-fg {
+  --primary-300: theme(colors.pink.300);
+  --primary-400: theme(colors.pink.400);
+  --primary-500: theme(colors.pink.500);
+}
+
+.green-fg {
+  --primary-300: theme(colors.green.300);
+  --primary-400: theme(colors.green.400);
+  --primary-500: theme(colors.green.500);
+}
+
+.orange-fg {
+  --primary-300: theme(colors.orange.300);
+  --primary-400: theme(colors.orange.400);
+  --primary-500: theme(colors.orange.500);
+}
+
+.red-fg {
+  --primary-300: theme(colors.red.300);
+  --primary-400: theme(colors.red.400);
+  --primary-500: theme(colors.red.500);
+}
+
+.yellow-fg {
+  --primary-300: theme(colors.yellow.300);
+  --primary-400: theme(colors.yellow.400);
+  --primary-500: theme(colors.yellow.500);
 }

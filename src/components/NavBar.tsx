@@ -39,21 +39,23 @@ export default function NavBar() {
           )}
         </For>
       </div>
-      <li
-        class="absolute flex items-center justify-center h-12 w-12 mt-2 mb-2 mx-auto bottom-2
+      <A href="/settings">
+        <li
+          class="absolute flex items-center justify-center h-12 w-12 mt-2 mb-2 mx-auto bottom-2
             bg-secondary-800 text-primary-400 hover:bg-primary-500 hover:text-white left-2
             rounded-3xl hover:rounded-xl transition-all duration-300 group hover:cursor-pointer"
-      >
-        <OcGear2 size={iconSize} />
-        <span
-          class="absolute w-auto p-2 m-2 min-w-max left-14 rounded-md shadow-md
+        >
+          <OcGear2 size={iconSize} />
+          <span
+            class="absolute w-auto p-2 m-2 min-w-max left-14 rounded-md shadow-md
               text-white bg-secondary-900 
               text-xs font-bold group-hover:scale-100
               transition-all duration-100 scale-0 origin-left"
-        >
-          settings
-        </span>
-      </li>
+          >
+            settings
+          </span>
+        </li>
+      </A>
     </div>
   );
 }

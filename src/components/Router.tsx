@@ -11,6 +11,7 @@ import WriteNewPostPage from "~/routes/forum/new";
 import CommunityPage, { communityRouteData } from "~/routes/forum/[name]";
 import ViewPost, { postRouteData } from "~/routes/forum/post/[id]";
 import CreateCommunityPage from "~/routes/forum/create-community";
+import SettingsPage from "~/routes/settings";
 
 export default function Router() {
   return (
@@ -20,6 +21,7 @@ export default function Router() {
       <Route path="/register" element={RegisterPage} />
       <Route path="/" element={BaseLayout}>
         <Route path="/" element={HomePage} data={userData} />
+        <Route path="/settings" element={SettingsPage} data={userData} />
         <Route path="/forum" element={ForumLayout}>
           <Route path="" element={ForumPage} data={forumRouteData} />
           <Route path="/new" element={WriteNewPostPage} />
