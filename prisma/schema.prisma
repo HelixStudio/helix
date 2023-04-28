@@ -8,14 +8,15 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(uuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now()) @updatedAt
-  username  String   @unique
-  email     String   @unique
+  id        String    @id @default(uuid())
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @default(now()) @updatedAt
+  username  String    @unique
+  email     String    @unique
   password  String
   posts     Post[]
-  theme     String   @default("zinc green")
+  theme     String    @default("zinc green")
+  Problem   Problem[]
 }
 
 model Community {
@@ -40,4 +41,20 @@ model Post {
   score       Int       @default(0)
   likedBy     String[]  @default([])
   dislikedBy  String[]  @default([])
+}
+
+model Problem {
+  id         Int      @id @default(autoincrement())
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @default(now()) @updatedAt
+  author     User     @relation(fields: [authorId], references: [id])
+  authorId   String
+  title      String
+  source     String
+  sourceLink String
+  statement  String
+  input      String
+  output     String
+  samples    Json
+  notes      String
 }

@@ -1,6 +1,11 @@
 import { For } from "solid-js";
 import { A } from "solid-start";
-import { OcHome2, OcCommentdiscussion2, OcGear2 } from "solid-icons/oc";
+import {
+  OcHome2,
+  OcCommentdiscussion2,
+  OcGear2,
+  OcCode2,
+} from "solid-icons/oc";
 
 export default function NavBar() {
   const iconSize = 25;
@@ -10,6 +15,11 @@ export default function NavBar() {
       name: "forum",
       icon: <OcCommentdiscussion2 size={iconSize} />,
       link: "/forum",
+    },
+    {
+      name: "online judge",
+      icon: <OcCode2 size={iconSize} />,
+      link: "/online-judge",
     },
   ];
 

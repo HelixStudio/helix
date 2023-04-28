@@ -1,7 +1,12 @@
 import { A } from "solid-start";
 import { ButtonLink } from "~/components/Button";
+import { isClient } from "~/utils/db";
+import { loadTheme } from "./settings";
 
 export default function NotFound() {
+  if (isClient() && localStorage.getItem("theme") != null) {
+    loadTheme(localStorage.getItem("theme")!);
+  }
   return (
     <main class="grid min-h-full place-items-center h-screen bg-secondary-800 text-white px-6 py-24 sm:py-32 lg:px-8">
       <div class="text-center">

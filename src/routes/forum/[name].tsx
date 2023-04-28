@@ -150,7 +150,7 @@ export function communityRouteData({ params }: RouteDataArgs) {
       });
       const posts = await db.post.findMany({
         where: { communityId: community?.id },
-        take: 10,
+        take: 10, // TODO
         orderBy: { createdAt: "desc" },
       });
       return { community, posts };
