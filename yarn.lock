@@ -1198,6 +1198,20 @@
     semver "^7.3.5"
     tar "^6.1.11"
 
+"@monaco-editor/loader@^1.3.3":
+  version "1.3.3"
+  resolved "https://registry.yarnpkg.com/@monaco-editor/loader/-/loader-1.3.3.tgz#7f1742bd3cc21c0362a46a4056317f6e5215cfca"
+  integrity sha512-6KKF4CTzcJiS8BJwtxtfyYt9shBiEv32ateQ9T4UVogwn4HM/uPo9iJd2Dmbkpz8CM6Y0PDUpjnZzCwC+eYo2Q==
+  dependencies:
+    state-local "^1.0.6"
+
+"@monaco-editor/react@^4.5.0":
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/@monaco-editor/react/-/react-4.5.0.tgz#5a581f1ce5af6597dd127ac2c0d22d15ca3f3928"
+  integrity sha512-VJMkp5Fe1+w8pLEq8tZPHZKu8zDXQIA1FtiDTSNccg1D3wg1YIZaH2es2Qpvop1k62g3c/YySRb3bnGXu2XwYQ==
+  dependencies:
+    "@monaco-editor/loader" "^1.3.3"
+
 "@nodelib/fs.scandir@2.1.5":
   version "2.1.5"
   resolved "https://registry.yarnpkg.com/@nodelib/fs.scandir/-/fs.scandir-2.1.5.tgz#7619c2eb21b25483f6d167548b4cfd5a7488c3d5"
@@ -3155,6 +3169,16 @@ mkdirp@^1.0.3:
   resolved "https://registry.yarnpkg.com/mkdirp/-/mkdirp-1.0.4.tgz#3eb5ed62622756d79a5f0e2a221dfebad75c2f7e"
   integrity sha512-vVqVZQyf3WLx2Shd0qJ9xuvqgAyKPLAiqITEtqW0oIUjzo3PePDd6fW9iFz30ef7Ysp/oiWqbhszeGWW2T6Gzw==
 
+monaco-editor@^0.37.1:
+  version "0.37.1"
+  resolved "https://registry.yarnpkg.com/monaco-editor/-/monaco-editor-0.37.1.tgz#d6f5ffb593e019e74e19bf8a2bdef5a691876f4e"
+  integrity sha512-jLXEEYSbqMkT/FuJLBZAVWGuhIb4JNwHE9kPTorAVmsdZ4UzHAfgWxLsVtD7pLRFaOwYPhNG9nUCpmFL1t/dIg==
+
+monaco-loader@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/monaco-loader/-/monaco-loader-1.0.0.tgz#7cfd7a8ba5de0f32b015b03df983e08e09fcb387"
+  integrity sha512-rVdJWvb/1pkfS958FXnnzSrq17hT2CcCg6DPW8yu5eZro52E2oAnpaXKA/XUnREgNp/tnLWvFFLsw4nlwzVZQw==
+
 mri@^1.1.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/mri/-/mri-1.2.0.tgz#6721480fec2a11a4889861115a48b6cbe7cc8f0b"
@@ -3484,6 +3508,11 @@ quick-lru@^5.1.1:
   version "5.1.1"
   resolved "https://registry.yarnpkg.com/quick-lru/-/quick-lru-5.1.1.tgz#366493e6b3e42a3a6885e2e99d18f80fb7a8c932"
   integrity sha512-WuyALRjWPDGtt/wzJiadO5AXY+8hZ80hVpe6MyivgraREW751X3SbhRvG3eLKOYN+8VEvqLcf3wdnt44Z4S4SA==
+
+react-solid-bridge@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/react-solid-bridge/-/react-solid-bridge-1.0.1.tgz#0b68c06f71f11144584698f945aee86ea9f5b72e"
+  integrity sha512-y0WWQlJOfAlwus7rZDHfJ2o7hYAiOwpggvLpu0nmcJRhzGZQEcAG07R1tG4IeVnt6AjC24WJRNJBQo8+i2fssw==
 
 read-cache@^1.0.0:
   version "1.0.0"
@@ -3885,6 +3914,11 @@ sshpk@^1.14.1:
     safer-buffer "^2.0.2"
     tweetnacl "~0.14.0"
 
+state-local@^1.0.6:
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/state-local/-/state-local-1.0.7.tgz#da50211d07f05748d53009bee46307a37db386d5"
+  integrity sha512-HTEHMNieakEnoe33shBYcZ7NX83ACUjCu8c40iOGEZsngj9zRnkqS9j1pqQPXwobB0ZcVTk27REb7COQ0UR59w==
+
 statuses@~1.5.0:
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/statuses/-/statuses-1.5.0.tgz#161c7dac177659fd9811f43771fa99381478628c"
@@ -4222,6 +4256,11 @@ vite-plugin-inspect@^0.7.14:
     kolorist "^1.7.0"
     sirv "^2.0.2"
     ufo "^1.1.1"
+
+vite-plugin-monaco-editor@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/vite-plugin-monaco-editor/-/vite-plugin-monaco-editor-1.1.0.tgz#a6238c2e13d5e98dd54a1bc51f6f189325219de3"
+  integrity sha512-IvtUqZotrRoVqwT0PBBDIZPNraya3BxN/bfcNfnxZ5rkJiGcNtO5eAOWWSgT7zullIAEqQwxMU83yL9J5k7gww==
 
 vite-plugin-solid@^2.6.1:
   version "2.6.1"
