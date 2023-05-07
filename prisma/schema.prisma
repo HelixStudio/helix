@@ -16,7 +16,7 @@ model User {
   password  String
   posts     Post[]
   theme     String    @default("zinc green")
-  Problem   Problem[]
+  problems  Problem[]
 }
 
 model Community {
@@ -57,4 +57,14 @@ model Problem {
   output     String
   samples    Json
   notes      String
+  tests      Test[]
+}
+
+model Test {
+  id        String  @id @default(uuid())
+  problem   Problem @relation(fields: [problemId], references: [id])
+  problemId Int
+  input     String
+  output    String
+  points    Int
 }

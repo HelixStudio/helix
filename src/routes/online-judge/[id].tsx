@@ -12,9 +12,12 @@ export function problemRouteData({ params }: RouteDataArgs) {
       if (db == undefined) {
         console.error("DB is undefined.");
       }
-      const problem = await db.problem.findFirst({
+      const problem = await db.problem.findUnique({
         where: { id: parseInt(id) },
-        include: { author: { select: { id: true, username: true } } },
+        include: {
+          author: { select: { id: true, username: true } },
+          tests: true,
+        },
       });
       return problem;
     },
@@ -26,6 +29,8 @@ export default function ProblemPage() {
   const problem = useRouteData<typeof problemRouteData>();
   const [code, setCode] = createSignal("");
   const [didRun, setDidRun] = createSignal(false);
+
+  console.log(problem());
 
   const [runningSolution, runSolution] = createRouteAction(
     async (code: string) => {
