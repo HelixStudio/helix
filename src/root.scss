@@ -82,3 +82,15 @@
   --primary-400: theme(colors.yellow.400);
   --primary-500: theme(colors.yellow.500);
 }
+
+*::-webkit-scrollbar {
+  width: 0.5rem;
+}
+
+*::-webkit-scrollbar-track {
+  background: var(--secondary-900);
+}
+
+*::-webkit-scrollbar-thumb {
+  background: var(--primary-400);
+}

@@ -1,26 +1,47 @@
-import { onMount } from "solid-js";
+import { createSignal, onMount } from "solid-js";
 import {
-  darkPlusTheme,
+  draculaTheme,
   githubDarkTheme,
   solarizedDarkTheme,
+  darkPlusTheme,
+  helixDarkTheme,
 } from "~/utils/monaco/themes";
 
-export default function CodeEditor() {
+export interface CodeEditorProps {
+  initialContent: string;
+  typeCallback: (newContent: string) => void;
+}
+
+export default function CodeEditor(props: CodeEditorProps) {
+  let editor = undefined;
+  const [content, setContent] = createSignal(props.initialContent);
+
   onMount(() => {
     require.config({
       paths: { vs: "https://unpkg.com/monaco-editor@0.37.1/min/vs" },
     });
     require(["vs/editor/editor.main"], function () {
       monaco.editor.defineTheme("solarized-dark", solarizedDarkTheme);
+      monaco.editor.defineTheme("dracula", draculaTheme);
+      monaco.editor.defineTheme("dark-plus", darkPlusTheme);
+      monaco.editor.defineTheme("helix", helixDarkTheme());
       monaco.editor.defineTheme("github-dark", githubDarkTheme); // https://github.com/brijeshb42/monaco-themes/tree/master/themes
-      var editor = monaco.editor.create(document.getElementById("editor"), {
-        theme: "github-dark",
-        value:
-          "#include <cstdlib>\n\nint solve(int a, int b) {\n\treturn a + b;\n}\n",
+
+      editor = monaco.editor.create(document.getElementById("editor"), {
+        theme: "helix",
+        smoothScrolling: true,
+        value: props.initialContent,
         language: "cpp",
+      });
+
+      props.typeCallback(props.initialContent);
+      editor.getModel().onDidChangeContent((_) => {
+        setContent(editor.getValue());
+        props.typeCallback(content());
       });
     });
   });
+
   return (
     <main>
       <link
@@ -28,8 +49,16 @@ export default function CodeEditor() {
         type="text/css"
         href="https://unpkg.com/monaco-editor@0.37.1/min/vs/editor/editor.main.css"
       />
-      <script src="https://unpkg.com/monaco-editor@0.37.1/min/vs/loader.js"></script>
-      <div style={{ height: "100vh", width: "48vw" }} id="editor"></div>
+      <script src="https://unpkg.com/monaco-editor@0.37.1/min/vs/loader.js" />
+      <div class="flex overflow-hidden flex-col rounded-md">
+        <div class="bg-secondary-700 h-8 items-center flex flex-row px-3">
+          <pre>C/C++</pre>
+        </div>
+        <div style={{ height: "60vh", width: "48vw" }} id="editor"></div>
+        {/* <div class="bg-secondary-700 h-8 items-center flex flex-row px-3">
+          <pre>C/C++</pre>
+        </div> */}
+      </div>
     </main>
   );
 }

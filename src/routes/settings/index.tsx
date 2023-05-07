@@ -48,11 +48,11 @@ export default function SettingsPage() {
     }
   );
 
-  const [background, setBackground] = createSignal("gray");
-  const [foreground, setForeground] = createSignal("green");
-
   const bg = user()?.()?.theme!.split(" ")[0];
   const fg = user()?.()?.theme!.split(" ")[1];
+
+  const [background, setBackground] = createSignal(bg);
+  const [foreground, setForeground] = createSignal(fg);
 
   loadTheme(user()?.()?.theme!);
 
@@ -66,6 +66,7 @@ export default function SettingsPage() {
           <Form
             class="flex flex-col gap-3"
             onSubmit={() => {
+              console.log("client theme: " + `${background()} ${foreground()}`);
               loadTheme(`${background()} ${foreground()}`);
             }}
           >
