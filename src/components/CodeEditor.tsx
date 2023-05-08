@@ -17,39 +17,47 @@ export default function CodeEditor(props: CodeEditorProps) {
   const [content, setContent] = createSignal(props.initialContent);
 
   onMount(() => {
-    require.config({
-      paths: { vs: "https://unpkg.com/monaco-editor@0.37.1/min/vs" },
-    });
-    require(["vs/editor/editor.main"], function () {
-      monaco.editor.defineTheme("solarized-dark", solarizedDarkTheme);
-      monaco.editor.defineTheme("dracula", draculaTheme);
-      monaco.editor.defineTheme("dark-plus", darkPlusTheme);
-      monaco.editor.defineTheme("helix", helixDarkTheme());
-      monaco.editor.defineTheme("github-dark", githubDarkTheme); // https://github.com/brijeshb42/monaco-themes/tree/master/themes
+    let monaco_loader = document.createElement("script");
+    monaco_loader.src =
+      "https://unpkg.com/monaco-editor@0.37.1/min/vs/loader.js";
+    document.getElementById("loaders")?.appendChild(monaco_loader);
 
-      editor = monaco.editor.create(document.getElementById("editor"), {
-        theme: "helix",
-        smoothScrolling: true,
-        value: props.initialContent,
-        language: "cpp",
+    monaco_loader.onload = () => {
+      require.config({
+        paths: { vs: "https://unpkg.com/monaco-editor@0.37.1/min/vs" },
       });
+      require(["vs/editor/editor.main"], function () {
+        monaco.editor.defineTheme("solarized-dark", solarizedDarkTheme);
+        monaco.editor.defineTheme("dracula", draculaTheme);
+        monaco.editor.defineTheme("dark-plus", darkPlusTheme);
+        monaco.editor.defineTheme("helix", helixDarkTheme());
+        monaco.editor.defineTheme("github-dark", githubDarkTheme); // https://github.com/brijeshb42/monaco-themes/tree/master/themes
 
-      props.typeCallback(props.initialContent);
-      editor.getModel().onDidChangeContent((_) => {
-        setContent(editor.getValue());
-        props.typeCallback(content());
+        editor = monaco.editor.create(document.getElementById("editor"), {
+          theme: "helix",
+          smoothScrolling: true,
+          value: props.initialContent,
+          language: "cpp",
+        });
+
+        props.typeCallback(props.initialContent);
+        editor.getModel().onDidChangeContent((_) => {
+          setContent(editor.getValue());
+          props.typeCallback(content());
+        });
       });
-    });
+    };
   });
 
   return (
     <main>
-      <link
-        rel="stylesheet"
-        type="text/css"
-        href="https://unpkg.com/monaco-editor@0.37.1/min/vs/editor/editor.main.css"
-      />
-      <script src="https://unpkg.com/monaco-editor@0.37.1/min/vs/loader.js" />
+      <div id="loaders">
+        <link
+          rel="stylesheet"
+          type="text/css"
+          href="https://unpkg.com/monaco-editor@0.37.1/min/vs/editor/editor.main.css"
+        />
+      </div>
       <div class="flex overflow-hidden flex-col rounded-md">
         <div class="bg-secondary-700 h-8 items-center flex flex-row px-3">
           <pre>C/C++</pre>

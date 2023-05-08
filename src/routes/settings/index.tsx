@@ -66,7 +66,6 @@ export default function SettingsPage() {
           <Form
             class="flex flex-col gap-3"
             onSubmit={() => {
-              console.log("client theme: " + `${background()} ${foreground()}`);
               loadTheme(`${background()} ${foreground()}`);
             }}
           >

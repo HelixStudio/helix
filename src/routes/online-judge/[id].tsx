@@ -30,22 +30,27 @@ export default function ProblemPage() {
   const [code, setCode] = createSignal("");
   const [didRun, setDidRun] = createSignal(false);
 
-  console.log(problem());
-
   const [runningSolution, runSolution] = createRouteAction(
     async (code: string) => {
       let headersList = {
-        "X-Auth": "wkjesrc24509873", // TODO: generate API keys
+        "Content-Type": "application/json",
+        // "X-Auth": "wkjesrc24509873", // TODO: generate API keys
       };
 
-      let response = await fetch("https://rce-engine.onrender.com/rce.php", {
-        method: "POST",
-        body: code,
-        headers: headersList,
-      });
+      let response = await fetch(
+        "https://helix-td2p.onrender.com/rce/run?unsafe=true",
+        {
+          method: "POST",
+          body: JSON.stringify({
+            input: "",
+            code: code,
+          }),
+          headers: headersList,
+        }
+      );
 
       let data = await response.text();
-      return data;
+      return JSON.parse(data) as { error: string; output: string };
     }
   );
 
@@ -110,7 +115,7 @@ export default function ProblemPage() {
           <div class="mx-3 flex flex-col">
             <CodeEditor
               initialContent={
-                '#include <stdio.h>\n\nint main() {\n\tputs("hello world");\n\treturn 0;\n}\n'
+                '#include <iostream>\n\nint main() {\n\tstd::cout << "Hello, World!\\n";\n\treturn 0;\n}\n'
               }
               typeCallback={(newContent: string) => {
                 setCode(newContent);
@@ -122,7 +127,7 @@ export default function ProblemPage() {
               </div>
               <div class="px-3 font-mono whitespace-pre h-[26vh] bg-secondary-900 overflow-y-auto">
                 <p>
-                  {runningSolution.result ||
+                  {runningSolution.result?.output ||
                     (!didRun()
                       ? "Click 'Submit' to run your code!"
                       : "loading...")}
