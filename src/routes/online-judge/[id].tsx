@@ -128,6 +128,7 @@ export default function ProblemPage() {
               <div class="px-3 font-mono whitespace-pre h-[26vh] bg-secondary-900 overflow-y-auto">
                 <p>
                   {runningSolution.result?.output ||
+                    runningSolution.result?.error ||
                     (!didRun()
                       ? "Click 'Submit' to run your code!"
                       : "loading...")}

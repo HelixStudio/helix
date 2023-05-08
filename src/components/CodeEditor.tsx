@@ -17,9 +17,14 @@ export default function CodeEditor(props: CodeEditorProps) {
   const [content, setContent] = createSignal(props.initialContent);
 
   onMount(() => {
+    if (document.querySelectorAll("#monaco-loader").length > 0) {
+      return;
+    }
+
     let monaco_loader = document.createElement("script");
     monaco_loader.src =
       "https://unpkg.com/monaco-editor@0.37.1/min/vs/loader.js";
+    monaco_loader.id = "monaco-loader";
     document.getElementById("loaders")?.appendChild(monaco_loader);
 
     monaco_loader.onload = () => {
