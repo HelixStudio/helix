@@ -1,3 +1,4 @@
+import { Test } from "@prisma/client";
 import { For, createSignal, onMount } from "solid-js";
 import { RouteDataArgs, createRouteAction, useRouteData } from "solid-start";
 import { createServerAction$, createServerData$ } from "solid-start/server";
@@ -31,18 +32,19 @@ export default function ProblemPage() {
   const [didRun, setDidRun] = createSignal(false);
 
   const [runningSolution, runSolution] = createRouteAction(
-    async (code: string) => {
+    async ({ code, tests }: { code: string; tests: Test[] }) => {
       let headersList = {
         "Content-Type": "application/json",
         // "X-Auth": "wkjesrc24509873", // TODO: generate API keys
       };
 
       let response = await fetch(
-        "https://helix-td2p.onrender.com/rce/run?unsafe=true",
+        "https://helix-td2p.onrender.com/rce/test?unsafe=true",
+        // "http://localhost:4000/rce/test?unsafe=true",
         {
           method: "POST",
           body: JSON.stringify({
-            input: "",
+            tests: tests,
             code: code,
           }),
           headers: headersList,
@@ -50,7 +52,7 @@ export default function ProblemPage() {
       );
 
       let data = await response.text();
-      return JSON.parse(data) as { error: string; output: string };
+      return JSON.parse(data) as { error: string; test_results: number[] };
     }
   );
 
@@ -66,7 +68,7 @@ export default function ProblemPage() {
             <ButtonAction
               action={() => {
                 setDidRun(true);
-                runSolution(code());
+                runSolution({ code: code(), tests: problem()?.tests! });
               }}
               text="Submit"
             />
@@ -125,14 +127,27 @@ export default function ProblemPage() {
               <div class="bg-secondary-700 h-8 items-center flex flex-row px-3">
                 <p>Output</p>
               </div>
-              <div class="px-3 font-mono whitespace-pre h-[26vh] bg-secondary-900 overflow-y-auto">
-                <p>
-                  {runningSolution.result?.output ||
+              <div class="font-mono whitespace-pre h-[26vh] bg-secondary-900 overflow-y-auto">
+                {/* {runningSolution.result?.output ||
                     runningSolution.result?.error ||
                     (!didRun()
                       ? "Click 'Submit' to run your code!"
-                      : "loading...")}
-                </p>
+                      : "loading...")} */}
+                {runningSolution.result != undefined ? (
+                  <div class="grid min-h-full grid-rows-4 flex-grow">
+                    {runningSolution.result?.test_results.map((test, index) => (
+                      <div class="w-full px-3 row-span-1 hover:bg-secondary-700 flex items-center transition-all cursor-pointer">
+                        <h1>
+                          Test #{index}: {test} points {test > 0 ? "✅" : "❌"}
+                        </h1>
+                      </div>
+                    ))}
+                  </div>
+                ) : !didRun() ? (
+                  "Click 'Submit' to run your code!"
+                ) : (
+                  "loading..."
+                )}
               </div>
             </div>
           </div>

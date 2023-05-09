@@ -17,6 +17,7 @@ model User {
   posts     Post[]
   theme     String    @default("zinc green")
   problems  Problem[]
+  // solved          Json // [{ problemId, score, code }]
 }
 
 model Community {
@@ -49,6 +50,8 @@ model Problem {
   updatedAt  DateTime @default(now()) @updatedAt
   author     User     @relation(fields: [authorId], references: [id])
   authorId   String
+  solvedBy   User[]   @relation(fields: [solvedById], references: [id])
+  solvedById String[]
   title      String
   source     String
   sourceLink String
