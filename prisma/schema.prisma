@@ -1,5 +1,6 @@
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["jsonProtocol"]
 }
 
 datasource db {
@@ -50,8 +51,6 @@ model Problem {
   updatedAt  DateTime @default(now()) @updatedAt
   author     User     @relation(fields: [authorId], references: [id])
   authorId   String
-  solvedBy   User[]   @relation(fields: [solvedById], references: [id])
-  solvedById String[]
   title      String
   source     String
   sourceLink String
