@@ -50,8 +50,8 @@ model Problem {
   updatedAt  DateTime @default(now()) @updatedAt
   author     User     @relation(fields: [authorId], references: [id])
   authorId   String
-  solvedBy   User[]   @relation(fields: [solvedById], references: [id])
-  solvedById String[]
+  // solvedBy   User[]   @relation(fields: [solvedById], references: [id])
+  // solvedById String[]
   title      String
   source     String
   sourceLink String
