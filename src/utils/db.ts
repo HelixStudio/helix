@@ -1,7 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 
 export const isClient = () => {
-  return typeof window != "undefined" && window.document;
+  return typeof window != "undefined";
 };
 
 let db: PrismaClient | undefined = undefined;

@@ -1,18 +1,20 @@
-import { Test } from "@prisma/client";
-import { For, createSignal, onMount } from "solid-js";
+import { Test, User } from "@prisma/client";
+import { For, createSignal } from "solid-js";
 import { RouteDataArgs, createRouteAction, useRouteData } from "solid-start";
-import { createServerAction$, createServerData$ } from "solid-start/server";
-import { ButtonAction, ButtonLink } from "~/components/Button";
+import { createServerData$ } from "solid-start/server";
+import { ButtonAction } from "~/components/Button";
 import CodeEditor from "~/components/CodeEditor";
+import { useUserSessionIntern } from "~/utils/auth";
 import { getDB } from "~/utils/db";
 
 export function problemRouteData({ params }: RouteDataArgs) {
   return createServerData$(
-    async (id: string) => {
+    async (id: string, { request }) => {
       const db = getDB()!;
       if (db == undefined) {
         console.error("DB is undefined.");
       }
+
       const problem = await db.problem.findUnique({
         where: { id: parseInt(id) },
         include: {
@@ -20,19 +22,30 @@ export function problemRouteData({ params }: RouteDataArgs) {
           tests: true,
         },
       });
-      return problem;
+
+      const user = await useUserSessionIntern(request)!;
+
+      return { problem, user };
     },
     { key: () => params.id }
   );
 }
 
 export default function ProblemPage() {
-  const problem = useRouteData<typeof problemRouteData>();
+  const data = useRouteData<typeof problemRouteData>();
   const [code, setCode] = createSignal("");
   const [didRun, setDidRun] = createSignal(false);
 
   const [runningSolution, runSolution] = createRouteAction(
-    async ({ code, tests }: { code: string; tests: Test[] }) => {
+    async ({
+      code,
+      tests,
+      user,
+    }: {
+      code: string;
+      tests: Test[];
+      user: User;
+    }) => {
       let headersList = {
         "Content-Type": "application/json",
         // "X-Auth": "wkjesrc24509873", // TODO: generate API keys
@@ -51,8 +64,24 @@ export default function ProblemPage() {
         }
       );
 
-      let data = await response.text();
-      return JSON.parse(data) as { error: string; test_results: number[] };
+      const text = await response.text();
+      const data = JSON.parse(text) as {
+        error: string;
+        test_results: number[];
+      };
+
+      interface SolvedProblem {
+        problem_id: number;
+        tests: number[];
+        code: string;
+      }
+      const solved_problems =
+        user.solved != null
+          ? (user.solved as unknown as { solved_problems: SolvedProblem[] })
+              .solved_problems
+          : [];
+
+      return data;
     }
   );
 
@@ -61,14 +90,18 @@ export default function ProblemPage() {
       <div>
         <div class="bg-secondary-800 px-7 py-1 mb-1 flex flex-row items-center justify-between">
           <h2 class="text-3xl font-bold tracking-tight sm:text-4xl">
-            {problem()?.title}
+            {data()?.problem?.title}
           </h2>
           <div class="flex flex-row items-center gap-5">
             <pre class="text-2xl bg-secondary-700 p-1 rounded-md">0/100</pre>
             <ButtonAction
               action={() => {
                 setDidRun(true);
-                runSolution({ code: code(), tests: problem()?.tests! });
+                runSolution({
+                  code: code(),
+                  tests: data()?.problem?.tests!,
+                  user: data()?.user!,
+                });
               }}
               text="Submit"
             />
@@ -76,15 +109,15 @@ export default function ProblemPage() {
         </div>
         <div class="flex flex-row">
           <div class="ml-7 mr-7 max-w-5xl mx-3" style={{ width: "52vw" }}>
-            <p>{problem()?.statement}</p>
+            <p>{data()?.problem?.statement}</p>
             <p class="text-xl mt-3 font-bold tracking-tight items-center">
               Input
             </p>
-            <p>{problem()?.input}</p>
+            <p>{data()?.problem?.input}</p>
             <p class="text-xl mt-3 font-bold tracking-tight items-center">
               Output
             </p>
-            <p>{problem()?.output}</p>
+            <p>{data()?.problem?.output}</p>
             <p class="text-xl mt-3 font-bold tracking-tight items-center">
               Sample
             </p>
@@ -96,7 +129,12 @@ export default function ProblemPage() {
                 </tr>
               </thead>
               <tbody class="text-gray-100 text-sm font-light">
-                <For each={problem()?.samples!.samples}>
+                <For
+                  each={
+                    (data()?.problem?.samples! as unknown as { samples: any })
+                      .samples
+                  }
+                >
                   {(sample) => (
                     <tr class="border border-secondary-700">
                       <td class="py-3 px-6 text-left whitespace-nowrap">
@@ -111,7 +149,7 @@ export default function ProblemPage() {
             <p class="text-xl mt-3 font-bold tracking-tight items-center">
               Notes
             </p>
-            <p>{problem()?.notes}</p>
+            <p>{data()?.problem?.notes}</p>
             <div class="mt-3"></div>
           </div>
           <div class="mx-3 flex flex-col">

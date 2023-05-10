@@ -18,7 +18,7 @@ model User {
   posts     Post[]
   theme     String    @default("zinc green")
   problems  Problem[]
-  // solved          Json // [{ problemId, score, code }]
+  solved    Json?
 }
 
 model Community {
