@@ -34,7 +34,7 @@ export function ButtonAction(props: ButtonAction) {
         class="rounded-md bg-primary-500 px-3.5 py-2.5 text-sm cursor-pointer
             font-semibold transition-all duration-300 text-white shadow-sm
             hover:bg-primary-400 focus-visible:outline focus-visible:outline-2 
-            focus-visible:outline-offset-2 focus-visible:outline-primary-300"
+            focus-visible:outline-offset-2 focus-visible:outline-primary-300 text-center"
       >
         {props.text}
       </p>

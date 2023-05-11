@@ -14,6 +14,7 @@ import CreateCommunityPage from "~/routes/forum/create-community";
 import SettingsPage from "~/routes/settings";
 import OnlineJudgePage, { problemsRouteData } from "~/routes/online-judge";
 import ProblemPage, { problemRouteData } from "~/routes/online-judge/[id]";
+import CodeRunnerPage from "~/routes/code-runner";
 
 export default function Router() {
   return (
@@ -23,11 +24,6 @@ export default function Router() {
       <Route path="/register" element={RegisterPage} />
       <Route path="/" element={BaseLayout}>
         <Route path="/" element={HomePage} data={userData} />
-        <Route path="/settings" element={SettingsPage} data={userData} />
-        <Route path="/online-judge">
-          <Route path="" element={OnlineJudgePage} data={problemsRouteData} />
-          <Route path="/:id" element={ProblemPage} data={problemRouteData} />
-        </Route>
         <Route path="/forum" element={ForumLayout}>
           <Route path="" element={ForumPage} data={forumRouteData} />
           <Route path="/new" element={WriteNewPostPage} />
@@ -39,6 +35,12 @@ export default function Router() {
           />
           <Route path="/post/:id" element={ViewPost} data={postRouteData} />
         </Route>
+        <Route path="/online-judge">
+          <Route path="" element={OnlineJudgePage} data={problemsRouteData} />
+          <Route path="/:id" element={ProblemPage} data={problemRouteData} />
+        </Route>
+        <Route path="/code-runner" element={CodeRunnerPage} data={userData} />
+        <Route path="/settings" element={SettingsPage} data={userData} />
       </Route>
     </Routes>
   );

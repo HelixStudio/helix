@@ -129,12 +129,7 @@ export default function ProblemPage() {
                 </tr>
               </thead>
               <tbody class="text-gray-100 text-sm font-light">
-                <For
-                  each={
-                    (data()?.problem?.samples! as unknown as { samples: any })
-                      .samples
-                  }
-                >
+                <For each={data()?.problem?.samples!.samples}>
                   {(sample) => (
                     <tr class="border border-secondary-700">
                       <td class="py-3 px-6 text-left whitespace-nowrap">
@@ -153,14 +148,20 @@ export default function ProblemPage() {
             <div class="mt-3"></div>
           </div>
           <div class="mx-3 flex flex-col">
-            <CodeEditor
-              initialContent={
-                '#include <iostream>\n\nint main() {\n\tstd::cout << "Hello, World!\\n";\n\treturn 0;\n}\n'
-              }
-              typeCallback={(newContent: string) => {
-                setCode(newContent);
-              }}
-            />
+            <div class="flex overflow-hidden flex-col rounded-md">
+              <div class="bg-secondary-700 h-8 items-center flex flex-row px-3">
+                <pre>C/C++</pre>
+              </div>
+              <CodeEditor
+                style={{ height: "60vh", width: "48vw" }}
+                initialContent={
+                  '#include <iostream>\n\nint main() {\n\tstd::cout << "Hello, World!\\n";\n\treturn 0;\n}\n'
+                }
+                typeCallback={(newContent: string) => {
+                  setCode(newContent);
+                }}
+              />
+            </div>
             <div class="mt-3 w-full rounded-md flex overflow-hidden flex-col">
               <div class="bg-secondary-700 h-8 items-center flex flex-row px-3">
                 <p>Output</p>

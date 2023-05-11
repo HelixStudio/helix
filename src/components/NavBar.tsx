@@ -1,13 +1,16 @@
 import { For } from "solid-js";
-import { A } from "solid-start";
+import { A, useLocation } from "solid-start";
 import {
   OcHome2,
   OcCommentdiscussion2,
   OcGear2,
   OcCode2,
+  OcPencil2,
 } from "solid-icons/oc";
 
 export default function NavBar() {
+  const location = useLocation();
+
   const iconSize = 25;
   const pages = [
     { name: "home", icon: <OcHome2 size={iconSize} />, link: "/" },
@@ -21,6 +24,11 @@ export default function NavBar() {
       icon: <OcCode2 size={iconSize} />,
       link: "/online-judge",
     },
+    {
+      name: "code runner",
+      icon: <OcPencil2 size={iconSize} />,
+      link: "/code-runner",
+    },
   ];
 
   return (
@@ -30,9 +38,17 @@ export default function NavBar() {
           {(page) => (
             <A href={page.link}>
               <li
-                class="ml-2 relative flex items-center justify-center h-12 w-12 mt-2 mb-2 mx-auto 
-            bg-secondary-800 text-primary-400 hover:bg-primary-500 hover:text-white
-            rounded-3xl hover:rounded-xl transition-all duration-300 group"
+                class={`ml-2 relative flex items-center justify-center h-12 w-12 mt-2 mb-2 mx-auto 
+                      ${
+                        (
+                          page.link == "/"
+                            ? location.pathname === page.link
+                            : location.pathname.startsWith(page.link)
+                        )
+                          ? "ring-primary-500 ring-2 bg-secondary-800 text-white rounded-xl"
+                          : "bg-secondary-800 text-primary-400 hover:bg-primary-500 hover:text-white hover:rounded-xl"
+                      }
+                      rounded-3xl transition-all duration-300 group`}
               >
                 {page.icon}
 

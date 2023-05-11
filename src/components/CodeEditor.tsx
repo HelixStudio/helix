@@ -1,4 +1,5 @@
 import { createSignal, onMount } from "solid-js";
+import { JSX } from "solid-js/web/types/jsx";
 import {
   draculaTheme,
   githubDarkTheme,
@@ -10,6 +11,7 @@ import {
 export interface CodeEditorProps {
   initialContent: string;
   typeCallback: (newContent: string) => void;
+  style: JSX.CSSProperties;
 }
 
 export default function CodeEditor(props: CodeEditorProps) {
@@ -63,15 +65,11 @@ export default function CodeEditor(props: CodeEditorProps) {
           href="https://unpkg.com/monaco-editor@0.37.1/min/vs/editor/editor.main.css"
         />
       </div>
-      <div class="flex overflow-hidden flex-col rounded-md">
-        <div class="bg-secondary-700 h-8 items-center flex flex-row px-3">
-          <pre>C/C++</pre>
-        </div>
-        <div style={{ height: "60vh", width: "48vw" }} id="editor"></div>
-        {/* <div class="bg-secondary-700 h-8 items-center flex flex-row px-3">
+
+      <div style={props.style} id="editor"></div>
+      {/* <div class="bg-secondary-700 h-8 items-center flex flex-row px-3">
           <pre>C/C++</pre>
         </div> */}
-      </div>
     </main>
   );
 }
