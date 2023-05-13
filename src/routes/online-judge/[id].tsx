@@ -57,6 +57,7 @@ export default function ProblemPage() {
         {
           method: "POST",
           body: JSON.stringify({
+            lang: "cpp",
             tests: tests,
             code: code,
           }),
