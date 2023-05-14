@@ -1,9 +1,10 @@
-import { PrismaClient, User } from "@prisma/client";
+import { User } from "@prisma/client";
 import { createServerData$, redirect } from "solid-start/server";
 import { getUser, storage } from "./session";
-import { getDB, isClient } from "./db";
+import { getDB } from "./db";
 import { loadUser, useUserStore } from "./stores/userStore";
-import { loadTheme } from "~/routes/settings";
+
+const apiEndpoint = "http://localhost:4000";
 
 export type UserCredentials = {
   username: string;
@@ -22,12 +23,24 @@ export const register = async (
   if (credentials.email == "" || !email_regex.test(credentials.email)) {
     return { message: "Email is wrong!" };
   }
-  // TODO: hash password
+
+  let response = await fetch(apiEndpoint + "/auth/encrypt", {
+    method: "POST",
+    body: JSON.stringify({
+      password: credentials.password,
+    }),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  let encyrpted_data: { hash: string } = await response.json();
+
   return getDB()!.user.create({
     data: {
       username: credentials.username,
       email: credentials.email,
-      password: credentials.password, // TODO: fix
+      password: encyrpted_data.hash,
     },
   });
 };
@@ -43,9 +56,20 @@ export const login = async (
       message: "User not found!",
     };
 
-  // TODO: fix
-  if (credentials.password !== user.password)
-    return { message: "Password is wrong!" };
+  let response = await fetch(apiEndpoint + "/auth/check", {
+    method: "POST",
+    body: JSON.stringify({
+      plain: credentials.password,
+      hash: user.password,
+    }),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  let data: { ok: boolean } = await response.json();
+
+  if (!data.ok) return { message: "Password is wrong!" };
 
   loadUser(user);
   return user;
@@ -78,11 +102,6 @@ export const useUserSession = () => {
   const res = createServerData$(async (_, { request }) => {
     return await useUserSessionIntern(request);
   });
-  // if (isClient()) {
-  //   const theme = localStorage.getItem("theme");
-  //   if (theme != null) loadTheme(theme);
-  // }
-  // TODO: check on every page, check user's db theme, fix loading theme
   return res;
 };
 

@@ -46,7 +46,6 @@ export default function CodeRunnerPage() {
     }) => {
       let headersList = {
         "Content-Type": "application/json",
-        // "X-Auth": "wkjesrc24509873", // TODO: generate API keys
       };
 
       let response = await fetch(

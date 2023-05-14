@@ -8,7 +8,7 @@ export const storage = createCookieSessionStorage({
   cookie: {
     name: "session",
     secure: true,
-    secrets: ["hello"], // TODO: fix
+    secrets: [import.meta.env.VITE_SECRET],
     sameSite: "lax",
     path: "/",
     maxAge: 60 * 60 * 24 * 30,
@@ -61,6 +61,7 @@ export const createUserSession = async (
   userId: string,
   redirectTo: string
 ): Promise<Response> => {
+  console.log(import.meta.env.SECRET);
   const session = await storage.getSession();
   session.set("userId", userId);
   return redirect(redirectTo, {

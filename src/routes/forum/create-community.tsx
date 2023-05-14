@@ -5,7 +5,7 @@ import { getDB } from "~/utils/db";
 import { getUserId } from "~/utils/session";
 
 export default function CreateCommunityPage() {
-  const [creating, { Form }] = createServerAction$(
+  const [_, { Form }] = createServerAction$(
     async (form: FormData, { request }) => {
       const db = getDB()!;
 

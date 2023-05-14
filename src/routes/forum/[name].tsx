@@ -87,7 +87,6 @@ function PostPreview(props: PostPreviewProps) {
             {props.title}
           </h5>
           <p class="font-normal text-gray-300">
-            {" "}
             {/* TODO: fix white */}
             {props.description.length > maxDescPreview
               ? props.description.substring(0, maxDescPreview) + "..."
