@@ -15,6 +15,7 @@ import SettingsPage from "~/routes/settings";
 import OnlineJudgePage, { problemsRouteData } from "~/routes/online-judge";
 import ProblemPage, { problemRouteData } from "~/routes/online-judge/[id]";
 import CodeRunnerPage from "~/routes/code-runner";
+import AICoachPage from "~/routes/ai-coach";
 
 export default function Router() {
   return (
@@ -40,6 +41,7 @@ export default function Router() {
           <Route path="/:id" element={ProblemPage} data={problemRouteData} />
         </Route>
         <Route path="/code-runner" element={CodeRunnerPage} data={userData} />
+        <Route path="/ai-coach" element={AICoachPage} data={userData} />
         <Route path="/settings" element={SettingsPage} data={userData} />
       </Route>
     </Routes>

@@ -6,6 +6,7 @@ import {
   OcGear2,
   OcCode2,
   OcPencil2,
+  OcDependabot2,
 } from "solid-icons/oc";
 
 export default function NavBar() {
@@ -28,6 +29,11 @@ export default function NavBar() {
       name: "code runner",
       icon: <OcPencil2 size={iconSize} />,
       link: "/code-runner",
+    },
+    {
+      name: "ai coach",
+      icon: <OcDependabot2 size={iconSize} />,
+      link: "/ai-coach",
     },
   ];
 
