@@ -3,6 +3,7 @@ import { createRouteAction } from "solid-start";
 import { ButtonAction } from "~/components/Button";
 
 export default function AICoachPage() {
+  const apiEndpoint = "https://helix-td2p.onrender.com"; // http://localhost:4000
   const [userPrompt, setUserPrompt] = createSignal("");
   const [chat, setChat] = createSignal<{ user: string; ai: string }[]>([
     {
@@ -20,7 +21,7 @@ export default function AICoachPage() {
         prompt: prompt,
       });
 
-      let response = await fetch("http://localhost:4000/ai/generate", {
+      let response = await fetch(apiEndpoint + "/ai/generate", {
         method: "POST",
         body: bodyContent,
         headers: headersList,
@@ -69,7 +70,7 @@ export default function AICoachPage() {
                 return (
                   <div class="mr-2">
                     {chatEntry.user != "" ? (
-                      <div class="flex flex-row justify-end mb-1">
+                      <div class="flex flex-row justify-end mb-2">
                         <p class="p-2 max-w-fit bg-primary-500 rounded-lg">
                           {chatEntry.user}
                         </p>
@@ -77,7 +78,7 @@ export default function AICoachPage() {
                     ) : (
                       <></>
                     )}
-                    <div class="flex flex-row justify-start mb-1">
+                    <div class="flex flex-row justify-start mb-2">
                       <p class="p-2 w-fit max-w-xl bg-secondary-700 rounded-lg">
                         {chatEntry.ai}
                       </p>
