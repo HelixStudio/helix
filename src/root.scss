@@ -11,6 +11,14 @@
   --primary-500: theme(colors.green.500);
 }
 
+// white bg
+.white-bg {
+  --secondary-700: theme(colors.neutral.100);
+  --secondary-800: theme(colors.neutral.200);
+  --secondary-900: theme(colors.neutral.300);
+}
+
+// black bg
 .zinc-bg {
   --secondary-700: theme(colors.zinc.700);
   --secondary-800: theme(colors.zinc.800);
@@ -53,6 +61,14 @@
   --secondary-900: theme(colors.yellow.950);
 }
 
+// white fg
+.black-fg {
+  --primary-300: theme(colors.zinc.700);
+  --primary-400: theme(colors.zinc.800);
+  --primary-500: theme(colors.zinc.900);
+}
+
+// black fg
 .pink-fg {
   --primary-300: theme(colors.pink.300);
   --primary-400: theme(colors.pink.400);
@@ -93,4 +109,8 @@
 
 *::-webkit-scrollbar-thumb {
   background: var(--primary-400);
+}
+
+#statement::-webkit-scrollbar {
+  width: 0.2rem !important;
 }

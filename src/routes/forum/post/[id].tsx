@@ -6,7 +6,7 @@ import { getDB } from "~/utils/db";
 import { PostPreviewProps, votePost } from "../[name]";
 import { Show } from "solid-js";
 import LoadingScreen from "~/components/LoadingScreen";
-import { useUserStore } from "~/utils/stores/userStore";
+import MarkdownIt from "markdown-it";
 
 export function postRouteData({ params }: RouteDataArgs) {
   return createServerData$(
@@ -36,7 +36,14 @@ export default function ViewPost() {
           <h5 class="mt-3 mb-3 text-2xl font-bold tracking-tight text-white">
             {data()?.post?.title}
           </h5>
-          <p class="font-normal">{data()?.post?.content}</p>
+          <p class="font-normal">
+            {() => {
+              const md_content = data()?.post?.content;
+              const md = new MarkdownIt();
+              const content = md.render(md_content!);
+              return <div innerHTML={content} />;
+            }}
+          </p>
         </div>
         <div class="flex flex-row items-center gap-5 mt-3">
           <button
