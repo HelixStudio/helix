@@ -141,7 +141,7 @@ export default function ProblemPage() {
           />
         </div>
       </div>
-      <div class="grid grid-cols-3 h-full">
+      <div class="grid grid-cols-2 h-full">
         <div
           class="flex flex-col col-span-1 overflow-y-auto mb-3"
           id="statement"
@@ -271,7 +271,7 @@ export default function ProblemPage() {
           </div>
         </div>
         <div
-          class="mx-3 grid col-span-2 gap-2 max-h-[95vh]"
+          class="mx-3 grid col-span-1 gap-2 max-h-[95vh]"
           style={{ "grid-template-rows": "2fr 1fr" }}
         >
           <div class="flex overflow-hidden flex-col rounded-md">

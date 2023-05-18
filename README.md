@@ -1,30 +1,60 @@
-# SolidStart
+# Helix 👨‍💻
 
-Everything you need to build a Solid project, powered by [`solid-start`](https://start.solidjs.com);
+Helix is an open-source website to help you learn & practice programming.
 
-## Creating a project
+# Required dependencies
 
-```bash
-# create a new project in the current directory
-npm init solid@latest
+Besides the specified node packages, you need to have the following software to host the frontend:
 
-# create a new project in my-app
-npm init solid@latest my-app
-```
+- git (any version)
+- nodejs >= 16
 
-## Developing
+# How to run
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+Firstly, clone the repository. Use the recursive argument so it also clones the backend, you can always skip this and clone the backend separately:
 
 ```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
+git clone https://github.com/NikolaTesla13/helix.git --recursively
 ```
 
-## Building
+Go to the newly created directory:
 
-Solid apps are built with _adapters_, which optimise your project for deployment to different environments.
+```bash
+cd helix
+```
 
-By default, `npm run build` will generate a Node app that you can run with `npm start`. To use a different adapter, add it to the `devDependencies` in `package.json` and specify in your `vite.config.js`.
+You can use any nodejs package manager to manage the dependencies (such as npm, yarn or pnpm). During development, yarn was used:
+
+```bash
+# install required packages
+yarn
+```
+
+Provide the required environment variables in a `.env` file, refer to the `.env.example` file for example usage:
+
+```bash
+# postgresql database url
+DATABASE_URL=
+# random secret to be used for sessions
+VITE_SECRET=
+```
+
+And now you can start the services:
+
+```bash
+# starts frontend on localhost:3000
+yarn dev
+
+# starts the prisma studio on localhost:5555
+yarn prisma studio
+
+# starts the cypress testing server on localhost:59664, may depend
+yarn test
+```
+
+Most common errors when running the frontend:
+
+- database connection error: check your connection url and if the db is up and running
+- dependencies error: check if a `node_modules` was created with the required libraries
+- backend not running: note that some features require the backend server to be running on port 4000, please refer to its repository for more instructions
+- feel free to open a new issue if you have discovered a bug
