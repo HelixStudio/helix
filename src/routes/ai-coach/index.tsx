@@ -1,10 +1,15 @@
+import MarkdownIt from "markdown-it";
 import { For, createSignal } from "solid-js";
 import { createRouteAction } from "solid-start";
 import { ButtonAction } from "~/components/Button";
+import Selector from "~/components/Selector";
 
 export default function AICoachPage() {
-  const apiEndpoint = "https://helix-td2p.onrender.com"; // http://localhost:4000
+  const apiEndpoint = import.meta.env.VITE_API_ENDPOINT;
+
   const [userPrompt, setUserPrompt] = createSignal("");
+  const [userModel, setUserModel] = createSignal("conversational");
+
   const [chat, setChat] = createSignal<{ user: string; ai: string }[]>([
     {
       user: "",
@@ -12,13 +17,20 @@ export default function AICoachPage() {
     },
   ]);
   const [_, generate] = createRouteAction(
-    async (prompt: string): Promise<string> => {
+    async ({
+      prompt,
+      model,
+    }: {
+      prompt: string;
+      model: string;
+    }): Promise<string> => {
       let headersList = {
         "Content-Type": "application/json",
       };
 
       let bodyContent = JSON.stringify({
         prompt: prompt,
+        model: model,
       });
 
       let response = await fetch(apiEndpoint + "/ai/generate", {
@@ -35,9 +47,31 @@ export default function AICoachPage() {
   const send = async () => {
     const prompt = userPrompt();
     const oldChat = chat();
+    let model = "";
+
+    switch (userModel()) {
+      case "conversational":
+        model = "microsoft/DialoGPT-medium";
+        break;
+      case "coder":
+        model = "OpenAssistant/oasst-sft-4-pythia-12b-epoch-3.5";
+        break;
+      case "advanced":
+        model = "gpt2-large";
+        break;
+    }
+
     setUserPrompt("");
     setChat([...oldChat, { user: prompt, ai: "loading..." }]);
-    const res = await generate(prompt);
+
+    let res = await generate({ prompt, model });
+    if (res == undefined)
+      res = "Error while generating the response. Please try again later.";
+    else if (userModel() != "conversational") {
+      res = res.substring(prompt.length);
+      // const md = new MarkdownIt();
+      // res = md.render(res);
+    }
     setChat([...oldChat, { user: prompt, ai: res }]);
     localStorage.setItem("chat", JSON.stringify(chat()));
   };
@@ -47,13 +81,25 @@ export default function AICoachPage() {
       <div class="ml-auto mr-auto max-w-5xl min-h-screen">
         <div class="p-3 items-start flex flex-col justify-between h-screen">
           <div class="flex flex-row justify-between w-full items-center">
-            <div>
-              <h2 class="text-3xl font-bold tracking-tight sm:text-4xl mb-2">
-                AI Coach
-              </h2>
-              <p class="mb-4">
-                This is you personal assistant. Go ask him anything!
-              </p>
+            <div class="flex sm:flex-row flex-col w-full justify-between sm:items-center items-start pb-2">
+              <div>
+                <h2 class="text-3xl font-bold tracking-tight sm:text-4xl mb-2">
+                  AI Coach
+                </h2>
+                <p class="mb-4">
+                  This is you personal assistant. Go ask him anything!
+                </p>
+              </div>
+              <div>
+                <Selector
+                  label="mode"
+                  value={userModel()}
+                  options={["conversational", "coder", "advanced"]}
+                  callback={(option) => {
+                    setUserModel(option);
+                  }}
+                />
+              </div>
             </div>
             {/* <div>
               <Selector

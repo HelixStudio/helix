@@ -45,7 +45,7 @@ export function problemRouteData({ params }: RouteDataArgs) {
 }
 
 export default function ProblemPage() {
-  const apiEndpoint = "http://localhost:4000"; // https://helix-td2p.onrender.com
+  const apiEndpoint = import.meta.env.VITE_API_ENDPOINT;
 
   const data = useRouteData<typeof problemRouteData>();
   const [code, setCode] = createSignal("");

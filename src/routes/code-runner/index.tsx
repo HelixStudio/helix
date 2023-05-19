@@ -1,25 +1,9 @@
-import { For, Show, createSignal, onMount } from "solid-js";
-import { Portal } from "solid-js/web";
-import {
-  A,
-  Navigate,
-  createRouteAction,
-  createRouteData,
-  useLocation,
-  useNavigate,
-  useParams,
-  useRouteData,
-} from "solid-start";
-import {
-  createServerAction$,
-  createServerData$,
-  redirect,
-} from "solid-start/server";
+import { Show, createSignal, onMount } from "solid-js";
+import { createRouteAction } from "solid-start";
 import { ButtonAction } from "~/components/Button";
 import CodeEditor from "~/components/CodeEditor";
-import Link from "~/components/Link";
 import Selector from "~/components/Selector";
-import { getDB, isClient } from "~/utils/db";
+import { isClient } from "~/utils/db";
 
 export const defaultCode =
   '#include <iostream>\n\nint main() {\n\tstd::cout << "Hello, World!\\n";\n\treturn 0;\n}\n';
@@ -49,8 +33,7 @@ export default function CodeRunnerPage() {
       };
 
       let response = await fetch(
-        "https://helix-td2p.onrender.com/rce/run?unsafe=true",
-        // "http://localhost:4000/rce/test?unsafe=true",
+        import.meta.env.VITE_API_ENDPOINT + "/rce/run?unsafe=true",
         {
           method: "POST",
           body: JSON.stringify({

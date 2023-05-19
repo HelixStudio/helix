@@ -4,7 +4,7 @@ import { getUser, storage } from "./session";
 import { getDB } from "./db";
 import { loadUser, useUserStore } from "./stores/userStore";
 
-const apiEndpoint = "https://helix-td2p.onrender.com"; //"http://localhost:4000";
+const apiEndpoint = import.meta.env.VITE_API_ENDPOINT;
 
 export type UserCredentials = {
   username: string;

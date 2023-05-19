@@ -3,7 +3,7 @@ import { useRouteData } from "solid-start";
 import { createServerAction$ } from "solid-start/server";
 import { ButtonForm } from "~/components/Button";
 import Selector from "~/components/Selector";
-import { useUserSession } from "~/utils/auth";
+import { logout, useUserSession } from "~/utils/auth";
 import { getDB, isClient } from "~/utils/db";
 import { getUserId } from "~/utils/session";
 
@@ -31,6 +31,11 @@ export const loadTheme = (theme: string) => {
 
 export default function SettingsPage() {
   const user = useRouteData<typeof userData>();
+
+  const [, AuthForm] = createServerAction$((f: FormData, { request }) =>
+    logout(request)
+  );
+
   const [, { Form }] = createServerAction$(
     async (form: FormData, { request }) => {
       const background = form.get("background") as string;
@@ -63,6 +68,8 @@ export default function SettingsPage() {
           <h2 class="text-3xl font-bold tracking-tight sm:text-4xl mb-4">
             Settings
           </h2>
+          <p class="text-xl mb-2">Logged in as {user()?.()?.username}.</p>
+
           <Form
             class="flex flex-col gap-3"
             onSubmit={() => {
@@ -87,7 +94,12 @@ export default function SettingsPage() {
                 setForeground(option);
               }}
             />
-            <ButtonForm text="update" />
+            <div class="flex flex-row gap-3">
+              <ButtonForm text="update" />
+              <AuthForm.Form>
+                <ButtonForm text="logout" />
+              </AuthForm.Form>
+            </div>
           </Form>
         </div>
       </div>
