@@ -37,6 +37,8 @@ Provide the required environment variables in a `.env` file, refer to the `.env.
 DATABASE_URL=
 # random secret to be used for sessions
 VITE_SECRET=
+# backend api endpoint
+VITE_API_ENDPOINT=
 ```
 
 And now you can start the services:
