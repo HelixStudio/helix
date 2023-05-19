@@ -51,7 +51,7 @@ export default function WriteNewPostPage() {
       <p class="text-3xl font-bold tracking-tight sm:text-4xl">Create a post</p>
       <Form class="mt-4">
         <div class="space-y-12">
-          <div class="border-b border-secondary-900/10 pb-12">
+          <div class="pb-12">
             <div class="sm:col-span-3">
               <label
                 for="title"

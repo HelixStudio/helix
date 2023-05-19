@@ -31,7 +31,7 @@ export default function CreateCommunityPage() {
       </p>
       <Form class="mt-4">
         <div class="space-y-12">
-          <div class="border-b border-secondary-900/10 pb-12">
+          <div class="pb-12">
             <div class="sm:col-span-3">
               <label
                 for="name"
