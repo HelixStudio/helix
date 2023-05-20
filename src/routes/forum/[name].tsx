@@ -74,8 +74,8 @@ function PostPreview(props: PostPreviewProps) {
     <div>
       <div
         class="items-center bg-white border border-secondary-200
-         rounded-lg shadow hover:bg-secondary-100 dark:bg-secondary-800
-         mb-5 dark:border-secondary-700 dark:hover:bg-secondary-700
+         rounded-lg shadow hover:bg-secondary-100 bg-secondary-800
+         mb-5 border-secondary-700 hover:bg-secondary-700
          transition-all  duration-150 flex justify-between
          hover:cursor-pointer"
       >
