@@ -31,9 +31,12 @@ export function problemRouteData({ params }: RouteDataArgs) {
 
       const user = await useUserSessionIntern(request)!;
 
-      const solved: { solved_problems: SolvedProblem[] } = JSON.parse(
-        user.solved?.toString()!
-      );
+      let solved: { solved_problems: SolvedProblem[] } = {
+        solved_problems: [],
+      };
+      if (user.solved != null) {
+        solved = JSON.parse(user.solved?.toString()!);
+      }
       const solved_problems = solved.solved_problems.filter(
         (solved: SolvedProblem) => solved.problem_id == problem?.id
       );
