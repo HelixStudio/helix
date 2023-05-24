@@ -1,51 +1,49 @@
 {
-  "name": "helix",
+  "name": "helix-t3",
+  "version": "0.1.0",
+  "private": true,
   "scripts": {
-    "dev": "solid-start dev",
-    "build": "solid-start build",
-    "start": "solid-start start",
-    "test": "cypress open",
-    "postinstall": "prisma generate"
-  },
-  "type": "module",
-  "devDependencies": {
-    "@types/cypress": "^1.1.3",
-    "@types/markdown-it": "^12.2.3",
-    "autoprefixer": "^10.4.14",
-    "cypress": "^12.9.0",
-    "postcss": "^8.4.21",
-    "postinstall": "^0.8.0",
-    "solid-start-node": "^0.2.19",
-    "tailwindcss": "^3.3.0",
-    "typescript": "^4.9.4",
-    "vite": "^4.1.4",
-    "vite-plugin-monaco-editor": "^1.1.0"
+    "build": "next build",
+    "dev": "next dev",
+    "postinstall": "prisma generate",
+    "lint": "next lint",
+    "start": "next start"
   },
   "dependencies": {
-    "@monaco-editor/react": "^4.5.0",
-    "@prisma/client": "^4.9.0",
-    "@solidjs/meta": "^0.28.2",
-    "@solidjs/router": "^0.8.1",
-    "@tailwindcss/forms": "^0.5.3",
-    "@vercel/analytics": "^1.0.1",
-    "babel-plugin-jsx-dom-expressions": "0.34.11",
-    "markdown-it": "^13.0.1",
-    "monaco-editor": "^0.37.1",
-    "monaco-loader": "^1.0.0",
-    "postcss-scss": "^4.0.6",
-    "prisma": "^4.14.0",
-    "react-solid-bridge": "^1.0.1",
-    "sass": "^1.62.0",
-    "solid-icons": "^1.0.4",
-    "solid-js": "^1.6.11",
-    "solid-start": "^0.2.23",
-    "solid-start-vercel": "^0.2.23",
-    "solid-zustand": "^1.5.0",
-    "undici": "^5.15.1",
-    "zod": "^3.21.4",
-    "zustand": "^4.3.7"
+    "@next-auth/prisma-adapter": "^1.0.5",
+    "@prisma/client": "^4.11.0",
+    "@t3-oss/env-nextjs": "^0.2.1",
+    "@tanstack/react-query": "^4.28.0",
+    "@trpc/client": "^10.18.0",
+    "@trpc/next": "^10.18.0",
+    "@trpc/react-query": "^10.18.0",
+    "@trpc/server": "^10.18.0",
+    "next": "^13.4.1",
+    "next-auth": "^4.21.0",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "superjson": "1.12.2",
+    "zod": "^3.21.4"
   },
-  "engines": {
-    "node": ">=16"
+  "devDependencies": {
+    "@types/eslint": "^8.21.3",
+    "@types/node": "^18.15.5",
+    "@types/prettier": "^2.7.2",
+    "@types/react": "^18.0.28",
+    "@types/react-dom": "^18.0.11",
+    "@typescript-eslint/eslint-plugin": "^5.56.0",
+    "@typescript-eslint/parser": "^5.56.0",
+    "autoprefixer": "^10.4.14",
+    "eslint": "^8.36.0",
+    "eslint-config-next": "^13.4.1",
+    "postcss": "^8.4.21",
+    "prettier": "^2.8.6",
+    "prettier-plugin-tailwindcss": "^0.2.6",
+    "prisma": "^4.11.0",
+    "tailwindcss": "^3.3.0",
+    "typescript": "^5.0.2"
+  },
+  "ct3aMetadata": {
+    "initVersion": "7.13.0"
   }
 }
