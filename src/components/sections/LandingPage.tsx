@@ -34,9 +34,8 @@ const LandingPage = () => {
 
   return (
     <>
-      {" "}
-      <div className="flex min-h-screen flex-col overflow-x-hidden bg-gradient-to-b from-slate-900 to-zinc-950">
-        <header className="top:0 sticky z-50 max-w-5xl items-center bg-slate-800/70 backdrop-blur-lg lg:top-[0.75rem]  lg:mx-auto lg:mt-3 lg:w-[60rem] lg:rounded-lg">
+      <div className="flex min-h-screen flex-col bg-gradient-to-b from-slate-900 to-zinc-950">
+        <header className="sticky top-0 z-50 max-w-5xl items-center bg-slate-800/70 backdrop-blur-lg lg:top-[0.75rem] lg:mx-auto lg:mt-3 lg:w-[60rem] lg:rounded-lg">
           <nav
             className="flex items-center justify-between p-2 lg:px-8"
             aria-label="Global"
@@ -49,7 +48,7 @@ const LandingPage = () => {
             <div className="flex lg:hidden">
               <button
                 type="button"
-                className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-100"
+                className="-my-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-100"
                 onClick={() => setMobileMenuOpen(true)}
               >
                 <span className="sr-only">Open main menu</span>
