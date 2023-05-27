@@ -20,6 +20,7 @@ import {
 } from "~/components/ui/Table";
 import { Button } from "~/components/ui/Button";
 import Link from "next/link";
+import { signIn } from "next-auth/react";
 
 const LandingPage = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -67,9 +68,9 @@ const LandingPage = () => {
               ))}
             </div>
             <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-              <a href="#" className="text-sm leading-6 text-gray-100">
+              <Button variant={"muted"} onClick={() => void signIn()}>
                 Log in <span aria-hidden="true">&rarr;</span>
-              </a>
+              </Button>
             </div>
           </nav>
         </header>
@@ -102,12 +103,9 @@ const LandingPage = () => {
                   ))}
                 </div>
                 <div className="py-6">
-                  <a
-                    href="#"
-                    className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-100 transition-colors hover:bg-gray-700"
-                  >
+                  <Button variant={"primary"} onClick={() => void signIn()}>
                     Log in
-                  </a>
+                  </Button>
                 </div>
               </div>
             </div>
@@ -134,7 +132,9 @@ const LandingPage = () => {
                 Built by students for students.
               </p>
               <div className="mt-10 flex items-center justify-center gap-x-6">
-                <Button variant={"accent"}>Get started</Button>
+                <Button variant={"accent"} onClick={() => void signIn()}>
+                  Get started
+                </Button>
                 <Button variant={"muted"}>
                   Learn more <span aria-hidden="true"> →</span>
                 </Button>
@@ -148,9 +148,9 @@ const LandingPage = () => {
             <svg
               className="h-6 w-6 text-slate-300"
               fill="none"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
               viewBox="0 0 24 24"
               stroke="currentColor"
             >
@@ -329,10 +329,12 @@ const LandingPage = () => {
 
         <div className="flex h-full max-w-5xl flex-col justify-center gap-2 px-4 lg:mx-auto">
           <h1 className="text-2xl lg:text-4xl">So what are you waiting for?</h1>
-          <h1 className="text-2xl lg:text-4xl">
-            It&apos;s <span className="text-accent-400">free</span>.
-          </h1>{" "}
-          <Button>Get started</Button>
+          <div className="flex flex-row gap-5">
+            <h1 className="text-2xl lg:text-4xl">
+              It&apos;s <span className="text-accent-400">free</span>.
+            </h1>{" "}
+            <Button onClick={() => void signIn()}>Get started</Button>
+          </div>
         </div>
 
         <footer className="max-w-container mx-auto mt-32 w-full">
