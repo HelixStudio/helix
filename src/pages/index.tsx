@@ -126,7 +126,7 @@ const Home: NextPage = () => {
             <div className="hidden sm:mb-16 sm:flex sm:justify-center">
               <div className="relative rounded-full bg-gray-800 px-3 py-1 text-sm leading-6 text-gray-100 ring-1 ring-gray-100/10 transition-colors hover:bg-gray-700 hover:ring-gray-200/20">
                 We&apos;re launching!{" "}
-                <a href="#" className="text-pink-400">
+                <a href="#" className="text-accent-400">
                   <span className="absolute inset-0" aria-hidden="true" />
                   Read more <span aria-hidden="true">&rarr;</span>
                 </a>
@@ -141,14 +141,8 @@ const Home: NextPage = () => {
                 Built by students for students.
               </p>
               <div className="mt-10 flex items-center justify-center gap-x-6">
-                {/* <a
-                  href="#"
-                  className="rounded-md bg-pink-500 px-3.5 py-2.5 text-sm text-white shadow-sm hover:bg-pink-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                >
-                  Get started
-                </a> */}
-                <Button variant={"primary"}>Get started</Button>
-                <Button variant={"ghost"}>
+                <Button variant={"accent"}>Get started</Button>
+                <Button variant={"muted"}>
                   Learn more <span aria-hidden="true"> →</span>
                 </Button>
               </div>
@@ -178,7 +172,7 @@ const Home: NextPage = () => {
               <div className="lg:col-span-2 lg:col-start-1 lg:row-start-1 lg:mx-auto lg:grid lg:w-full lg:max-w-7xl lg:grid-cols-2 lg:gap-x-8 lg:px-8">
                 <div className="lg:pr-4">
                   <div className="lg:max-w-lg">
-                    <p className="text-base font-semibold leading-7 text-pink-400">
+                    <p className="text-base font-semibold leading-7 text-accent-400">
                       Learn faster
                     </p>
                     <h1 className="mt-2 text-3xl font-bold tracking-tight text-gray-100 sm:text-4xl">
@@ -214,7 +208,7 @@ const Home: NextPage = () => {
                     <ul role="list" className="mt-8 space-y-8 text-gray-200">
                       <li className="flex gap-x-3">
                         <CommandLineIcon
-                          className="mt-1 h-5 w-5 flex-none text-pink-500"
+                          className="mt-1 h-5 w-5 flex-none text-accent"
                           aria-hidden="true"
                         />
                         <span>
@@ -229,7 +223,7 @@ const Home: NextPage = () => {
                       </li>
                       <li className="flex gap-x-3">
                         <BookOpenIcon
-                          className="mt-1 h-5 w-5 flex-none text-pink-500"
+                          className="mt-1 h-5 w-5 flex-none text-accent"
                           aria-hidden="true"
                         />
                         <span>
@@ -243,7 +237,7 @@ const Home: NextPage = () => {
                       </li>
                       <li className="flex gap-x-3">
                         <CloudIcon
-                          className="mt-1 h-5 w-5 flex-none text-pink-500"
+                          className="mt-1 h-5 w-5 flex-none text-accent"
                           aria-hidden="true"
                         />
                         <span>
@@ -343,7 +337,7 @@ const Home: NextPage = () => {
         <div className="flex h-full max-w-5xl flex-col justify-center gap-2 px-4 lg:mx-auto">
           <h1 className="text-2xl lg:text-4xl">So what are you waiting for?</h1>
           <h1 className="text-2xl lg:text-4xl">
-            It&apos;s <span className="text-pink-400">free</span>.
+            It&apos;s <span className="text-accent-400">free</span>.
           </h1>{" "}
           <Button>Get started</Button>
         </div>
