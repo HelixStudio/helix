@@ -4,7 +4,6 @@ import Image from "next/image";
 
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import {
-  CloudArrowUpIcon,
   CommandLineIcon,
   CloudIcon,
   BookOpenIcon,
