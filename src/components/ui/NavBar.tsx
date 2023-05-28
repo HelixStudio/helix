@@ -1,18 +1,9 @@
-import {
-  HomeIcon,
-  CommentDiscussionIcon,
-  GearIcon,
-  CodeIcon,
-  PencilIcon,
-  DependabotIcon,
-} from "@primer/octicons-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const NavBar = () => {
   const pathname = usePathname();
 
-  const iconSize = 25;
   const pages = [
     {
       name: "home",
