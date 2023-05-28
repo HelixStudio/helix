@@ -14,15 +14,27 @@ html {
   background: rgb(180, 79, 138);
 }
 
+.thicc svg {
+  stroke-width: 4px !important;
+  stroke: var(--primary-400) !important;
+}
+
 @layer base {
   :root {
     --background: 224 71% 4%;
     --foreground: 213 31% 91%;
 
-    --accent: 330 82% 61%;
+    --primary-400: 0 0% 98%;
+    --primary-500: 240 5% 96%;
+    --primary-600: 220 13% 91%;
+
+    --secondary-700: 240 4% 16%;
+    --secondary-800: 240 6% 10%;
+    --secondary-900: 240 10% 4%;
+
     --accent-400: 329 86% 70%;
+    --accent-500: 330 81% 60%;
     --accent-600: 333 71% 51%;
-    --accent-foreground: 0 0% 98%;
 
     --popover: 224 71% 4%;
     --popover-foreground: 215 20.2% 65.1%;
@@ -32,12 +44,6 @@ html {
 
     --border: 216 34% 17%;
     --input: 216 34% 17%;
-
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 1.2%;
-
-    --secondary: 222.2 47.4% 11.2%;
-    --secondary-foreground: 210 40% 98%;
 
     --muted: 216 34% 17%;
     --muted-foreground: 210 40% 98%;

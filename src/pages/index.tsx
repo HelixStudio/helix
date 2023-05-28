@@ -2,7 +2,9 @@ import { type NextPage } from "next";
 import { signOut, useSession } from "next-auth/react";
 
 import LandingPage from "~/components/sections/LandingPage";
+import AppShell from "~/components/ui/AppShell";
 import { LoadingPage } from "~/components/ui/Loading";
+import NavBar from "~/components/ui/NavBar";
 
 const Home: NextPage = () => {
   const { data: session, status } = useSession();
@@ -16,10 +18,10 @@ const Home: NextPage = () => {
   }
 
   return (
-    <>
+    <AppShell>
       <p>Signed in as {session?.user?.name}</p>
       <button onClick={() => void signOut()}>Sign out</button>
-    </>
+    </AppShell>
   );
 };
 
