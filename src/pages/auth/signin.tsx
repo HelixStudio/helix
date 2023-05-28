@@ -44,14 +44,17 @@ const SignInPage = ({
       </Head>
 
       <main className="flex h-screen flex-col items-center justify-center bg-zinc-900 ">
-        <h1 className="pb-8 text-6xl">Helix</h1>
+        <h1 className="pb-8 text-7xl font-bold leading-normal">
+          Helix<span className="text-accent-400">.</span>
+        </h1>
         <div className="flex w-screen flex-col items-center rounded-none bg-zinc-800 p-4 ring-2 ring-zinc-700 sm:w-fit sm:rounded-lg">
           <p className="mb-4">Sign in with</p>
           <div className="grid grid-cols-2">
             {Object.values(providers).map((provider) => (
-              <div key={provider.name} className=" p-3">
+              <div key={provider.name} className="p-3">
                 <Button
                   variant={"primary"}
+                  size={"lg"}
                   onClick={() => void signIn(provider.id)}
                 >
                   <div className="pr-3">
