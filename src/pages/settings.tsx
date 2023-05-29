@@ -102,7 +102,7 @@ const SettingsPage: NextPage = () => {
                   </FormItem>
                 )}
               />
-              <Button type="submit">Submit</Button>
+              <Button type="submit">Update</Button>
             </form>
           </Form>
         </div>
