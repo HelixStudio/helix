@@ -42,16 +42,16 @@ html {
     --card: 224 71% 4%;
     --card-foreground: 213 31% 91%;
 
-    --border: 216 34% 17%;
-    --input: 216 34% 17%;
+    --border: 240 5% 34%;
+    --input: 240 5% 34%;
 
     --muted: 216 34% 17%;
-    --muted-foreground: 210 40% 98%;
+    --muted-foreground: 210 8% 79%;
 
-    --destructive: 0 63% 31%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 84% 60%;
 
-    --ring: 216 34% 17%;
+    --ring: 240 5% 26%;
 
     --radius: 0.5rem;
   }

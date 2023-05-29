@@ -1,3 +1,5 @@
+import AppShell from "./AppShell";
+
 export const LoadingSpinner = (props: { size?: number }) => {
   return (
     <div role="status">
@@ -21,6 +23,16 @@ export const LoadingSpinner = (props: { size?: number }) => {
       </svg>
       <span className="sr-only">Loading...</span>
     </div>
+  );
+};
+
+export const LoadingSection = () => {
+  return (
+    <AppShell>
+      <div className="flex h-full w-full items-center justify-center align-middle">
+        <LoadingSpinner size={60} />
+      </div>
+    </AppShell>
   );
 };
 
