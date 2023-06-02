@@ -273,7 +273,7 @@ const CodeRunnerPage: NextPage = () => {
         <Editor
           height="90vh"
           theme="vs-dark"
-          defaultLanguage="zig"
+          defaultLanguage="javascript"
           options={{ smoothScrolling: true }}
           defaultValue="console.log('hello'); // some comment"
         />
