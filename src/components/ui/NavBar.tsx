@@ -123,7 +123,7 @@ const NavBar = () => {
   ];
 
   return (
-    <div className="z-50 m-0 flex h-screen w-16 flex-col justify-between bg-secondary-800 text-primary-400 shadow-lg">
+    <div className="fixed z-50 m-0 flex h-screen w-16 flex-col justify-between bg-secondary-800 text-primary-400 shadow-lg">
       <div className="fixed flex flex-col [&>*:last-child]:fixed [&>*:last-child]:bottom-0">
         {pages.map((page) => (
           <Link key={page.name} href={page.link}>

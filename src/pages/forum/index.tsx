@@ -1,9 +1,15 @@
 import { type NextPage } from "next";
 import React from "react";
 import AppShell from "~/components/ui/AppShell";
+import IconButton from "~/components/ui/IconButton";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "~/components/ui/Tabs";
+import { BsPencilSquare } from "react-icons/bs";
+import { HiMagnifyingGlass } from "react-icons/hi2";
+import { useRouter } from "next/navigation";
 
 const ForumPage: NextPage = () => {
+  const router = useRouter();
+
   return (
     <AppShell>
       <div className="mx-auto max-w-5xl sm:px-3">
@@ -50,7 +56,20 @@ const ForumPage: NextPage = () => {
                 New
               </TabsTrigger>
             </TabsList>
-            <div>dropdown</div>
+            <div className="flex flex-row gap-5">
+              <IconButton
+                icon={<BsPencilSquare size={20} />}
+                onClick={() => {
+                  router.push("/forum/write");
+                }}
+              />
+              <IconButton
+                icon={<HiMagnifyingGlass size={20} />}
+                onClick={() => {
+                  alert("search");
+                }}
+              />
+            </div>
           </div>
           <div className="px-3 sm:px-0">
             <TabsContent value="best">best </TabsContent>
