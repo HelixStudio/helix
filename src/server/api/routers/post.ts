@@ -1,6 +1,11 @@
 import { z } from "zod";
+import { formSchema } from "~/pages/forum/write";
 
-import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
+import {
+  createTRPCRouter,
+  protectedProcedure,
+  publicProcedure,
+} from "~/server/api/trpc";
 
 export const postRouter = createTRPCRouter({
   getLatestPosts: publicProcedure
@@ -13,5 +18,27 @@ export const postRouter = createTRPCRouter({
         orderBy: { updatedAt: "desc" },
       });
       return posts;
+    }),
+  setNewPost: protectedProcedure
+    .input(
+      z.object({
+        metadata: formSchema,
+        authorId: z.string().cuid(),
+        group: z.string(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      const group = await ctx.prisma.group.findFirst({
+        where: { name: input.group },
+      });
+      if (group == undefined) throw new Error("group not found");
+      return await ctx.prisma.post.create({
+        data: {
+          title: input.metadata.title,
+          content: input.metadata.content,
+          authorId: input.authorId,
+          groupId: group?.id,
+        },
+      });
     }),
 });

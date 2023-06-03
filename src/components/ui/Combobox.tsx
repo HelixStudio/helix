@@ -21,6 +21,7 @@ import {
 export interface ComboboxProps {
   placeholder: string;
   options: string[];
+  onSelect: (newValue: string) => void;
 }
 
 const Combobox = (props: ComboboxProps) => {
@@ -49,8 +50,10 @@ const Combobox = (props: ComboboxProps) => {
               <CommandItem
                 key={option}
                 onSelect={(currentValue) => {
-                  setValue(currentValue === value ? "" : option);
+                  const newValue = currentValue === value ? "" : option;
+                  setValue(newValue);
                   setOpen(false);
+                  props.onSelect(option);
                 }}
               >
                 <Check
