@@ -2,6 +2,7 @@ import { Editor, useMonaco } from "@monaco-editor/react";
 import { type NextPage } from "next";
 import { useEffect } from "react";
 import AppShell from "~/components/ui/AppShell";
+import { LoadingSpinner } from "~/components/ui/Loading";
 
 const CodeRunnerPage: NextPage = () => {
   const monaco = useMonaco();
@@ -273,6 +274,7 @@ const CodeRunnerPage: NextPage = () => {
         <Editor
           height="90vh"
           theme="vs-dark"
+          loading={<LoadingSpinner />}
           defaultLanguage="javascript"
           options={{ smoothScrolling: true }}
           defaultValue="console.log('hello'); // some comment"
