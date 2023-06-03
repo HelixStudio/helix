@@ -22,7 +22,7 @@ const PostPreview = (props: {
          shadow  transition-all duration-150 hover:cursor-pointer
          hover:bg-secondary-600"
       >
-        <Link className="w-full p-3" href={`/forum/post/0`}>
+        <Link className="w-full p-3" href={`/forum/post/${props.post.id}`}>
           <p className="text-sm">
             {`${props.post.group.name} • `}
             <span className="text-neutral-400">
