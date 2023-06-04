@@ -64,6 +64,11 @@ const EditPostPage: NextPage = () => {
     form.setValue("content", post.data?.content as string);
   });
 
+  if (user.data?.user.id != post.data?.authorId) {
+    void router.push("/forum");
+    return <LoadingSection />;
+  }
+
   if (
     post.isLoading ||
     post.data == undefined ||

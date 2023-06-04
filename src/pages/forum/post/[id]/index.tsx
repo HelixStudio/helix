@@ -49,12 +49,14 @@ const PostPage: NextPage = () => {
             </span>
           </p>
           <div className="flex flex-row gap-2">
-            <IconButton
-              icon={<PencilIcon size={20} />}
-              onClick={() =>
-                router.push(`/forum/post/${router.query.id as string}/edit`)
-              }
-            />
+            {user.data?.user.id == post.data.authorId && (
+              <IconButton
+                icon={<PencilIcon size={20} />}
+                onClick={() =>
+                  router.push(`/forum/post/${router.query.id as string}/edit`)
+                }
+              />
+            )}
             <IconButton
               icon={<BookmarkIcon size={20} />}
               onClick={() => {
