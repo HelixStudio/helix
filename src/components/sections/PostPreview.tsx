@@ -6,6 +6,8 @@ import Link from "next/link";
 import { ArrowDownIcon, ArrowUpIcon } from "@primer/octicons-react";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
+import { marked } from "marked";
+import { sanitize } from "isomorphic-dompurify";
 
 dayjs.extend(relativeTime);
 
@@ -74,6 +76,26 @@ const PostPreview = (props: {
           </button>
         </div>
       </div>
+    </>
+  );
+};
+
+export const PostPreviewLarge = (props: { title: string; content: string }) => {
+  const renderedContent = marked.parse(props.content);
+  const safeContent = sanitize(renderedContent);
+
+  return (
+    <>
+      <h5
+        className="my-2 text-3xl font-bold tracking-tight 
+          text-secondary-900 text-white"
+      >
+        {props.title}
+      </h5>
+      <article
+        className="prose prose-neutral dark:prose-invert"
+        dangerouslySetInnerHTML={{ __html: safeContent }}
+      />
     </>
   );
 };

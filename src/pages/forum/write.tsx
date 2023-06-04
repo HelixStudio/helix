@@ -21,6 +21,7 @@ import { api } from "~/utils/api";
 import { LoadingSection } from "~/components/ui/Loading";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
+import { PostPreviewLarge } from "~/components/sections/PostPreview";
 
 export const formSchema = z.object({
   title: z
@@ -48,10 +49,15 @@ const WritePage: NextPage = () => {
   const newPost = api.post.setNewPost.useMutation();
   const router = useRouter();
   const user = useSession();
-
   const [group, setGroup] = useState("");
 
+  const watchAllFields = form.watch();
+
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    if (group == "") {
+      alert("Choose a group to post in!");
+      return;
+    }
     newPost.mutate({
       metadata: values,
       authorId: user.data?.user.id as string,
@@ -90,6 +96,7 @@ const WritePage: NextPage = () => {
           <TabsList>
             <TabsTrigger value="text">Text</TabsTrigger>
             <TabsTrigger value="images">Images</TabsTrigger>
+            <TabsTrigger value="preview">Preview</TabsTrigger>
           </TabsList>
           <TabsContent value="text" className="w-full">
             <Form {...form}>
@@ -133,6 +140,12 @@ const WritePage: NextPage = () => {
             </Form>
           </TabsContent>
           <TabsContent value="images">Upload your images here.</TabsContent>
+          <TabsContent value="preview">
+            <PostPreviewLarge
+              title={watchAllFields.title}
+              content={watchAllFields.content}
+            />
+          </TabsContent>
         </Tabs>
       </div>
     </AppShell>

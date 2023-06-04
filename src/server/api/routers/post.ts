@@ -49,4 +49,20 @@ export const postRouter = createTRPCRouter({
         },
       });
     }),
+  updatePost: protectedProcedure
+    .input(
+      z.object({
+        id: z.string().uuid(),
+        metadata: formSchema,
+        authorId: z.string().cuid(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      if (input.authorId != ctx.session.user.id)
+        throw new Error("User doesn't have permission to edit this post.");
+      return await ctx.prisma.post.update({
+        where: { id: input.id },
+        data: { title: input.metadata.title, content: input.metadata.content },
+      });
+    }),
 });

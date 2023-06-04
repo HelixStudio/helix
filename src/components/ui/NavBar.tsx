@@ -1,8 +1,8 @@
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { useRouter } from "next/router";
 
 const NavBar = () => {
-  const pathname = usePathname();
+  const pathname = useRouter().pathname;
 
   const pages = [
     {
