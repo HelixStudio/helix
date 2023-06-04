@@ -8,6 +8,9 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { marked } from "marked";
 import { sanitize } from "isomorphic-dompurify";
+import hljs from "highlight.js";
+import { useEffect } from "react";
+import "highlight.js/styles/stackoverflow-dark.css";
 
 dayjs.extend(relativeTime);
 
@@ -83,6 +86,8 @@ const PostPreview = (props: {
 export const PostPreviewLarge = (props: { title: string; content: string }) => {
   const renderedContent = marked.parse(props.content);
   const safeContent = sanitize(renderedContent);
+
+  useEffect(() => hljs.highlightAll(), []);
 
   return (
     <>

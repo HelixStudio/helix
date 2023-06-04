@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 import { type NextPage } from "next";
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useEffect } from "react";
 import AppShell from "~/components/ui/AppShell";
 import { LoadingSection } from "~/components/ui/Loading";
 import { api } from "~/utils/api";
@@ -17,6 +17,8 @@ import { marked } from "marked";
 import { sanitize } from "isomorphic-dompurify";
 import { useSession } from "next-auth/react";
 import IconButton from "~/components/ui/IconButton";
+import "highlight.js/styles/stackoverflow-dark.css";
+import hljs from "highlight.js";
 
 dayjs.extend(relativeTime);
 
@@ -24,6 +26,8 @@ const PostPage: NextPage = () => {
   const router = useRouter();
   const user = useSession();
   const post = api.post.getPostById.useQuery({ id: router.query.id as string });
+
+  useEffect(() => hljs.highlightAll(), [post]);
 
   if (
     post.isLoading ||
