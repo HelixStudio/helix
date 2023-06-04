@@ -25,6 +25,7 @@ import { Textarea } from "~/components/ui/Textarea";
 import { formSchema } from "../../write";
 import { Input } from "~/components/ui/Input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "~/components/ui/Tabs";
+import { toastSuccess } from "~/utils/toast";
 
 dayjs.extend(relativeTime);
 
@@ -50,6 +51,7 @@ const EditPostPage: NextPage = () => {
       metadata: values,
       authorId: user.data?.user.id as string,
     });
+    toastSuccess("Posted edited!");
     await router.push("/forum");
   };
 

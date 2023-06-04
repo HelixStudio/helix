@@ -22,6 +22,7 @@ import { LoadingSection } from "~/components/ui/Loading";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { PostPreviewLarge } from "~/components/sections/PostPreview";
+import toast from "react-hot-toast";
 
 export const formSchema = z.object({
   title: z
@@ -62,6 +63,13 @@ const WritePage: NextPage = () => {
       metadata: values,
       authorId: user.data?.user.id as string,
       group: group,
+    });
+    toast.success("Post published!", {
+      style: {
+        borderRadius: "10px",
+        background: "#333",
+        color: "#fff",
+      },
     });
     await router.push("/forum");
   };

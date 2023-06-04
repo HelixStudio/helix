@@ -12,6 +12,7 @@ import {
   ArrowUpIcon,
   BookmarkIcon,
   PencilIcon,
+  TrashIcon,
 } from "@primer/octicons-react";
 import { marked } from "marked";
 import { sanitize } from "isomorphic-dompurify";
@@ -59,6 +60,12 @@ const PostPage: NextPage = () => {
                 onClick={() =>
                   router.push(`/forum/post/${router.query.id as string}/edit`)
                 }
+              />
+            )}
+            {user.data?.user.id == post.data.authorId && (
+              <IconButton
+                icon={<TrashIcon size={20} />}
+                onClick={() => alert("delete post")}
               />
             )}
             <IconButton

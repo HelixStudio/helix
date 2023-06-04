@@ -18,6 +18,7 @@ import { LoadingSection } from "~/components/ui/Loading";
 import { api } from "~/utils/api";
 import { Textarea } from "~/components/ui/Textarea";
 import { useEffect } from "react";
+import { toastSuccess } from "~/utils/toast";
 
 const SettingsPage: NextPage = () => {
   const { data: user, isLoading } = api.user.getMetadata.useQuery({
@@ -47,6 +48,7 @@ const SettingsPage: NextPage = () => {
       id: undefined,
       ...values,
     });
+    toastSuccess("Settings saved!");
   };
 
   useEffect(() => {
