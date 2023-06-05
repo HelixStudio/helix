@@ -25,6 +25,7 @@ const PostPreview = (props: {
   const like = api.post.likePost.useMutation({
     onSuccess: async () => {
       await ctx.post.getLatestPosts.invalidate();
+      await ctx.post.getBestPosts.invalidate();
     },
   });
 

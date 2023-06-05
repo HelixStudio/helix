@@ -15,9 +15,18 @@ export const postRouter = createTRPCRouter({
     .query(async ({ ctx, input }) => {
       const posts = await ctx.prisma.post.findMany({
         take: input.limit,
-        where: {},
         include: { author: true, group: true },
         orderBy: { createdAt: "desc" },
+      });
+      return posts;
+    }),
+  getBestPosts: publicProcedure
+    .input(z.object({ limit: z.number().min(1).max(100) }))
+    .query(async ({ ctx, input }) => {
+      const posts = await ctx.prisma.post.findMany({
+        take: input.limit,
+        include: { author: true, group: true },
+        orderBy: { likedBy: "desc" },
       });
       return posts;
     }),

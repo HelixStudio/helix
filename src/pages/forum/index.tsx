@@ -14,7 +14,11 @@ import { useSession } from "next-auth/react";
 const ForumPage: NextPage = () => {
   const router = useRouter();
   const user = useSession();
-  const posts = api.post.getLatestPosts.useQuery({ limit: 10 });
+
+  const limit = 10;
+
+  const posts = api.post.getLatestPosts.useQuery({ limit: limit });
+  const bestPosts = api.post.getBestPosts.useQuery({ limit: limit });
 
   if (posts.isLoading || user.status == "loading") return <LoadingSection />;
 
@@ -80,7 +84,15 @@ const ForumPage: NextPage = () => {
             </div>
           </div>
           <div className="px-3 sm:px-0">
-            <TabsContent value="best">best </TabsContent>
+            <TabsContent value="best">
+              {bestPosts.data?.map((post) => (
+                <PostPreview
+                  post={post}
+                  uid={user.data?.user.id as string}
+                  key={post.id}
+                />
+              ))}
+            </TabsContent>
             <TabsContent value="new">
               {posts.data?.map((post) => (
                 <PostPreview
