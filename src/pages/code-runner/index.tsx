@@ -1,5 +1,6 @@
 import { Editor, useMonaco } from "@monaco-editor/react";
 import { type NextPage } from "next";
+import Link from "next/link";
 import { useEffect } from "react";
 import AppShell from "~/components/ui/AppShell";
 import { LoadingSpinner } from "~/components/ui/Loading";
@@ -279,6 +280,7 @@ const CodeRunnerPage: NextPage = () => {
           options={{ smoothScrolling: true }}
           defaultValue="console.log('hello'); // some comment"
         />
+        <Link href={"/code-runner/canvas"}>go to the canvas</Link>
       </div>
     </AppShell>
   );
