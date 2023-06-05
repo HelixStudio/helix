@@ -7,13 +7,7 @@ import { LoadingSection } from "~/components/ui/Loading";
 import { api } from "~/utils/api";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
-import {
-  ArrowDownIcon,
-  ArrowUpIcon,
-  BookmarkIcon,
-  PencilIcon,
-  TrashIcon,
-} from "@primer/octicons-react";
+import { BookmarkIcon, PencilIcon, TrashIcon } from "@primer/octicons-react";
 import { marked } from "marked";
 import { sanitize } from "isomorphic-dompurify";
 import { useSession } from "next-auth/react";
@@ -32,12 +26,13 @@ const PostPage: NextPage = () => {
     { retry: false }
   );
   const deletePost = api.post.deletePost.useMutation();
+  // const votePost = api.post.votePost.useMutation();
 
   useEffect(() => hljs.highlightAll(), [post]);
 
-  if (post.error) {
-    void router.push("/404");
-  }
+  // if (post.error) {
+  //   void router.push("/404");
+  // }
 
   if (
     post.isLoading ||
@@ -106,40 +101,20 @@ const PostPage: NextPage = () => {
             />
           </div>
           <div className="mr-5 flex flex-col items-center gap-1">
-            <button
-              onClick={() => {
-                console.log("click");
-              }}
-            >
-              <ArrowUpIcon
-                className={
-                  post.data.likedBy.includes(post.data.authorId)
-                    ? "rounded-xl bg-primary-400"
-                    : ""
-                }
-                size={20}
-              />
-            </button>
-            <p>{0}</p>
-            <button
-              onClick={() => {
-                console.log("click");
-              }}
-            >
-              <ArrowDownIcon
-                className={
-                  post.data.likedBy.includes(post.data.authorId)
-                    ? "rounded-xl bg-blue-400"
-                    : ""
-                }
-                size={20}
-              />
-            </button>
+            {/* todo */}
           </div>
         </div>
       </div>
     </AppShell>
   );
 };
+
+export function removeItem<T>(arr: Array<T>, value: T): Array<T> {
+  const index = arr.indexOf(value);
+  if (index > -1) {
+    arr.splice(index, 1);
+  }
+  return arr;
+}
 
 export default PostPage;

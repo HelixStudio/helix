@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 import { type User, type Post, type Group } from "@prisma/client";
 import Link from "next/link";
-import { ArrowDownIcon, ArrowUpIcon } from "@primer/octicons-react";
+import { HeartFillIcon, HeartIcon } from "@primer/octicons-react";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { marked } from "marked";
@@ -11,13 +11,22 @@ import { sanitize } from "isomorphic-dompurify";
 import hljs from "highlight.js";
 import { useEffect } from "react";
 import "highlight.js/styles/stackoverflow-dark.css";
+import { api } from "~/utils/api";
 
 dayjs.extend(relativeTime);
 
 const PostPreview = (props: {
   post: Post & { author: User; group: Group };
+  uid: string;
 }) => {
-  const maxPreview = 250;
+  const maxPreview = 50;
+
+  const ctx = api.useContext();
+  const like = api.post.likePost.useMutation({
+    onSuccess: async () => {
+      await ctx.post.getLatestPosts.invalidate();
+    },
+  });
 
   return (
     <>
@@ -50,33 +59,20 @@ const PostPreview = (props: {
         <div className="mr-5 flex flex-col items-center gap-1">
           <button
             onClick={() => {
-              console.log("click");
+              like.mutate({
+                id: props.post.id,
+                userId: props.uid,
+                likedBy: props.post.likedBy,
+              });
             }}
           >
-            <ArrowUpIcon
-              className={
-                props.post.likedBy.includes(props.post.authorId)
-                  ? "rounded-xl bg-primary-400"
-                  : ""
-              }
-              size={20}
-            />
+            {props.post.likedBy.includes(props.uid) ? (
+              <HeartFillIcon size={20} />
+            ) : (
+              <HeartIcon size={20} />
+            )}
           </button>
-          <p>{0}</p>
-          <button
-            onClick={() => {
-              console.log("click");
-            }}
-          >
-            <ArrowDownIcon
-              className={
-                props.post.likedBy.includes(props.post.authorId)
-                  ? "rounded-xl bg-blue-400"
-                  : ""
-              }
-              size={20}
-            />
-          </button>
+          <p>{props.post.likedBy.length}</p>
         </div>
       </div>
     </>

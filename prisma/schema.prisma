@@ -68,16 +68,14 @@ model Group {
 }
 
 model Post {
-    id         String   @id @default(uuid())
-    createdAt  DateTime @default(now())
-    updatedAt  DateTime @default(now()) @updatedAt
-    author     User     @relation(fields: [authorId], references: [id])
-    authorId   String
-    group      Group    @relation(fields: [groupId], references: [id])
-    groupId    String
-    title      String
-    content    String
-    score      Int      @default(0)
-    likedBy    String[] @default([])
-    dislikedBy String[] @default([])
+    id        String   @id @default(uuid())
+    createdAt DateTime @default(now())
+    updatedAt DateTime @default(now()) @updatedAt
+    author    User     @relation(fields: [authorId], references: [id])
+    authorId  String
+    group     Group    @relation(fields: [groupId], references: [id])
+    groupId   String
+    title     String
+    content   String
+    likedBy   String[] @default([])
 }

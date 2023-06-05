@@ -9,12 +9,14 @@ import { useRouter } from "next/router";
 import { api } from "~/utils/api";
 import { LoadingSection } from "~/components/ui/Loading";
 import PostPreview from "~/components/sections/PostPreview";
+import { useSession } from "next-auth/react";
 
 const ForumPage: NextPage = () => {
   const router = useRouter();
+  const user = useSession();
   const posts = api.post.getLatestPosts.useQuery({ limit: 10 });
 
-  if (posts.isLoading) return <LoadingSection />;
+  if (posts.isLoading || user.status == "loading") return <LoadingSection />;
 
   return (
     <AppShell>
@@ -81,7 +83,11 @@ const ForumPage: NextPage = () => {
             <TabsContent value="best">best </TabsContent>
             <TabsContent value="new">
               {posts.data?.map((post) => (
-                <PostPreview post={post} key={post.id} />
+                <PostPreview
+                  post={post}
+                  uid={user.data?.user.id as string}
+                  key={post.id}
+                />
               ))}
             </TabsContent>
           </div>
