@@ -90,8 +90,12 @@ const PostPage: NextPage = () => {
         <div className="flex w-full flex-row items-end justify-between border-b-2 border-neutral-600 pb-3">
           <div className="w-full">
             <h5
-              className="my-2 text-3xl font-bold tracking-tight 
-          text-secondary-900 text-white"
+              className={`${
+                post.data.content.length > 250
+                  ? "mb-4 mt-2 text-center"
+                  : "my-2"
+              } text-3xl font-bold tracking-tight
+          text-secondary-900 text-white`}
             >
               {post.data.title}
             </h5>

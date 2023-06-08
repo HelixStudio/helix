@@ -72,6 +72,25 @@ export const postRouter = createTRPCRouter({
         },
       });
     }),
+  bookmarkPost: protectedProcedure
+    .input(z.object({ id: z.string().uuid(), add: z.boolean().default(true) }))
+    .mutation(async ({ ctx, input }) => {
+      if (input.add) {
+        await ctx.prisma.user.update({
+          where: { id: ctx.session.user.id },
+          data: { bookmarks: { push: input.id } },
+        });
+      } else {
+        const user = await ctx.prisma.user.findUnique({
+          where: { id: ctx.session.user.id },
+        });
+        const bookmarks = removeItem(user?.bookmarks as string[], input.id);
+        await ctx.prisma.user.update({
+          where: { id: ctx.session.user.id },
+          data: { bookmarks: { set: bookmarks } },
+        });
+      }
+    }),
   updatePost: protectedProcedure
     .input(
       z.object({

@@ -53,6 +53,7 @@ model User {
     sessions       Session[]
     created_groups Group[]
     created_posts  Post[]
+    bookmarks      String[]  @default([])
 }
 
 model Group {
