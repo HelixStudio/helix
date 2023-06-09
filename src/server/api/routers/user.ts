@@ -16,6 +16,22 @@ export const userRouter = createTRPCRouter({
       });
       return user;
     }),
+  getLatestPosts: publicProcedure.query(async ({ ctx }) => {
+    return await ctx.prisma.user.findUnique({
+      where: { id: ctx.session?.user.id },
+      select: { created_posts: true },
+    });
+  }),
+  getBookmarkedPosts: publicProcedure.query(async ({ ctx }) => {
+    const bookmarkIds = await ctx.prisma.user.findUnique({
+      where: { id: ctx.session?.user.id },
+      select: { bookmarks: true },
+    });
+    return await ctx.prisma.post.findMany({
+      where: { id: { in: bookmarkIds?.bookmarks } },
+      orderBy: { createdAt: "desc" },
+    });
+  }),
   updateMetadata: protectedProcedure
     .input(
       z.object({

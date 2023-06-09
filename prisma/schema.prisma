@@ -66,6 +66,8 @@ model Group {
     author      User     @relation(fields: [authorId], references: [id])
     authorId    String
     posts       Post[]
+    private     Boolean
+    joined      String[] @default([])
 }
 
 model Post {

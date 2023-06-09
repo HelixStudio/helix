@@ -1,6 +1,10 @@
-import { z } from "zod";
+import { string, z } from "zod";
 
-import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
+import {
+  createTRPCRouter,
+  protectedProcedure,
+  publicProcedure,
+} from "~/server/api/trpc";
 
 export const groupRouter = createTRPCRouter({
   getPopularGroups: publicProcedure
@@ -12,5 +16,25 @@ export const groupRouter = createTRPCRouter({
         orderBy: { posts: { _count: "desc" } },
       });
       return groups;
+    }),
+  createGroup: protectedProcedure
+    .input(
+      z.object({
+        name: z.string(),
+        description: z.string(),
+        rules: z.array(z.string()),
+        private: z.boolean(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      return await ctx.prisma.group.create({
+        data: {
+          name: input.name,
+          description: input.description,
+          authorId: ctx.session.user.id,
+          rules: input.rules,
+          private: input.private,
+        },
+      });
     }),
 });

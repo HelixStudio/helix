@@ -7,7 +7,12 @@ import { LoadingSection } from "~/components/ui/Loading";
 import { api } from "~/utils/api";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
-import { BookmarkIcon, PencilIcon, TrashIcon } from "@primer/octicons-react";
+import {
+  BookmarkFillIcon,
+  BookmarkIcon,
+  PencilIcon,
+  TrashIcon,
+} from "@primer/octicons-react";
 import { marked } from "marked";
 import { sanitize } from "isomorphic-dompurify";
 import { useSession } from "next-auth/react";
@@ -20,13 +25,21 @@ dayjs.extend(relativeTime);
 
 const PostPage: NextPage = () => {
   const router = useRouter();
-  const user = useSession();
+  const user = useSession(); // todo auth state
+  const userMetadata = api.user.getMetadata.useQuery({ id: undefined });
   const post = api.post.getPostById.useQuery(
     { id: router.query.id as string },
     { retry: false }
   );
   const deletePost = api.post.deletePost.useMutation();
   // const votePost = api.post.votePost.useMutation();
+  const ctx = api.useContext();
+  const bookmarkPost = api.post.bookmarkPost.useMutation({
+    onSuccess: async () => {
+      // todo: fix optimistic updates for likes & bookmark
+      await ctx.post.getPostById.invalidate({ id: router.query.id as string });
+    },
+  });
 
   useEffect(() => hljs.highlightAll(), [post]);
 
@@ -38,6 +51,7 @@ const PostPage: NextPage = () => {
     post.isLoading ||
     post.data == undefined ||
     post.data == null ||
+    userMetadata.data == null ||
     user.status == "loading"
   ) {
     return <LoadingSection />;
@@ -45,6 +59,10 @@ const PostPage: NextPage = () => {
 
   const renderedContent = marked.parse(post.data.content);
   const safeContent = sanitize(renderedContent);
+
+  const isBookmarked = userMetadata.data.bookmarks.find(
+    (value) => value == post.data.id
+  );
 
   return (
     <AppShell>
@@ -80,9 +98,15 @@ const PostPage: NextPage = () => {
               />
             )}
             <IconButton
-              icon={<BookmarkIcon size={20} />}
+              icon={
+                isBookmarked ? (
+                  <BookmarkFillIcon size={20} />
+                ) : (
+                  <BookmarkIcon size={20} />
+                )
+              }
               onClick={() => {
-                alert("bookmark");
+                bookmarkPost.mutate({ id: post.data.id, add: !isBookmarked });
               }}
             />
           </div>
