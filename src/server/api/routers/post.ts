@@ -15,7 +15,10 @@ export const postRouter = createTRPCRouter({
     .query(async ({ ctx, input }) => {
       const posts = await ctx.prisma.post.findMany({
         take: input.limit,
-        include: { author: true, group: true },
+        include: {
+          author: true,
+          group: true,
+        },
         orderBy: { createdAt: "desc" },
       });
       return posts;
@@ -36,7 +39,11 @@ export const postRouter = createTRPCRouter({
       try {
         const post = await ctx.prisma.post.findUniqueOrThrow({
           where: { id: input.id },
-          include: { author: true, group: true },
+          include: {
+            author: true,
+            group: true,
+            comments: { include: { author: true } },
+          },
         });
         return post;
       } catch {
@@ -150,6 +157,17 @@ export const postRouter = createTRPCRouter({
         where: { id: input.id },
         data: {
           likedBy: input.likedBy,
+        },
+      });
+    }),
+  createComment: protectedProcedure
+    .input(z.object({ postId: z.string().uuid(), comment: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      return await ctx.prisma.comment.create({
+        data: {
+          message: input.comment,
+          authorId: ctx.session.user.id,
+          postId: input.postId,
         },
       });
     }),

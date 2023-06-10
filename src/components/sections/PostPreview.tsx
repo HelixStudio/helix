@@ -87,7 +87,7 @@ export const PostPreviewLarge = (props: { title: string; content: string }) => {
   useEffect(() => hljs.highlightAll(), []);
 
   return (
-    <>
+    <div className="w-full">
       <h5
         className="my-2 text-3xl font-bold tracking-tight 
           text-secondary-900 text-white"
@@ -95,10 +95,10 @@ export const PostPreviewLarge = (props: { title: string; content: string }) => {
         {props.title}
       </h5>
       <article
-        className="prose prose-neutral dark:prose-invert"
+        className="prose prose-neutral min-w-full dark:prose-invert"
         dangerouslySetInnerHTML={{ __html: safeContent }}
       />
-    </>
+    </div>
   );
 };
 

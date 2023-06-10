@@ -33,8 +33,8 @@ export const formSchema = z.object({
     .max(300, {
       message: "Title must not be more than 300 characters.",
     }),
-  content: z.string().max(1024, {
-    message: "Content cannot be longer than 1024 characters.",
+  content: z.string().max(17000, {
+    message: "Content cannot be longer than 17000 characters.",
   }),
 });
 

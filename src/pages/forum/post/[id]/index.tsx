@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 import { type NextPage } from "next";
 import { useRouter } from "next/router";
@@ -21,6 +22,19 @@ import "highlight.js/styles/stackoverflow-dark.css";
 import hljs from "highlight.js";
 import { toastSuccess } from "~/utils/toast";
 import Link from "next/link";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Button } from "~/components/ui/Button";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "~/components/ui/Form";
+import { Input } from "~/components/ui/Input";
 
 dayjs.extend(relativeTime);
 
@@ -36,6 +50,13 @@ const PostPage: NextPage = () => {
   // const votePost = api.post.votePost.useMutation();
   const bookmarkPost = api.post.bookmarkPost.useMutation();
 
+  const ctx = api.useContext();
+  const createComment = api.post.createComment.useMutation({
+    onSuccess: async () => {
+      await ctx.post.getPostById.invalidate({ id: router.query.id as string });
+    },
+  });
+
   const [isBookmarked, setIsBookmarked] = useState<boolean>(false);
 
   useEffect(() => hljs.highlightAll(), [post]);
@@ -49,8 +70,24 @@ const PostPage: NextPage = () => {
     [userMetadata.data?.bookmarks, post.data?.id]
   );
 
-  if (post.error) {
-    void router.push("/404");
+  const formSchema = z.object({
+    comment: z.string().min(2).max(100),
+  });
+
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      comment: "",
+    },
+  });
+
+  function onSubmit(values: z.infer<typeof formSchema>) {
+    createComment.mutate({
+      comment: values.comment,
+      postId: post.data?.id as string,
+    });
+    form.setValue("comment", "");
+    toastSuccess("Comment posted!");
   }
 
   if (
@@ -133,12 +170,56 @@ const PostPage: NextPage = () => {
               {post.data.title}
             </h5>
             <article
-              className="prose prose-neutral dark:prose-invert"
+              className="prose prose-neutral min-w-full dark:prose-invert"
               dangerouslySetInnerHTML={{ __html: safeContent }}
             />
           </div>
           <div className="mr-5 flex flex-col items-center gap-1">
-            {/* todo */}
+            {/* todo likes */}
+          </div>
+        </div>
+        <div className="my-3">
+          <Form {...form}>
+            <form
+              onSubmit={form.handleSubmit(onSubmit)}
+              className="flex w-full flex-row gap-3 space-y-8"
+            >
+              <FormField
+                control={form.control}
+                name="comment"
+                render={({ field }) => (
+                  <FormItem className="w-full">
+                    <FormLabel>Comments</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="Write a comment"
+                        className="w-full"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <Button type="submit">Submit</Button>
+            </form>
+          </Form>
+          <div className="my-2">
+            {post.data.comments.map((comment) => (
+              <div key={comment.id} className="my-3 flex flex-row gap-2">
+                <img
+                  src={comment.author.image as string}
+                  className="m-1 h-12 w-12 rounded-md"
+                  alt="profile picture"
+                />
+                <div className="flex flex-col gap-1">
+                  <p className="font-thin text-zinc-300">{`${
+                    comment.author.name ?? ""
+                  } • ${dayjs(comment.createdAt).fromNow()}`}</p>
+                  <h1 className="text-xl">{comment.message}</h1>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </div>

@@ -7,8 +7,8 @@ const SettingsPage: NextPage = () => {
   return (
     <AppShell>
       <div className="mx-auto max-w-5xl px-3">
-        <ForumSettings />
         <UserSettings />
+        <ForumSettings />
       </div>
     </AppShell>
   );

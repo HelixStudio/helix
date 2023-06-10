@@ -43,17 +43,18 @@ model VerificationToken {
 }
 
 model User {
-    id             String    @id @default(cuid())
-    name           String?
-    email          String?   @unique
-    emailVerified  DateTime?
-    image          String?
-    bio            String?
-    accounts       Account[]
-    sessions       Session[]
-    created_groups Group[]
-    created_posts  Post[]
-    bookmarks      String[]  @default([])
+    id               String    @id @default(cuid())
+    name             String?
+    email            String?   @unique
+    emailVerified    DateTime?
+    image            String?
+    bio              String?
+    accounts         Account[]
+    sessions         Session[]
+    created_groups   Group[]
+    created_posts    Post[]
+    created_comments Comment[]
+    bookmarks        String[]  @default([])
 }
 
 model Group {
@@ -71,14 +72,26 @@ model Group {
 }
 
 model Post {
+    id        String    @id @default(uuid())
+    createdAt DateTime  @default(now())
+    updatedAt DateTime  @default(now()) @updatedAt
+    author    User      @relation(fields: [authorId], references: [id])
+    authorId  String
+    group     Group     @relation(fields: [groupId], references: [id])
+    groupId   String
+    comments  Comment[]
+    title     String
+    content   String
+    likedBy   String[]  @default([])
+}
+
+model Comment {
     id        String   @id @default(uuid())
     createdAt DateTime @default(now())
     updatedAt DateTime @default(now()) @updatedAt
     author    User     @relation(fields: [authorId], references: [id])
     authorId  String
-    group     Group    @relation(fields: [groupId], references: [id])
-    groupId   String
-    title     String
-    content   String
-    likedBy   String[] @default([])
+    post      Post     @relation(fields: [postId], references: [id])
+    postId    String
+    message   String
 }
