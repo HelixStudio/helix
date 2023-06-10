@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 import { type NextPage } from "next";
 import { useRouter } from "next/router";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import AppShell from "~/components/ui/AppShell";
 import { LoadingSection } from "~/components/ui/Loading";
 import { api } from "~/utils/api";
@@ -33,15 +33,20 @@ const PostPage: NextPage = () => {
   );
   const deletePost = api.post.deletePost.useMutation();
   // const votePost = api.post.votePost.useMutation();
-  const ctx = api.useContext();
-  const bookmarkPost = api.post.bookmarkPost.useMutation({
-    onSuccess: async () => {
-      // todo: fix optimistic updates for likes & bookmark
-      await ctx.post.getPostById.invalidate({ id: router.query.id as string });
-    },
-  });
+  const bookmarkPost = api.post.bookmarkPost.useMutation();
+
+  const [isBookmarked, setIsBookmarked] = useState<boolean>(false);
 
   useEffect(() => hljs.highlightAll(), [post]);
+
+  useEffect(
+    () =>
+      setIsBookmarked(
+        userMetadata.data?.bookmarks.find((value) => value == post.data?.id) !=
+          undefined
+      ),
+    [userMetadata.data?.bookmarks, post.data?.id]
+  );
 
   // if (post.error) {
   //   void router.push("/404");
@@ -59,10 +64,6 @@ const PostPage: NextPage = () => {
 
   const renderedContent = marked.parse(post.data.content);
   const safeContent = sanitize(renderedContent);
-
-  const isBookmarked = userMetadata.data.bookmarks.find(
-    (value) => value == post.data.id
-  );
 
   return (
     <AppShell>
@@ -106,6 +107,7 @@ const PostPage: NextPage = () => {
                 )
               }
               onClick={() => {
+                setIsBookmarked(!isBookmarked);
                 bookmarkPost.mutate({ id: post.data.id, add: !isBookmarked });
               }}
             />
