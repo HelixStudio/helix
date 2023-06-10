@@ -48,9 +48,9 @@ const PostPage: NextPage = () => {
     [userMetadata.data?.bookmarks, post.data?.id]
   );
 
-  // if (post.error) {
-  //   void router.push("/404");
-  // }
+  if (post.error) {
+    void router.push("/404");
+  }
 
   if (
     post.isLoading ||
