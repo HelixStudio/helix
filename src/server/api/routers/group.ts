@@ -17,6 +17,17 @@ export const groupRouter = createTRPCRouter({
       });
       return groups;
     }),
+  getGroup: publicProcedure
+    .input(z.object({ name: z.string() }))
+    .query(async ({ ctx, input }) => {
+      return await ctx.prisma.group.findUnique({
+        where: { name: input.name },
+        include: {
+          author: true,
+          posts: { include: { author: true, group: true } },
+        },
+      });
+    }),
   createGroup: protectedProcedure
     .input(
       z.object({

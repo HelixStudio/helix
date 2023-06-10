@@ -19,7 +19,12 @@ export const userRouter = createTRPCRouter({
   getLatestPosts: publicProcedure.query(async ({ ctx }) => {
     return await ctx.prisma.user.findUnique({
       where: { id: ctx.session?.user.id },
-      select: { created_posts: true },
+      select: {
+        created_posts: {
+          include: { author: true, group: true },
+          orderBy: { createdAt: "desc" },
+        },
+      },
     });
   }),
   getBookmarkedPosts: publicProcedure.query(async ({ ctx }) => {
@@ -30,6 +35,14 @@ export const userRouter = createTRPCRouter({
     return await ctx.prisma.post.findMany({
       where: { id: { in: bookmarkIds?.bookmarks } },
       orderBy: { createdAt: "desc" },
+      include: { author: true, group: true },
+    });
+  }),
+  getGroups: publicProcedure.query(async ({ ctx }) => {
+    return await ctx.prisma.group.findMany({
+      where: { authorId: ctx.session?.user.id },
+      orderBy: { createdAt: "desc" },
+      select: { id: true, name: true, joined: true },
     });
   }),
   updateMetadata: protectedProcedure

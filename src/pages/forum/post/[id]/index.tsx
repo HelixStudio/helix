@@ -20,6 +20,7 @@ import IconButton from "~/components/ui/IconButton";
 import "highlight.js/styles/stackoverflow-dark.css";
 import hljs from "highlight.js";
 import { toastSuccess } from "~/utils/toast";
+import Link from "next/link";
 
 dayjs.extend(relativeTime);
 
@@ -70,7 +71,13 @@ const PostPage: NextPage = () => {
       <div className="mx-auto max-w-5xl p-3">
         <div className="flex w-full flex-row items-center justify-between pb-2">
           <p className="text-sm">
-            {`${post.data.group.name} • `}
+            <Link
+              href={`../group/${post.data.group.name}`}
+              className="hover:underline"
+            >
+              {post.data.group.name}
+            </Link>
+            {` • `}
             <span className="text-neutral-400">
               Posted by {post.data.author.name}
               <span>{`, ${dayjs(post.data.createdAt).fromNow()}`}</span>

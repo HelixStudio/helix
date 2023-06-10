@@ -20,12 +20,14 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/Tabs";
 import { Switch } from "../ui/Switch";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import PostPreview from "./PostPreview";
 
 const ForumSettings = () => {
   const router = useRouter();
 
   const createGroup = api.group.createGroup.useMutation();
 
+  const yourGroups = api.user.getGroups.useQuery();
   const latestPosts = api.user.getLatestPosts.useQuery();
   const bookmarks = api.user.getBookmarkedPosts.useQuery();
 
@@ -64,7 +66,7 @@ const ForumSettings = () => {
     void router.push("/forum");
   };
 
-  if (latestPosts.isLoading || bookmarks.isLoading) {
+  if (latestPosts.isLoading || bookmarks.isLoading || yourGroups.isLoading) {
     return (
       <div className="flex h-[20vh] items-center justify-center">
         <LoadingSpinner size={25} />
@@ -75,12 +77,31 @@ const ForumSettings = () => {
   return (
     <div className="py-2">
       <h1 className="my-4 border-b-2 text-2xl">Forum settings</h1>
-      <Tabs defaultValue="new-group">
+      <Tabs defaultValue="your-posts">
         <TabsList>
-          <TabsTrigger value="new-group">Create group</TabsTrigger>
           <TabsTrigger value="your-posts">Your posts</TabsTrigger>
           <TabsTrigger value="bookmarks">Bookmarks</TabsTrigger>
+          <TabsTrigger value="your-groups">Your grops</TabsTrigger>
+          <TabsTrigger value="new-group">Create group</TabsTrigger>
         </TabsList>
+        <TabsContent value="your-groups">
+          <ul className="ml-7 list-disc">
+            {yourGroups.data?.map((group) => (
+              <li key={group.id}>
+                <Link
+                  href={`forum/group/${group.name}`}
+                  className="w-fit hover:underline"
+                >
+                  {group.name}
+                </Link>
+                :
+                {` ${group.joined.length ?? 0} member${
+                  group.joined.length != 1 ? "s" : ""
+                } joined`}
+              </li>
+            ))}
+          </ul>
+        </TabsContent>
         <TabsContent value="new-group">
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
@@ -169,9 +190,7 @@ const ForumSettings = () => {
         <TabsContent value="your-posts">
           {(latestPosts.data?.created_posts.length as number) > 0 ? (
             latestPosts.data?.created_posts.map((post) => (
-              <div key={post.id}>
-                <p>{post.title}</p>
-              </div>
+              <PostPreview key={post.id} post={post} uid={post.authorId} />
             ))
           ) : (
             <p>You have no posts.</p>
@@ -180,9 +199,7 @@ const ForumSettings = () => {
         <TabsContent value="bookmarks">
           {(bookmarks.data?.length as number) > 0 ? (
             bookmarks.data?.map((post) => (
-              <div key={post.id}>
-                <p>{post.title}</p>
-              </div>
+              <PostPreview key={post.id} post={post} uid={post.authorId} />
             ))
           ) : (
             <p>You have no bookmarked posts.</p>
