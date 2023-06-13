@@ -44,6 +44,20 @@ export const runCode = async (
   return res.data as Output;
 };
 
+export const getDefaultCode = (lang: string) => {
+  const version = getLanguageVersion(lang);
+  if (version == "") return "";
+
+  switch (lang) {
+    case "elixir":
+      return `IO.puts("Hello world from Elixir")`;
+    case "cpp":
+      return "cpp";
+    case "python":
+      return `print("Hello world from Python")`;
+  }
+};
+
 // https://emkc.org/api/v2/piston/runtimes
 export const supportedLanguages: Language[] = [
   {
