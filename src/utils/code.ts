@@ -10,7 +10,7 @@ export interface Output {
     stdout: string;
     stderr: string;
     code: number;
-    signal: any;
+    signal: never;
     output: string;
   };
   language: string;
