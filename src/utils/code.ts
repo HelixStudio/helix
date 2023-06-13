@@ -52,21 +52,31 @@ export const getDefaultCode = (lang: string) => {
     case "elixir":
       return `IO.puts("Hello world from Elixir")`;
     case "cpp":
-      return "cpp";
+      return `#include <iostream>\n\nint main() {\n\tstd::cout << "Hello world from C++\\n";\n\treturn 0;\n}\n`;
     case "python":
       return `print("Hello world from Python")`;
+    case "csharp":
+      return `Console.WriteLine("Hello world from C#");`;
+    case "c":
+      return `#include <stdio.h>\n\nint main() {\n\tprintf("Hello world from C\\n");\n\treturn 0;\n}\n`;
+    case "go":
+      return `package main\n\nimport "fmt"\n\nfunc main() {\n\tfmt.Println("Hello world from Go")\n}\n`;
+    case "haskell":
+      return `main :: IO ()\n\nmain = putStrLn "Hello world from Haskell"\n`;
+    case "rust":
+      return `fn main() {\n\tprintln!("Hello world from Rust");\n}\n`;
+    case "swift":
+      return `print("Hello world from Swift")`;
+    case "zig":
+      return `const std = @import("std");\npub fn main() !void {\n\tstd.debug.print("Hello world from Zig", .{});\n}\n`;
   }
-};
+}; // TODO: fix haskell, zig and csharp
 
 // https://emkc.org/api/v2/piston/runtimes
 export const supportedLanguages: Language[] = [
   {
     name: "cpp",
     version: "10.2.0",
-  },
-  {
-    name: "javascript",
-    version: "1.32.3",
   },
   {
     name: "csharp",
@@ -87,10 +97,6 @@ export const supportedLanguages: Language[] = [
   {
     name: "haskell",
     version: "9.0.1",
-  },
-  {
-    name: "nasm64",
-    version: "2.15.5",
   },
   {
     name: "python",

@@ -13,11 +13,11 @@ import {
   SelectItem,
 } from "~/components/ui/Select";
 import { api } from "~/utils/api";
-import { getDefaultCode } from "~/utils/code";
+import { getDefaultCode, supportedLanguages } from "~/utils/code";
 
 const CodeRunnerPage: NextPage = () => {
   const [output, setOutput] = useState("");
-  const [lang, setLang] = useState("elixir");
+  const [lang, setLang] = useState("cpp");
   const [code, setCode] = useState(getDefaultCode(lang));
   const [executing, setExecuting] = useState(false);
 
@@ -72,19 +72,25 @@ const CodeRunnerPage: NextPage = () => {
                   </p>
                 </button>
                 <Select
-                  defaultValue="elixir"
+                  defaultValue={lang}
                   onValueChange={(newValue: SetStateAction<string>) => {
                     setLang(newValue);
                     setCode(getDefaultCode(newValue.toString()));
+                    setOutput("");
                   }}
                 >
                   <SelectTrigger className="max-w-[180px]">
                     <SelectValue placeholder="Language" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="cpp">C++</SelectItem>
+                    {supportedLanguages.map((supLang) => (
+                      <SelectItem value={supLang.name} key={supLang.name}>
+                        {supLang.name}
+                      </SelectItem>
+                    ))}
+                    {/* <SelectItem value="cpp">C++</SelectItem>
                     <SelectItem value="elixir">Elixir</SelectItem>
-                    <SelectItem value="python">Python</SelectItem>
+                    <SelectItem value="python">Python</SelectItem> */}
                   </SelectContent>
                 </Select>
               </div>
@@ -100,6 +106,7 @@ const CodeRunnerPage: NextPage = () => {
                   theme="vs-dark"
                   loading={<LoadingSpinner />}
                   defaultLanguage={lang}
+                  language={lang}
                   options={{
                     smoothScrolling: true,
                     fontSize: 12,
