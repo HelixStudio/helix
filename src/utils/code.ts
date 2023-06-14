@@ -2,7 +2,10 @@ import axios from "axios";
 
 export interface Language {
   name: string;
+  fancyName: string;
   version: string;
+  defaultCode: string;
+  extension: string;
 }
 
 export interface Output {
@@ -21,6 +24,11 @@ export const getLanguageVersion = (lang: string) => {
   const ver = supportedLanguages.find((l) => l.name == lang);
   if (ver != undefined) return ver.version;
   return "";
+};
+
+export const getLanguage = (lang: string): Language => {
+  const l = supportedLanguages.find((l) => l.name == lang);
+  return l as Language;
 };
 
 export const runCode = async (
@@ -44,74 +52,76 @@ export const runCode = async (
   return res.data as Output;
 };
 
-export const getDefaultCode = (lang: string) => {
-  const version = getLanguageVersion(lang);
-  if (version == "") return "";
-
-  switch (lang) {
-    case "elixir":
-      return `IO.puts("Hello world from Elixir")`;
-    case "cpp":
-      return `#include <iostream>\n\nint main() {\n\tstd::cout << "Hello world from C++\\n";\n\treturn 0;\n}\n`;
-    case "python":
-      return `print("Hello world from Python")`;
-    case "csharp":
-      return `Console.WriteLine("Hello world from C#");`;
-    case "c":
-      return `#include <stdio.h>\n\nint main() {\n\tprintf("Hello world from C\\n");\n\treturn 0;\n}\n`;
-    case "go":
-      return `package main\n\nimport "fmt"\n\nfunc main() {\n\tfmt.Println("Hello world from Go")\n}\n`;
-    case "haskell":
-      return `main :: IO ()\n\nmain = putStrLn "Hello world from Haskell"\n`;
-    case "rust":
-      return `fn main() {\n\tprintln!("Hello world from Rust");\n}\n`;
-    case "swift":
-      return `print("Hello world from Swift")`;
-    case "zig":
-      return `const std = @import("std");\npub fn main() !void {\n\tstd.debug.print("Hello world from Zig", .{});\n}\n`;
-  }
-}; // TODO: fix haskell, zig and csharp
-
 // https://emkc.org/api/v2/piston/runtimes
 export const supportedLanguages: Language[] = [
   {
     name: "cpp",
+    fancyName: "C++",
     version: "10.2.0",
+    defaultCode: `#include <iostream>\n\nint main() {\n\tstd::cout << "Hello world from C++\\n";\n\treturn 0;\n}\n`,
+    extension: "cpp",
   },
   {
-    name: "csharp",
-    version: "5.0.201",
+    name: "java",
+    fancyName: "Java",
+    version: "15.0.2",
+    defaultCode: `class Program {\n\tpublic static void main(String[] args) {\n\t\tSystem.out.println("Hello world from Java");\n\t}\n}\n`,
+    extension: "java",
   },
   {
     name: "elixir",
+    fancyName: "Elixir",
     version: "1.11.3",
+    defaultCode: `IO.puts("Hello world from Elixir")\n`,
+    extension: "ex",
   },
   {
     name: "c",
+    fancyName: "C",
     version: "10.2.0",
+    defaultCode: `#include <stdio.h>\n\nint main() {\n\tprintf("Hello world from C\\n");\n\treturn 0;\n}\n`,
+    extension: "c",
   },
   {
     name: "go",
+    fancyName: "Go",
     version: "1.16.2",
+    defaultCode: `package main\n\nimport "fmt"\n\nfunc main() {\n\tfmt.Println("Hello world from Go")\n}\n`,
+    extension: "go",
   },
   {
     name: "haskell",
+    fancyName: "Haskell",
     version: "9.0.1",
+    defaultCode: `main :: IO ()\n\nmain = putStrLn "Hello world from Haskell"\n`,
+    extension: "hs",
   },
   {
     name: "python",
+    fancyName: "Python",
     version: "3.10.0",
+    defaultCode: `print("Hello world from Python")\n`,
+    extension: "py",
   },
   {
     name: "rust",
+    fancyName: "Rust",
     version: "1.68.2",
+    defaultCode: `fn main() {\n\tprintln!("Hello world from Rust");\n}\n`,
+    extension: "py",
   },
   {
     name: "swift",
+    fancyName: "Swift",
     version: "5.3.3",
+    defaultCode: `print("Hello world from Swift")\n`,
+    extension: "swift",
   },
   {
-    name: "zig",
-    version: "0.9.1",
+    name: "javascript",
+    fancyName: "JavaScript",
+    version: "1.32.3",
+    defaultCode: `console.log("Hello world from JavaScript");`,
+    extension: "js",
   },
 ];
