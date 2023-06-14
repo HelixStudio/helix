@@ -45,6 +45,12 @@ export const userRouter = createTRPCRouter({
       select: { id: true, name: true, joined: true },
     });
   }),
+  getUploadedImages: protectedProcedure.query(async ({ ctx }) => {
+    return await ctx.prisma.user.findUnique({
+      where: { id: ctx.session?.user.id },
+      select: { uploaded_images: true },
+    });
+  }),
   updateMetadata: protectedProcedure
     .input(
       z.object({

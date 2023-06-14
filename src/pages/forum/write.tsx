@@ -23,6 +23,7 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { PostPreviewLarge } from "~/components/sections/PostPreview";
 import toast from "react-hot-toast";
+import UploadImages from "~/components/sections/UploadImages";
 
 export const formSchema = z.object({
   title: z
@@ -147,7 +148,9 @@ const WritePage: NextPage = () => {
               </form>
             </Form>
           </TabsContent>
-          <TabsContent value="images">Upload your images here.</TabsContent>
+          <TabsContent value="images">
+            <UploadImages />
+          </TabsContent>
           <TabsContent value="preview">
             <PostPreviewLarge
               title={watchAllFields.title}

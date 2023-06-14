@@ -55,6 +55,7 @@ model User {
     created_posts    Post[]
     created_comments Comment[]
     bookmarks        String[]  @default([])
+    uploaded_images  String[]  @default([])
 }
 
 model Group {
