@@ -108,7 +108,7 @@ export const supportedLanguages: Language[] = [
     fancyName: "Rust",
     version: "1.68.2",
     defaultCode: `fn main() {\n\tprintln!("Hello world from Rust");\n}\n`,
-    extension: "py",
+    extension: "rs",
   },
   {
     name: "swift",
