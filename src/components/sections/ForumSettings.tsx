@@ -69,7 +69,7 @@ const ForumSettings = () => {
   if (latestPosts.isLoading || bookmarks.isLoading || yourGroups.isLoading) {
     return (
       <div className="flex h-[20vh] items-center justify-center">
-        <LoadingSpinner size={25} />
+        {/* <LoadingSpinner size={25} /> too many spinners */}
       </div>
     );
   }

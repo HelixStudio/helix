@@ -7,6 +7,11 @@ import AppShell from "~/components/ui/AppShell";
 // import { Button } from "~/components/ui/Button";
 import { LoadingSpinner } from "~/components/ui/Loading";
 import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "~/components/ui/Popover";
+import {
   Select,
   SelectTrigger,
   SelectValue,
@@ -270,28 +275,35 @@ const CodeRunnerPage: NextPage = () => {
                     </svg>
                   </p>
                 </button>
-                <button onClick={() => alert("choose a layout")}>
-                  <p
-                    className={`relative flex h-10 w-10 items-center justify-center 
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <button>
+                      <p
+                        className={`relative flex h-10 w-10 items-center justify-center 
                       ${"bg-secondary-700 text-accent-400 hover:rounded-xl hover:bg-accent-500 hover:text-primary-400"}
                       group rounded-3xl transition-all duration-200`}
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth="1.5"
-                      stroke="currentColor"
-                      className="h-6 w-6"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M6.429 9.75L2.25 12l4.179 2.25m0-4.5l5.571 3 5.571-3m-11.142 0L2.25 7.5 12 2.25l9.75 5.25-4.179 2.25m0 0L21.75 12l-4.179 2.25m0 0l4.179 2.25L12 21.75 2.25 16.5l4.179-2.25m11.142 0l-5.571 3-5.571-3"
-                      />
-                    </svg>
-                  </p>
-                </button>
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth="1.5"
+                          stroke="currentColor"
+                          className="h-6 w-6"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M6.429 9.75L2.25 12l4.179 2.25m0-4.5l5.571 3 5.571-3m-11.142 0L2.25 7.5 12 2.25l9.75 5.25-4.179 2.25m0 0L21.75 12l-4.179 2.25m0 0l4.179 2.25L12 21.75 2.25 16.5l4.179-2.25m11.142 0l-5.571 3-5.571-3"
+                          />
+                        </svg>
+                      </p>
+                    </button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-80">
+                    choose a layout
+                  </PopoverContent>
+                </Popover>
                 <Select
                   defaultValue={lang}
                   onValueChange={(newValue: SetStateAction<string>) => {
@@ -384,7 +396,7 @@ const CodeRunnerPage: NextPage = () => {
               </Panel>
               <PanelResizeHandle className="h-1 bg-secondary-600" />
               <Panel defaultSize={20} minSize={10} maxSize={30}>
-                <div className="h-full rounded-md bg-secondary-800 p-2 font-mono text-sm">
+                <div className="h-full overflow-y-auto whitespace-pre rounded-md bg-secondary-800 p-2 font-mono text-sm">
                   {!executing ? (
                     <span>
                       {output != ""
