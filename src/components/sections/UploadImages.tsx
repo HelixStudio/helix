@@ -64,25 +64,26 @@ const UploadImages = () => {
       </div>
       <div>
         <Show when={uploadedImages.data != undefined}>
-          {/* todo fix TS errors */}
-          <p>Uploaded images:</p>
-          <ul className="ml-5 list-disc break-all">
-            {uploadedImages.data?.uploaded_images.map((image) => (
-              <li key={image} className="list-item">
-                <Link
-                  href={image}
-                  target="_blank"
-                  className="text-accent-400 underline"
-                >
-                  {image.substring(63)}
-                </Link>
-              </li>
-            ))}
-          </ul>
-          <p className="pt-5">
-            To insert images into markdown:{" "}
-            <pre className="inline">![alt text](image link)</pre>
-          </p>
+          <div>
+            <p>Uploaded images:</p>
+            <ul className="ml-5 list-disc break-all">
+              {uploadedImages.data?.uploaded_images.map((image) => (
+                <li key={image} className="list-item">
+                  <Link
+                    href={image}
+                    target="_blank"
+                    className="text-accent-400 underline"
+                  >
+                    {image.substring(63)}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+            <p className="pt-5">
+              To insert images into markdown:{" "}
+              <pre className="inline">![alt text](image link)</pre>
+            </p>
+          </div>
         </Show>
       </div>
     </div>

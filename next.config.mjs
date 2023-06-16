@@ -14,6 +14,7 @@ const config = {
 
   experimental: {
     esmExternals: false,
+    appDir: true
   },
 
   i18n: {
