@@ -47,7 +47,13 @@ const PostPreview = (props: {
             </Link>
             {` • `}
             <span className="text-neutral-400">
-              Posted by {props.post.author.name}
+              Posted by{" "}
+              <Link
+                href={`/user/${props.post.author.id}`}
+                className="hover:underline"
+              >
+                {props.post.author.name}
+              </Link>
               <span>{`, ${dayjs(props.post.createdAt).fromNow()}`}</span>
             </span>
           </p>
