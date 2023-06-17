@@ -39,7 +39,13 @@ const PostPreview = (props: {
       >
         <Link className="w-full p-3" href={`/forum/post/${props.post.id}`}>
           <p className="text-sm">
-            {`${props.post.group.name} • `}
+            <Link
+              href={`/forum/group/${props.post.group.name}`}
+              className="hover:underline"
+            >
+              {props.post.group.name}
+            </Link>
+            {` • `}
             <span className="text-neutral-400">
               Posted by {props.post.author.name}
               <span>{`, ${dayjs(props.post.createdAt).fromNow()}`}</span>
