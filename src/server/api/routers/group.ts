@@ -48,4 +48,18 @@ export const groupRouter = createTRPCRouter({
         },
       });
     }),
+  updateGroup: protectedProcedure
+    .input(
+      z.object({
+        name: z.string(),
+        description: z.string(),
+        rules: z.array(z.string()),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      await ctx.prisma.group.update({
+        where: { name: input.name },
+        data: { description: input.description, rules: input.rules },
+      });
+    }),
 });
