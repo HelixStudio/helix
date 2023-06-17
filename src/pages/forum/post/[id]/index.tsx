@@ -35,6 +35,7 @@ import {
 } from "~/components/ui/Form";
 import { Input } from "~/components/ui/Input";
 import { CommentPreview } from "~/components/sections/CommentPreview";
+import Head from "next/head";
 
 dayjs.extend(relativeTime);
 
@@ -105,6 +106,13 @@ const PostPage: NextPage = () => {
 
   return (
     <AppShell>
+      <Head>
+        <title>Helix | {post.data.title}</title>
+        <meta
+          name="description"
+          content={post.data.content.substring(0, 255)}
+        />
+      </Head>
       <div className="mx-auto max-w-5xl p-3">
         <div className="flex w-full flex-row items-center justify-between pb-2">
           <p className="text-sm">

@@ -4,6 +4,7 @@ import { useChat } from "ai/react";
 import hljs from "highlight.js";
 import { sanitize } from "isomorphic-dompurify";
 import { marked } from "marked";
+import Head from "next/head";
 import AppShell from "~/components/ui/AppShell";
 import IconButton from "~/components/ui/IconButton";
 
@@ -21,6 +22,9 @@ export default function Chat() {
 
   return (
     <AppShell>
+      <Head>
+        <title>Helix | AI Coach</title>
+      </Head>
       <main className="min-h-screen bg-secondary-700 text-primary-400">
         <div className="ml-auto mr-auto min-h-screen max-w-5xl">
           <div className="flex h-screen flex-col items-start justify-between p-3">

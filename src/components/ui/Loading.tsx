@@ -1,3 +1,4 @@
+import Head from "next/head";
 import AppShell from "./AppShell";
 
 export const LoadingSpinner = (props: { size?: number }) => {
@@ -26,9 +27,14 @@ export const LoadingSpinner = (props: { size?: number }) => {
   );
 };
 
-export const LoadingSection = () => {
+export const LoadingSection = (props: { title?: string }) => {
   return (
     <AppShell>
+      {props.title && (
+        <Head>
+          <title>{props.title}</title>
+        </Head>
+      )}
       <div className="flex h-full w-full items-center justify-center align-middle">
         <LoadingSpinner size={60} />
       </div>

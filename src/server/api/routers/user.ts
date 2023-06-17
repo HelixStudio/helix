@@ -1,3 +1,4 @@
+import { type Prisma } from "@prisma/client";
 import { z } from "zod";
 
 import {
@@ -9,21 +10,34 @@ import {
 export const userRouter = createTRPCRouter({
   getMetadata: publicProcedure
     .input(
-      z.object({ id: z.string().optional(), posts: z.boolean().default(false) })
+      z.object({
+        id: z.string().optional(),
+        name: z.string().optional(),
+        posts: z.boolean().default(false),
+      })
     )
     .query(async ({ ctx, input }) => {
-      const id = input.id ?? ctx.session?.user.id;
-      const user = await ctx.prisma.user.findUnique({
-        where: { id: id },
-        include: {
-          created_posts: input.posts
-            ? {
-                include: { author: true, group: true },
-                orderBy: { createdAt: "desc" },
-              }
-            : false,
-        },
-      });
+      let user = undefined;
+      const includeBody: Prisma.UserInclude = {
+        created_posts: input.posts
+          ? {
+              include: { author: true, group: true },
+              orderBy: { createdAt: "desc" },
+            }
+          : false,
+      };
+      if (input.name != undefined) {
+        user = await ctx.prisma.user.findUnique({
+          where: { name: input.name },
+          include: includeBody,
+        });
+      } else {
+        const id = input.id ?? ctx.session?.user.id;
+        user = await ctx.prisma.user.findUnique({
+          where: { id: id },
+          include: includeBody,
+        });
+      }
       return user;
     }),
   getLatestPosts: publicProcedure.query(async ({ ctx }) => {

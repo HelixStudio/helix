@@ -9,6 +9,7 @@ import PostPreview from "~/components/sections/PostPreview";
 import { useSession } from "next-auth/react";
 import IconButton from "~/components/ui/IconButton";
 import { PencilIcon } from "@primer/octicons-react";
+import Head from "next/head";
 
 dayjs.extend(relativeTime);
 
@@ -20,13 +21,17 @@ const GroupPage: NextPage = () => {
   });
 
   if (group.isLoading || user.status === "loading") {
-    return <LoadingSection />;
+    return <LoadingSection title={`Helix | ${router.query.name as string}`} />;
   }
 
   const members = group.data?.joined.length ?? 0;
 
   return (
     <AppShell>
+      <Head>
+        <title>Helix | ${router.query.name as string}`</title>
+        <meta name="description" content={group.data?.description} />
+      </Head>
       <div className="mx-auto max-w-5xl p-3">
         <div className="border-b-2 pb-2">
           <div className="flex flex-row justify-between">

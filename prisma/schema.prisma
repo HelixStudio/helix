@@ -46,7 +46,7 @@ model User {
     id               String    @id @default(cuid())
     created_at       DateTime  @default(now())
     updated_at       DateTime  @default(now()) @updatedAt
-    name             String?
+    name             String?   @unique
     email            String?   @unique
     emailVerified    DateTime?
     image            String?

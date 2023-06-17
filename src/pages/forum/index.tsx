@@ -10,6 +10,7 @@ import { api } from "~/utils/api";
 import { LoadingSection } from "~/components/ui/Loading";
 import PostPreview from "~/components/sections/PostPreview";
 import { useSession } from "next-auth/react";
+import Head from "next/head";
 
 const ForumPage: NextPage = () => {
   const router = useRouter();
@@ -24,6 +25,9 @@ const ForumPage: NextPage = () => {
 
   return (
     <AppShell>
+      <Head>
+        <title>Helix | Forum</title>
+      </Head>
       <div className="mx-auto max-w-5xl sm:px-3">
         <Tabs defaultValue="new">
           <div className="flex w-full flex-row items-center justify-between bg-secondary-800 px-3 py-2 sm:my-3 sm:rounded-lg">

@@ -24,6 +24,7 @@ import { useRouter } from "next/router";
 import { PostPreviewLarge } from "~/components/sections/PostPreview";
 import toast from "react-hot-toast";
 import UploadImages from "~/components/sections/UploadImages";
+import Head from "next/head";
 
 export const formSchema = z.object({
   title: z
@@ -92,6 +93,9 @@ const WritePage: NextPage = () => {
 
   return (
     <AppShell>
+      <Head>
+        <title>Helix | Write new post</title>
+      </Head>
       <div className="mx-auto max-w-5xl px-3">
         <h1 className="py-3 text-2xl">Write a new post</h1>
         <div className="pb-3">

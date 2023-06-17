@@ -1,5 +1,6 @@
 import { Editor, useMonaco } from "@monaco-editor/react";
 import { type NextPage } from "next";
+import Head from "next/head";
 import Link from "next/link";
 import { type SetStateAction, useEffect, useState } from "react";
 import { PanelGroup, PanelResizeHandle, Panel } from "react-resizable-panels";
@@ -248,6 +249,9 @@ const CodeRunnerPage: NextPage = () => {
 
   return (
     <AppShell>
+      <Head>
+        <title>Helix | Code Runner</title>
+      </Head>
       <div>
         <PanelGroup direction="horizontal" className="min-h-screen">
           <Panel defaultSize={20} minSize={10} maxSize={30}>
