@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 import { type NextPage } from "next";
 import { useRouter } from "next/router";
@@ -35,6 +34,7 @@ import {
   FormMessage,
 } from "~/components/ui/Form";
 import { Input } from "~/components/ui/Input";
+import { CommentPreview } from "~/components/sections/CommentPreview";
 
 dayjs.extend(relativeTime);
 
@@ -116,7 +116,13 @@ const PostPage: NextPage = () => {
             </Link>
             {` • `}
             <span className="text-neutral-400">
-              Posted by {post.data.author.name}
+              Posted by{" "}
+              <Link
+                className="hover:underline"
+                href={`/user/${post.data.author.id}`}
+              >
+                {post.data.author.name}
+              </Link>
               <span>{`, ${dayjs(post.data.createdAt).fromNow()}`}</span>
             </span>
           </p>
@@ -206,19 +212,7 @@ const PostPage: NextPage = () => {
           </Form>
           <div className="my-2">
             {post.data.comments.map((comment) => (
-              <div key={comment.id} className="my-3 flex flex-row gap-2">
-                <img
-                  src={comment.author.image as string}
-                  className="m-1 h-12 w-12 rounded-md"
-                  alt="profile picture"
-                />
-                <div className="flex flex-col gap-1">
-                  <p className="font-thin text-zinc-300">{`${
-                    comment.author.name ?? ""
-                  } • ${dayjs(comment.createdAt).fromNow()}`}</p>
-                  <h1 className="text-xl">{comment.message}</h1>
-                </div>
-              </div>
+              <CommentPreview comment={comment} key={comment.id} />
             ))}
           </div>
         </div>

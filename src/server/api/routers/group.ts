@@ -24,7 +24,10 @@ export const groupRouter = createTRPCRouter({
         where: { name: input.name },
         include: {
           author: true,
-          posts: { include: { author: true, group: true } },
+          posts: {
+            include: { author: true, group: true },
+            orderBy: { createdAt: "desc" },
+          },
         },
       });
     }),
