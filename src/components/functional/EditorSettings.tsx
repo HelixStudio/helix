@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { SetStateAction, useState } from "react";
 import { Button } from "~/components/ui/Button";
 import {
   Dialog,
@@ -11,13 +11,56 @@ import {
 } from "~/components/ui/Dialog";
 import { Input } from "~/components/ui/Input";
 import { Label } from "~/components/ui/Label";
+import { themes, type Theme } from "~/utils/monaco-themes";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/Select";
+
+export type EditorSettingsProps = {
+  fontSize: number;
+  fontFamily: string;
+  theme: Theme;
+};
+
+const getEditorSettingFromStorage = (): EditorSettingsProps | null => {
+  if (!(typeof window != "undefined" && window.document)) return null;
+  if (localStorage.getItem("editorFontSize") == null) return null;
+  return {
+    fontSize: parseInt(localStorage.getItem("editorFontSize") as string),
+    fontFamily: localStorage.getItem("editorFontFamily") as string,
+    theme: localStorage.getItem("editorTheme") as Theme,
+  };
+};
+
+const setEditorSettingsToStorage = (props: EditorSettingsProps) => {
+  localStorage.setItem("editorFontSize", props.fontSize.toString());
+  localStorage.setItem("editorFontFamily", props.fontFamily);
+  localStorage.setItem("editorTheme", props.theme);
+};
+
+export const getDefaultEditorSettings = (): EditorSettingsProps => {
+  const ls = getEditorSettingFromStorage();
+  if (ls != null) return ls;
+  return {
+    fontSize: 14,
+    fontFamily: "Fira Code",
+    theme: "github",
+  };
+};
 
 const EditorSettings = (props: {
-  callback: (args: { fontSize: number; fontFamily: string }) => void;
+  callback: (args: EditorSettingsProps) => void;
 }) => {
   const [isOpened, setIsOpened] = useState(false);
-  const [fontSize, setFontSize] = useState(13);
-  const [fontFamily, setFontFamily] = useState("Fira Code");
+  const [fontSize, setFontSize] = useState(getDefaultEditorSettings().fontSize);
+  const [fontFamily, setFontFamily] = useState(
+    getDefaultEditorSettings().fontFamily
+  );
+  const [theme, setTheme] = useState<Theme>(getDefaultEditorSettings().theme);
 
   return (
     <>
@@ -49,7 +92,7 @@ const EditorSettings = (props: {
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
-            <DialogTitle>Code Runner settings</DialogTitle>
+            <DialogTitle>Code Editor settings</DialogTitle>
             <DialogDescription>
               Edit your preferances regarding your coding enviorment.
             </DialogDescription>
@@ -82,12 +125,35 @@ const EditorSettings = (props: {
                 className="col-span-3"
               />
             </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="theme" className="text-right">
+                Color theme
+              </Label>
+              <Select
+                defaultValue={theme}
+                onValueChange={(newValue: SetStateAction<string>) => {
+                  setTheme(newValue.toString() as Theme);
+                }}
+              >
+                <SelectTrigger className="col-span-3 w-full">
+                  <SelectValue placeholder="Color theme" />
+                </SelectTrigger>
+                <SelectContent className="w-full">
+                  {themes.map((theme) => (
+                    <SelectItem value={theme.name} key={theme.name}>
+                      {theme.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>{" "}
+            </div>
           </div>
           <DialogFooter>
             <Button
               type="submit"
               onClick={() => {
-                props.callback({ fontSize, fontFamily });
+                props.callback({ fontSize, fontFamily, theme });
+                setEditorSettingsToStorage({ fontSize, fontFamily, theme });
                 setIsOpened(false);
               }}
             >

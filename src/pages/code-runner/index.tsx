@@ -4,7 +4,9 @@ import Head from "next/head";
 import Link from "next/link";
 import { type SetStateAction, useEffect, useState } from "react";
 import { PanelGroup, PanelResizeHandle, Panel } from "react-resizable-panels";
-import EditorSettings from "~/components/functional/EditorSettings";
+import EditorSettings, {
+  getDefaultEditorSettings,
+} from "~/components/functional/EditorSettings";
 import AppShell from "~/components/ui/AppShell";
 import { LoadingSpinner } from "~/components/ui/Loading";
 import {
@@ -21,14 +23,18 @@ import {
 } from "~/components/ui/Select";
 import { api } from "~/utils/api";
 import { getLanguage, supportedLanguages } from "~/utils/code";
+import { registerThemes, type Theme } from "~/utils/monaco-themes";
 
 const CodeRunnerPage: NextPage = () => {
   const [output, setOutput] = useState("");
   const [lang, setLang] = useState("cpp");
   const [code, setCode] = useState(getLanguage(lang).defaultCode);
   const [executing, setExecuting] = useState(false);
-  const [fontSize, setFontSize] = useState(13);
-  const [fontFamily, setFontFamily] = useState("Fira Code");
+  const [fontSize, setFontSize] = useState(getDefaultEditorSettings().fontSize);
+  const [fontFamily, setFontFamily] = useState(
+    getDefaultEditorSettings().fontFamily
+  );
+  const [theme, setTheme] = useState<Theme>(getDefaultEditorSettings().theme);
 
   const monaco = useMonaco();
   useEffect(() => {
@@ -231,7 +237,15 @@ const CodeRunnerPage: NextPage = () => {
       binarydigits: /[0-1]+(_+[0-1]+)*/,
       hexdigits: /[[0-9a-fA-F]+(_+[0-9a-fA-F]+)*/,
     });
-  }, [monaco]);
+
+    registerThemes(monaco);
+
+    setFontSize(getDefaultEditorSettings().fontSize);
+    setFontFamily(getDefaultEditorSettings().fontFamily);
+    setTheme(getDefaultEditorSettings().theme);
+
+    monaco.editor.setTheme(theme);
+  }, [monaco, theme]);
 
   const runCode = api.code.runCode.useMutation({
     onSuccess: (data) => {
@@ -340,7 +354,7 @@ const CodeRunnerPage: NextPage = () => {
               </div>
             </div>
           </Panel>
-          <PanelResizeHandle className="w-1 bg-secondary-600" />
+          <PanelResizeHandle className="w-1 bg-secondary-800 focus:bg-secondary-600" />
           <Panel minSize={70}>
             <PanelGroup direction="vertical">
               <Panel className="m-0" defaultSize={80} maxSize={90}>
@@ -369,16 +383,17 @@ const CodeRunnerPage: NextPage = () => {
                       callback={(args) => {
                         setFontSize(args.fontSize);
                         setFontFamily(args.fontFamily);
+                        setTheme(args.theme);
                       }}
                     />
                   </div>
                 </div>
                 <Editor
                   height="90vh"
-                  theme="vs-dark"
                   loading={<LoadingSpinner />}
                   defaultLanguage={lang}
                   language={lang}
+                  theme={theme as string}
                   options={{
                     smoothScrolling: true,
                     fontSize: fontSize,
@@ -390,7 +405,7 @@ const CodeRunnerPage: NextPage = () => {
                   onChange={handleEditorChange}
                 />
               </Panel>
-              <PanelResizeHandle className="h-1 bg-secondary-600" />
+              <PanelResizeHandle className="h-1 bg-secondary-800 focus:bg-secondary-600" />
               <Panel defaultSize={20} minSize={10} maxSize={30}>
                 <div className="h-full overflow-y-auto whitespace-pre rounded-md bg-secondary-800 p-2 font-mono text-sm">
                   {!executing ? (
