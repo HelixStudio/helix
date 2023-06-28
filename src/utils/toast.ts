@@ -9,3 +9,13 @@ export const toastSuccess = (msg: string) => {
     },
   });
 };
+
+export const toastPlain = (msg: string) => {
+  toast(msg, {
+    style: {
+      borderRadius: "10px",
+      background: "#333",
+      color: "#fff",
+    },
+  });
+};
