@@ -1,4 +1,4 @@
-import { SetStateAction, useState } from "react";
+import { type SetStateAction, useState } from "react";
 import { Button } from "~/components/ui/Button";
 import {
   Dialog,
@@ -48,7 +48,7 @@ export const getDefaultEditorSettings = (): EditorSettingsProps => {
   return {
     fontSize: 14,
     fontFamily: "Fira Code",
-    theme: "github",
+    theme: "dark-plus",
   };
 };
 
@@ -149,6 +149,28 @@ const EditorSettings = (props: {
             </div>
           </div>
           <DialogFooter>
+            <Button
+              type="submit"
+              variant={"outline"}
+              onClick={() => {
+                localStorage.removeItem("editorFontSize");
+                localStorage.removeItem("editorFontFamily");
+                localStorage.removeItem("editorTheme");
+
+                const defaults = getDefaultEditorSettings();
+
+                setFontSize(defaults.fontSize);
+                setFontFamily(defaults.fontFamily);
+                setTheme(defaults.theme);
+
+                props.callback(defaults);
+                setEditorSettingsToStorage(defaults);
+
+                setIsOpened(false);
+              }}
+            >
+              Reset to default
+            </Button>
             <Button
               type="submit"
               onClick={() => {
