@@ -9,7 +9,7 @@ const config = {
   reactStrictMode: true,
 
   images: {
-    domains: ["tailwindui.com"], // TODO
+    domains: ["media.discordapp.net"], // TODO
   },
 
   experimental: {

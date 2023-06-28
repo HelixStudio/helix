@@ -5,7 +5,18 @@ import Link from "next/link";
 import { type SetStateAction, useEffect, useState } from "react";
 import { PanelGroup, PanelResizeHandle, Panel } from "react-resizable-panels";
 import AppShell from "~/components/ui/AppShell";
-// import { Button } from "~/components/ui/Button";
+import { Button } from "~/components/ui/Button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "~/components/ui/Dialog";
+import { Input } from "~/components/ui/Input";
+import { Label } from "~/components/ui/Label";
 import { LoadingSpinner } from "~/components/ui/Loading";
 import {
   Popover,
@@ -333,7 +344,7 @@ const CodeRunnerPage: NextPage = () => {
                   <Link href="#" className="text-accent-400 underline">
                     Login
                   </Link>{" "}
-                  to be able to edit and manage multiple files.
+                  to be able to edit multiple files and save your projects.
                 </p>
               </div>
             </div>
@@ -363,22 +374,60 @@ const CodeRunnerPage: NextPage = () => {
                     </div>
                   </div>
                   <div className="mr-5 flex flex-row gap-3">
-                    <button onClick={() => alert("choose a layout")}>
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke-width="1.5"
-                        stroke="currentColor"
-                        className="h-6 w-6"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M10.5 6h9.75M10.5 6a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-9.75 0h9.75"
-                        />
-                      </svg>
-                    </button>
+                    <Dialog>
+                      <DialogTrigger asChild>
+                        <Button variant="outline">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke-width="1.5"
+                            stroke="currentColor"
+                            className="h-6 w-6"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              d="M10.5 6h9.75M10.5 6a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-9.75 0h9.75"
+                            />
+                          </svg>
+                        </Button>
+                      </DialogTrigger>
+                      <DialogContent className="sm:max-w-[425px]">
+                        <DialogHeader>
+                          <DialogTitle>Edit profile</DialogTitle>
+                          <DialogDescription>
+                            Make changes to your profile here. Click save when
+                            youre done.
+                          </DialogDescription>
+                        </DialogHeader>
+                        <div className="grid gap-4 py-4">
+                          <div className="grid grid-cols-4 items-center gap-4">
+                            <Label htmlFor="name" className="text-right">
+                              Name
+                            </Label>
+                            <Input
+                              id="name"
+                              value="Pedro Duarte"
+                              className="col-span-3"
+                            />
+                          </div>
+                          <div className="grid grid-cols-4 items-center gap-4">
+                            <Label htmlFor="username" className="text-right">
+                              Username
+                            </Label>
+                            <Input
+                              id="username"
+                              value="@peduarte"
+                              className="col-span-3"
+                            />
+                          </div>
+                        </div>
+                        <DialogFooter>
+                          <Button type="submit">Save changes</Button>
+                        </DialogFooter>
+                      </DialogContent>
+                    </Dialog>
                   </div>
                 </div>
                 <Editor
@@ -389,7 +438,7 @@ const CodeRunnerPage: NextPage = () => {
                   language={lang}
                   options={{
                     smoothScrolling: true,
-                    fontSize: 12,
+                    fontSize: 14,
                     fontFamily: "Fira Code",
                     fontLigatures: true,
                   }}

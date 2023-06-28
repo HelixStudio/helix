@@ -21,15 +21,16 @@ import {
 import { Button } from "~/components/ui/Button";
 import Link from "next/link";
 import { signIn } from "next-auth/react";
+import Footer from "../ui/Footer";
 
 const LandingPage = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const navigation = [
-    { name: "Problems", href: "#" },
-    { name: "Courses", href: "#" },
-    { name: "Forum", href: "#" },
-    { name: "About", href: "#" },
+    { name: "Online Judge", href: "/online-judge" },
+    { name: "Courses", href: "/courses" },
+    { name: "Forum", href: "/forum" },
+    { name: "About", href: "/about" },
   ];
 
   return (
@@ -57,13 +58,13 @@ const LandingPage = () => {
             </div>
             <div className="hidden lg:flex lg:gap-x-12">
               {navigation.map((item) => (
-                <a
+                <Link
                   key={item.name}
                   href={item.href}
                   className="rounded-lg px-2 py-1 text-sm leading-6 text-gray-100 transition-colors hover:bg-slate-800"
                 >
                   {item.name}
-                </a>
+                </Link>
               ))}
             </div>
             <div className="hidden lg:flex lg:flex-1 lg:justify-end">
@@ -113,8 +114,17 @@ const LandingPage = () => {
 
         <div className="relative isolate px-6 pb-20 lg:px-8">
           <div className="mx-auto max-w-2xl py-32 sm:py-48 lg:py-16">
-            <div className="hidden sm:mb-16 sm:flex sm:justify-center">
-              <div className="relative rounded-full bg-gray-800 px-3 py-1 text-sm leading-6 text-gray-100 ring-1 ring-gray-100/10 transition-colors hover:bg-gray-700 hover:ring-gray-200/20">
+            <div className="hidden p-3 sm:mb-16 sm:flex sm:justify-center">
+              <div
+                className="relative rounded-full bg-gray-800 px-3 py-1 text-sm 
+              leading-6 text-gray-100 ring-1 ring-gray-100/10 transition-colors hover:bg-gray-700 
+              hover:ring-gray-200/20"
+              >
+                <div
+                  className="absolute -inset-2 -z-30
+                 animate-pulse rounded-full bg-gradient-to-r from-purple-600
+                  to-pink-600 opacity-25 blur"
+                ></div>
                 We&apos;re launching!{" "}
                 <a href="#" className="text-accent-400">
                   <span className="absolute inset-0" aria-hidden="true" />
@@ -181,7 +191,7 @@ const LandingPage = () => {
                 <div className="min-h-full overflow-hidden rounded-lg border-2 border-slate-600">
                   <Image
                     className=""
-                    src="https://tailwindui.com/img/component-images/dark-project-app-screenshot.png"
+                    src="https://media.discordapp.net/attachments/739478958118010911/1118188070274088990/Screenshot_2023-06-13_at_17.39.20.png?width=2080&height=1046"
                     alt="App screenshot"
                     width={1824}
                     height={1080}
@@ -336,28 +346,7 @@ const LandingPage = () => {
           </div>
         </div>
 
-        <footer className="max-w-container mx-auto mt-32 w-full">
-          <div className="border-t border-slate-100/5 py-10">
-            <p className="text-center text-xl leading-6 text-slate-100">
-              Helix
-            </p>
-            <p className="mt-5 text-center text-sm leading-6 text-slate-100">
-              © 2023{" "}
-              <Link
-                className="hover:underline"
-                href="https://stefan-asandei.netlify.app"
-              >
-                Asandei Stefan-Alexandru
-              </Link>
-              . All rights reserved.
-            </p>
-            <div className="mt-6 flex items-center justify-center space-x-4 text-sm leading-6 text-slate-200">
-              <Link href="/privacy-policy">Privacy policy</Link>
-              <div className="h-4 w-px bg-slate-100/50"></div>
-              <Link href="/changelog">Changelog</Link>
-            </div>
-          </div>
-        </footer>
+        <Footer />
       </div>
     </>
   );

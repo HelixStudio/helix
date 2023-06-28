@@ -1,8 +1,8 @@
 import { type NextPage } from "next";
-import AppShell from "~/components/ui/AppShell";
+import { ComingSoonSection } from "~/components/sections/ComingSoon";
 
 const OnlineJudgePage: NextPage = () => {
-  return <AppShell>online judge</AppShell>;
+  return <ComingSoonSection title="Online Judge" />;
 };
 
 export default OnlineJudgePage;

@@ -8,6 +8,7 @@ import { Button } from "~/components/ui/Button";
 import { getServerAuthSession } from "~/server/auth";
 import { FaDiscord, FaGithub, FaGoogle, FaTwitter } from "react-icons/fa";
 import { type IconType } from "react-icons";
+import Link from "next/link";
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const session = await getServerAuthSession(context);
@@ -70,7 +71,15 @@ const SignInPage = ({
             ))}
           </div>
           <p className="mt-4">
-            By signing in, you agree to our Terms of Service and Privacy Policy.
+            By signing in, you agree to our{" "}
+            <Link href="/terms-of-service" className="hover:underline">
+              Terms of Service
+            </Link>{" "}
+            and{" "}
+            <Link href="/privacy-policy" className="hover:underline">
+              Privacy Policy
+            </Link>
+            .
           </p>
         </div>
       </main>

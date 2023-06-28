@@ -16,7 +16,7 @@ const CommandMenu = () => {
 
   useEffect(() => {
     const down = (e: KeyboardEvent) => {
-      if (e.key === "k" && e.metaKey) {
+      if ((e.key === "k" && e.metaKey) || (e.key === "/" && e.metaKey)) {
         setOpen((open) => !open);
       }
     };
