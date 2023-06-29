@@ -52,22 +52,24 @@ const OnlineJudgePage: NextPage = () => {
                   </th>
                 </tr>
               </thead>
-              <tbody className="text-sm font-light text-gray-100">
+              <tbody className="text-sm text-gray-100">
                 {problems.data?.map((problem) => (
                   <tr key={problem.id} className="hover:bg-secondary-800">
                     <td className="whitespace-nowrap px-6 py-3 text-left">
                       {problem.id}
                     </td>
-                    <td className="px-6 py-3 text-left">
+                    <td className="px-6 py-3 text-left text-accent-400 hover:underline">
                       <Link href={`/online-judge/${problem.id}`}>
                         {problem.title}
                       </Link>
                     </td>
-                    <td className="px-6 py-3 text-left">
+                    <td className="px-6 py-3 text-left hover:underline">
                       <Link href={problem.sourceLink}>{problem.source}</Link>
                     </td>
-                    <td className="px-6 py-3 text-left">
-                      {problem.author.name}
+                    <td className="px-6 py-3 text-left hover:underline">
+                      <Link href={`/user/${problem.author.id}`}>
+                        {problem.author.name}
+                      </Link>
                     </td>
                     <td className="hidden px-6 py-3 text-left md:table-cell">
                       {problem.diffuculty}

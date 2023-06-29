@@ -12,4 +12,12 @@ export const problemRouter = createTRPCRouter({
       });
       return problems;
     }),
+  getProblemById: publicProcedure
+    .input(z.object({ id: z.number() }))
+    .query(async ({ ctx, input }) => {
+      const problem = await ctx.prisma.problem.findUnique({
+        where: { id: input.id },
+      });
+      return problem;
+    }),
 });
