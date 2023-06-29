@@ -56,6 +56,7 @@ model User {
     created_groups   Group[]
     created_posts    Post[]
     created_comments Comment[]
+    created_problems Problem[]
     bookmarks        String[]  @default([])
     uploaded_images  String[]  @default([])
 }
@@ -97,4 +98,36 @@ model Comment {
     post      Post     @relation(fields: [postId], references: [id])
     postId    String
     message   String
+}
+
+model Problem {
+    id            Int      @id @default(autoincrement())
+    createdAt     DateTime @default(now())
+    updatedAt     DateTime @default(now()) @updatedAt
+    author        User     @relation(fields: [authorId], references: [id])
+    authorId      String
+    title         String
+    source        String
+    sourceLink    String
+    statement     String
+    inputFormat   String
+    outputFormat  String
+    inputs        String[]
+    outputs       String[]
+    notes         String
+    tags          String[] @default([])
+    solvedBy      Int      @default(0)
+    diffuculty    String
+    timeLimitMs   Int
+    memLimitBytes Int
+    tests         Test[]
+}
+
+model Test {
+    id        String  @id @default(uuid())
+    problem   Problem @relation(fields: [problemId], references: [id])
+    problemId Int
+    input     String
+    output    String
+    points    Int
 }
