@@ -3,14 +3,23 @@ import { type NextPage } from "next";
 import { useSession } from "next-auth/react";
 import Head from "next/head";
 import { useRouter } from "next/router";
+import { SetStateAction, useState } from "react";
 import { PanelGroup, Panel, PanelResizeHandle } from "react-resizable-panels";
 import { Scracthpad } from "~/components/sections/Scratchpad";
 import { StatementView } from "~/components/sections/StatementView";
 import AppShell from "~/components/ui/AppShell";
 import { Button } from "~/components/ui/Button";
 import { LoadingSection } from "~/components/ui/Loading";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "~/components/ui/Select";
 import UIPanel from "~/components/ui/UIPanel";
 import { api } from "~/utils/api";
+import { supportedLanguages } from "~/utils/code";
 import { toastPlain } from "~/utils/toast";
 
 const OnlineJudgePage: NextPage = () => {
@@ -20,6 +29,8 @@ const OnlineJudgePage: NextPage = () => {
   const problem = api.problem.getProblemById.useQuery({
     id: parseInt(router.query.id as string),
   });
+
+  const [lang, setLang] = useState("cpp");
 
   if (session.status === "loading" || problem.isLoading)
     return <LoadingSection />;
@@ -62,8 +73,36 @@ const OnlineJudgePage: NextPage = () => {
           <Panel defaultSize={50} minSize={20} maxSize={80}>
             <PanelGroup direction="vertical" className="min-h-screen">
               <Panel defaultSize={80} minSize={20} maxSize={90}>
-                code editor
-                {/* <UIPanel /> */}
+                <UIPanel
+                  pages={[]}
+                  leading={
+                    <div className="flex flex-row gap-3">
+                      <Select
+                        defaultValue={lang}
+                        onValueChange={(newValue: SetStateAction<string>) => {
+                          setLang(newValue.toString());
+                        }}
+                      >
+                        <SelectTrigger className="min-w-[6rem] max-w-[180px]">
+                          <SelectValue placeholder="Language" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {supportedLanguages.map((supLang) => (
+                            <SelectItem value={supLang.name} key={supLang.name}>
+                              {supLang.fancyName}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  }
+                  controls={
+                    <div className="flex flex-row gap-3">
+                      <Button variant={"outline"}>Submit</Button>
+                      <Button variant={"outline"}>Settings</Button>
+                    </div>
+                  }
+                />
               </Panel>
               <PanelResizeHandle className="h-1 bg-secondary-800 focus:bg-secondary-600" />
               <Panel defaultSize={20} minSize={10} maxSize={80}>
