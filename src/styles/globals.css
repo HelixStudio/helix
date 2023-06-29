@@ -18,6 +18,14 @@ html {
   stroke: var(--primary-400) !important;
 }
 
+#vim-bar input {
+  background: var(--secondary-700);
+}
+
+#vim-bar input:enabled {
+    outline: none;
+}
+
 pre {
   padding: 0 !important;
 }

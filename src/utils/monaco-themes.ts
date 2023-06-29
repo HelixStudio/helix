@@ -1,5 +1,4 @@
 import { type Monaco } from "@monaco-editor/react";
-import colors from "tailwindcss/colors";
 
 type BuiltinTheme = "vs" | "vs-dark" | "hc-black" | "hc-light";
 

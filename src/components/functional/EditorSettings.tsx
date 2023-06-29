@@ -19,11 +19,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/Select";
+import { Checkbox } from "../ui/Checkbox";
 
 export type EditorSettingsProps = {
   fontSize: number;
   fontFamily: string;
   theme: Theme;
+  vimMode: boolean;
 };
 
 const getEditorSettingFromStorage = (): EditorSettingsProps | null => {
@@ -33,6 +35,7 @@ const getEditorSettingFromStorage = (): EditorSettingsProps | null => {
     fontSize: parseInt(localStorage.getItem("editorFontSize") as string),
     fontFamily: localStorage.getItem("editorFontFamily") as string,
     theme: localStorage.getItem("editorTheme") as Theme,
+    vimMode: localStorage.getItem("editorVimMode") == "true",
   };
 };
 
@@ -40,6 +43,7 @@ const setEditorSettingsToStorage = (props: EditorSettingsProps) => {
   localStorage.setItem("editorFontSize", props.fontSize.toString());
   localStorage.setItem("editorFontFamily", props.fontFamily);
   localStorage.setItem("editorTheme", props.theme);
+  localStorage.setItem("editorVimMode", props.vimMode ? "true" : "false");
 };
 
 export const getDefaultEditorSettings = (): EditorSettingsProps => {
@@ -49,6 +53,7 @@ export const getDefaultEditorSettings = (): EditorSettingsProps => {
     fontSize: 14,
     fontFamily: "Fira Code",
     theme: "dark-plus",
+    vimMode: false,
   };
 };
 
@@ -61,6 +66,9 @@ const EditorSettings = (props: {
     getDefaultEditorSettings().fontFamily
   );
   const [theme, setTheme] = useState<Theme>(getDefaultEditorSettings().theme);
+  const [vimMode, setVimMode] = useState<boolean>(
+    getDefaultEditorSettings().vimMode
+  );
 
   return (
     <>
@@ -78,7 +86,7 @@ const EditorSettings = (props: {
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
-              stroke-width="1.5"
+              strokeWidth="1.5"
               stroke="currentColor"
               className="h-6 w-6"
             >
@@ -145,7 +153,18 @@ const EditorSettings = (props: {
                     </SelectItem>
                   ))}
                 </SelectContent>
-              </Select>{" "}
+              </Select>
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <label htmlFor="vim-mode" className="text-right">
+                Vim mode
+              </label>
+              <Checkbox
+                id="vim-mode"
+                className="col-span-3"
+                checked={vimMode}
+                onClick={() => setVimMode(!vimMode)}
+              />
             </div>
           </div>
           <DialogFooter>
@@ -162,6 +181,7 @@ const EditorSettings = (props: {
                 setFontSize(defaults.fontSize);
                 setFontFamily(defaults.fontFamily);
                 setTheme(defaults.theme);
+                setVimMode(defaults.vimMode);
 
                 props.callback(defaults);
                 setEditorSettingsToStorage(defaults);
@@ -174,8 +194,9 @@ const EditorSettings = (props: {
             <Button
               type="submit"
               onClick={() => {
-                props.callback({ fontSize, fontFamily, theme });
-                setEditorSettingsToStorage({ fontSize, fontFamily, theme });
+                const args = { fontSize, fontFamily, theme, vimMode };
+                props.callback(args);
+                setEditorSettingsToStorage(args);
                 setIsOpened(false);
               }}
             >

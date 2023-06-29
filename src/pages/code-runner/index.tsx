@@ -1,4 +1,8 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+/* eslint no-use-before-define: 0 */
 import { Editor, useMonaco } from "@monaco-editor/react";
+import { type editor } from "monaco-editor";
 import { type NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
@@ -35,6 +39,10 @@ const CodeRunnerPage: NextPage = () => {
     getDefaultEditorSettings().fontFamily
   );
   const [theme, setTheme] = useState<Theme>(getDefaultEditorSettings().theme);
+  const [vimMode, setVimMode] = useState<boolean>(false);
+  const [vim, setVim] = useState<{ dispose: () => void } | undefined>(
+    undefined
+  );
 
   const monaco = useMonaco();
   useEffect(() => {
@@ -243,9 +251,35 @@ const CodeRunnerPage: NextPage = () => {
     setFontSize(getDefaultEditorSettings().fontSize);
     setFontFamily(getDefaultEditorSettings().fontFamily);
     setTheme(getDefaultEditorSettings().theme);
+    setVimMode(getDefaultEditorSettings().vimMode);
 
     monaco.editor.setTheme(theme);
-  }, [monaco, theme]);
+
+    if (vimMode) {
+      const enableVim = (MonacoVim: {
+        initVimMode: (
+          arg0: editor.ICodeEditor | undefined,
+          arg1: HTMLElement | null
+        ) => { dispose: () => void };
+      }) => {
+        setVim(
+          MonacoVim.initVimMode(
+            monaco.editor.getEditors()[0],
+            document.getElementById("vim-bar")
+          ) as { dispose: () => void }
+        );
+      };
+
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
+      window.require(["monaco-vim"], enableVim);
+    } else {
+      if (vim != undefined) {
+        vim.dispose();
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [monaco, theme, vimMode]);
 
   const runCode = api.code.runCode.useMutation({
     onSuccess: (data) => {
@@ -256,6 +290,17 @@ const CodeRunnerPage: NextPage = () => {
 
   const handleEditorChange = (value: string | undefined, _: unknown) => {
     setCode(value as string);
+  };
+
+  const handleEditorMount = (_editor: unknown, _monaco: unknown) => {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+    window.require.config({
+      paths: {
+        "monaco-vim": "https://unpkg.com/monaco-vim@0.4.0/dist/monaco-vim.js",
+      },
+    });
   };
 
   const run = () => {
@@ -378,12 +423,21 @@ const CodeRunnerPage: NextPage = () => {
                       </svg>
                     </div>
                   </div>
-                  <div className="mr-5 flex flex-row gap-3">
+                  <div className="mr-5 flex flex-row items-center gap-3">
+                    <div>
+                      {vimMode && (
+                        <div
+                          className="mr-3 bg-secondary-700 font-mono text-primary-500"
+                          id="vim-bar"
+                        ></div>
+                      )}
+                    </div>
                     <EditorSettings
                       callback={(args) => {
                         setFontSize(args.fontSize);
                         setFontFamily(args.fontFamily);
                         setTheme(args.theme);
+                        setVimMode(args.vimMode);
                       }}
                     />
                   </div>
@@ -403,6 +457,7 @@ const CodeRunnerPage: NextPage = () => {
                   defaultValue={code}
                   value={code}
                   onChange={handleEditorChange}
+                  onMount={handleEditorMount}
                 />
               </Panel>
               <PanelResizeHandle className="h-1 bg-secondary-800 focus:bg-secondary-600" />
