@@ -12,6 +12,7 @@ const UIPanel = (props: {
   pages: PanelPage[];
   leading?: React.ReactNode;
   controls?: React.ReactNode;
+  children: React.ReactNode;
 }) => {
   const PAGE_LENGTH = 107;
 
@@ -54,6 +55,7 @@ const UIPanel = (props: {
       </div>
       <div className="h-full bg-secondary-800 px-3">
         {activePage?.component}
+        {props.pages.length == 0 && props.children}
       </div>
     </div>
   );
