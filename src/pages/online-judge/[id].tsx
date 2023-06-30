@@ -1,9 +1,9 @@
-import { type Problem } from "@prisma/client";
 import { type NextPage } from "next";
 import { useSession } from "next-auth/react";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { PanelGroup, Panel, PanelResizeHandle } from "react-resizable-panels";
+import { type ProblemMetadata } from "~/components/sections/StatementView";
 import Editor from "~/components/sections/online-judge/Editor";
 import Informations from "~/components/sections/online-judge/Informations";
 import Solutions from "~/components/sections/online-judge/Solutions";
@@ -36,7 +36,7 @@ const OnlineJudgePage: NextPage = () => {
       <main className="h-screen bg-secondary-700 text-white">
         <PanelGroup direction="horizontal" className="min-h-screen">
           <Panel defaultSize={44} minSize={42} maxSize={70}>
-            <Informations problem={problem.data as Problem} />
+            <Informations problem={problem.data as ProblemMetadata} />
           </Panel>
           <PanelResizeHandle className="w-1 bg-secondary-700 focus:bg-secondary-600" />
           <Panel defaultSize={56} minSize={30} maxSize={58}>

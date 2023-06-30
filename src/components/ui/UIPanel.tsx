@@ -53,7 +53,7 @@ const UIPanel = (props: {
         {props.pages.length == 0 && props.leading}
         {props.controls !== undefined && props.controls}
       </div>
-      <div className="h-full bg-secondary-800 px-3">
+      <div className="h-full overflow-y-scroll bg-secondary-800 px-3">
         {activePage?.component}
         {props.pages.length == 0 && props.children}
       </div>
