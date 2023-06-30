@@ -78,3 +78,17 @@ pre {
     font-feature-settings: "rlig" 1, "calt" 1;
   }
 }
+
+.custom-excalidraw .excalidraw {
+  --color-primary: #fcc6d9;
+  --color-primary-darker: #f783ac;
+  --color-primary-darkest: #e64980;
+  --color-primary-light: #f2a9c4;
+}
+
+.custom-excalidraw.excalidraw.theme--dark {
+  --color-primary: #aed494;
+  --color-primary-darker: #51d64c;
+  --color-primary-darkest: #e86e99;
+  --color-primary-light: #dcbec9;
+}

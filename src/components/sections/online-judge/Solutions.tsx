@@ -1,4 +1,3 @@
-import { Scracthpad } from "~/components/sections/Scratchpad";
 import UIPanel from "~/components/ui/UIPanel";
 
 const Solutions = () => {
@@ -8,15 +7,15 @@ const Solutions = () => {
         pages={[
           {
             name: "Solutions",
-            component: <Scracthpad />,
+            component: <p>solutions</p>,
           },
           {
             name: "Your tests",
-            component: <Scracthpad />,
+            component: <p>your tests</p>,
           },
           {
             name: "Results",
-            component: <Scracthpad />,
+            component: <p>results</p>,
           },
         ]}
         controls={<></>}

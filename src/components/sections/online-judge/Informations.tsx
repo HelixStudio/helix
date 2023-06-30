@@ -1,10 +1,9 @@
-import { type Problem } from "@prisma/client";
 import { Button } from "~/components/ui/Button";
 import UIPanel from "~/components/ui/UIPanel";
 import { Scracthpad } from "../Scratchpad";
-import { StatementView } from "../StatementView";
+import { type ProblemMetadata, StatementView } from "../StatementView";
 
-const Informations = (props: { problem: Problem }) => {
+const Informations = (props: { problem: ProblemMetadata }) => {
   return (
     <div className="h-full">
       <UIPanel
@@ -13,13 +12,13 @@ const Informations = (props: { problem: Problem }) => {
             name: "Statement",
             component: <StatementView problem={props.problem} />,
           },
-          {
-            name: "Scratchpad",
-            component: <Scracthpad />,
-          },
+          // {
+          //   name: "Scratchpad",
+          //   component: <Scracthpad />,
+          // },
           {
             name: "Editorial",
-            component: <Scracthpad />,
+            component: <p>Editorial</p>,
           },
         ]}
         controls={
