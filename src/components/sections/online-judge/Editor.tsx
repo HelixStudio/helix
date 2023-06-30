@@ -9,9 +9,15 @@ import { supportedLanguages } from "~/utils/code";
 import { Button } from "~/components/ui/Button";
 import UIPanel from "~/components/ui/UIPanel";
 import { type SetStateAction, useState } from "react";
+import CodeEditor, {
+  codeEditorDefaults,
+} from "~/components/functional/CodeEditor";
+import EditorSettings from "~/components/functional/EditorSettings";
 
 const Editor = () => {
-  const [lang, setLang] = useState("cpp");
+  const [settings, setSettings] = useState(codeEditorDefaults);
+  const [lang, setLang] = useState(settings.lang);
+  const [code, setCode] = useState(settings.initialCode);
 
   return (
     <div className="h-full">
@@ -23,6 +29,15 @@ const Editor = () => {
               defaultValue={lang}
               onValueChange={(newValue: SetStateAction<string>) => {
                 setLang(newValue.toString());
+                setSettings({
+                  fontFamily: settings.fontFamily,
+                  fontSize: settings.fontSize,
+                  theme: settings.theme,
+                  vimMode: settings.vimMode,
+
+                  lang: newValue.toString(),
+                  initialCode: settings.initialCode,
+                });
               }}
             >
               <SelectTrigger className="min-w-[8rem] max-w-[180px]">
@@ -40,12 +55,39 @@ const Editor = () => {
         }
         controls={
           <div className="flex flex-row gap-3">
-            <Button variant={"outline"}>Submit</Button>
-            <Button variant={"outline"}>Settings</Button>
+            <Button
+              variant={"outline"}
+              onClick={() => {
+                alert(
+                  JSON.stringify({
+                    code: code,
+                    lang: lang,
+                  })
+                );
+              }}
+            >
+              Submit
+            </Button>
+            <EditorSettings
+              callback={(args) => {
+                setSettings({
+                  fontFamily: args.fontFamily,
+                  fontSize: args.fontSize,
+                  theme: args.theme,
+                  vimMode: args.vimMode,
+
+                  lang: lang,
+                  initialCode: settings.initialCode,
+                });
+              }}
+            />
           </div>
         }
       >
-        yes
+        <CodeEditor
+          settings={settings}
+          onCodeChange={(newCode) => setCode(newCode)}
+        />
       </UIPanel>
     </div>
   );

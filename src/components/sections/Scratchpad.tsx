@@ -1,7 +1,5 @@
 "use client";
 
-import { serializeAsJSON } from "@excalidraw/excalidraw";
-import { type ExcalidrawElement } from "@excalidraw/excalidraw/types/element/types";
 import {
   type ExcalidrawProps,
   type ExcalidrawAPIRefValue,

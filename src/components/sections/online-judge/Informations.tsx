@@ -1,6 +1,6 @@
 import { Button } from "~/components/ui/Button";
 import UIPanel from "~/components/ui/UIPanel";
-import { Scracthpad } from "../Scratchpad";
+// import { Scracthpad } from "../Scratchpad";
 import { type ProblemMetadata, StatementView } from "../StatementView";
 
 const Informations = (props: { problem: ProblemMetadata }) => {
