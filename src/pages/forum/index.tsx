@@ -89,6 +89,7 @@ const ForumPage: NextPage = () => {
           </div>
           <div className="px-3 sm:px-0">
             <TabsContent value="best">
+              {bestPosts.data?.length == 0 && <p>There are no posts.</p>}
               {bestPosts.data?.map((post) => (
                 <PostPreview
                   post={post}
@@ -98,6 +99,7 @@ const ForumPage: NextPage = () => {
               ))}
             </TabsContent>
             <TabsContent value="new">
+              {posts.data?.length == 0 && <p>There are no posts.</p>}
               {posts.data?.map((post) => (
                 <PostPreview
                   post={post}

@@ -84,22 +84,26 @@ const ForumSettings = () => {
           <TabsTrigger value="new-group">Create group</TabsTrigger>
         </TabsList>
         <TabsContent value="your-groups">
-          <ul className="ml-7 list-disc">
-            {yourGroups.data?.map((group) => (
-              <li key={group.id}>
-                <Link
-                  href={`forum/group/${group.name}`}
-                  className="w-fit hover:underline"
-                >
-                  {group.name}
-                </Link>
-                :
-                {` ${group.joined.length ?? 0} member${
-                  group.joined.length != 1 ? "s" : ""
-                } joined`}
-              </li>
-            ))}
-          </ul>
+          {(yourGroups.data?.length as number) > 0 ? (
+            <ul className="ml-7 list-disc">
+              {yourGroups.data?.map((group) => (
+                <li key={group.id}>
+                  <Link
+                    href={`forum/group/${group.name}`}
+                    className="w-fit hover:underline"
+                  >
+                    {group.name}
+                  </Link>
+                  :
+                  {` ${group.joined.length ?? 0} member${
+                    group.joined.length != 1 ? "s" : ""
+                  } joined`}
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p>You have no groups.</p>
+          )}
         </TabsContent>
         <TabsContent value="new-group">
           <Form {...form}>

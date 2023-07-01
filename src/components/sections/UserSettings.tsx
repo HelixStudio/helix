@@ -28,7 +28,6 @@ import {
 } from "../ui/Select";
 import { colorThemes, themeAtom } from "~/utils/atoms";
 import { useAtom } from "jotai";
-import { Label } from "../ui/Label";
 
 const UserSettings = () => {
   const { data: user, isLoading } = api.user.getMetadata.useQuery({
