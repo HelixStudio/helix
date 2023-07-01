@@ -46,6 +46,7 @@
     "framer-motion": "^10.12.17",
     "highlight.js": "^11.8.0",
     "isomorphic-dompurify": "^1.6.0",
+    "jotai": "^2.2.1",
     "lucide-react": "^0.221.0",
     "marked": "^5.0.4",
     "monaco-vim": "^0.4.0",

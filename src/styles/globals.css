@@ -23,7 +23,7 @@ html {
 }
 
 #vim-bar input:enabled {
-    outline: none;
+  outline: none;
 }
 
 pre {
@@ -31,6 +31,54 @@ pre {
 }
 
 @layer base {
+  .red {
+    --accent-400: 0 91% 71%;
+    --accent-500: 0 84% 60%;
+    --accent-600: 0 72% 51%;
+  }
+
+  .orange {
+    --accent-400: 27 96% 61%;
+    --accent-500: 25 95% 53%;
+    --accent-600: 21 90% 48%;
+  }
+
+  .amber {
+    --accent-400: 43 96% 56%;
+    --accent-500: 38 92% 50%;
+    --accent-600: 32 95% 44%;
+  }
+
+  .green {
+    --accent-400: 142 69% 58%;
+    --accent-500: 142 71% 45%;
+    --accent-600: 142 76% 36%;
+  }
+
+  .teal {
+    --accent-400: 172 66% 50%;
+    --accent-500: 173 80% 40%;
+    --accent-600: 175 84% 32%;
+  }
+
+  .blue {
+    --accent-400: 213 94% 68%;
+    --accent-500: 199 89% 48%;
+    --accent-600: 200 98% 39%;
+  }
+
+  .indigo {
+    --accent-400: 234 89% 74%;
+    --accent-500: 239 84% 67%;
+    --accent-600: 243 75% 59%;
+  }
+
+  .pink {
+    --accent-400: 329 86% 70%;
+    --accent-500: 330 81% 60%;
+    --accent-600: 333 71% 51%;
+  }
+
   :root {
     --background: 224 71% 4%;
     --foreground: 213 31% 91%;
@@ -44,9 +92,9 @@ pre {
     --secondary-800: 240 6% 10%;
     --secondary-900: 240 10% 4%;
 
-    --accent-400: 329 86% 70%;
+    /* --accent-400: 329 86% 70%;
     --accent-500: 330 81% 60%;
-    --accent-600: 333 71% 51%;
+    --accent-600: 333 71% 51%; */
 
     --popover: 224 71% 4%;
     --popover-foreground: 215 20.2% 65.1%;

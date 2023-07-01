@@ -17,6 +17,18 @@ import { api } from "~/utils/api";
 import { Textarea } from "~/components/ui/Textarea";
 import { useEffect } from "react";
 import { toastSuccess } from "~/utils/toast";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/Select";
+import { colorThemes, themeAtom } from "~/utils/atoms";
+import { useAtom } from "jotai";
+import { Label } from "../ui/Label";
 
 const UserSettings = () => {
   const { data: user, isLoading } = api.user.getMetadata.useQuery({
@@ -48,6 +60,8 @@ const UserSettings = () => {
     });
     toastSuccess("Settings saved!");
   };
+
+  const [theme, setTheme] = useAtom(themeAtom);
 
   useEffect(() => {
     if (user === null || user === undefined) return;
@@ -104,6 +118,32 @@ const UserSettings = () => {
               </FormItem>
             )}
           />
+          <div className="flex flex-row items-center gap-3">
+            <p>Color theme:</p>
+            <Select
+              defaultValue={theme}
+              onValueChange={(newTheme) => setTheme(newTheme)}
+            >
+              <SelectTrigger className="max-w-[150px]">
+                <SelectValue placeholder="color theme" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectLabel>Themes</SelectLabel>
+                  {colorThemes.map((ctheme) => (
+                    <SelectItem value={ctheme} key={ctheme} className="w-full">
+                      <div className="flex w-full flex-row items-center justify-between gap-2">
+                        <div
+                          className={`${ctheme} h-[20px] w-[20px] rounded-md bg-accent-500`}
+                        ></div>
+                        <p>{ctheme}</p>
+                      </div>
+                    </SelectItem>
+                  ))}
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+          </div>
           <Button type="submit">Update</Button>
         </form>
       </Form>
