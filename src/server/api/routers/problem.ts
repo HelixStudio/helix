@@ -1,6 +1,10 @@
 import { z } from "zod";
 
-import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
+import {
+  createTRPCRouter,
+  protectedProcedure,
+  publicProcedure,
+} from "~/server/api/trpc";
 
 export const problemRouter = createTRPCRouter({
   getProblems: publicProcedure
@@ -20,5 +24,56 @@ export const problemRouter = createTRPCRouter({
         include: { author: { select: { name: true, id: true } } },
       });
       return problem;
+    }),
+  postProblemDraft: protectedProcedure
+    .input(
+      z.object({
+        authorId: z.string().cuid(),
+        title: z.string(),
+        source: z.string(),
+        sourceLink: z.string(),
+        statement: z.string(),
+        inputFormat: z.string(),
+        outputFormat: z.string(),
+        // inputs: z.array(z.string()), //
+        // outputs: z.array(z.string()), //
+        notes: z.string(),
+        tags: z.array(z.string()),
+        difficulty: z.string(),
+        timeLimitMs: z.number(),
+        memLimitBytes: z.number(),
+        // tests: z.array(
+        //   z.object({
+        //     input: z.string(),
+        //     output: z.string(),
+        //     points: z.number(),
+        //   })
+        // ),
+        // editorial: z.string(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      await ctx.prisma.problem.create({
+        data: {
+          authorId: input.authorId,
+          title: input.title,
+          source: input.source,
+          sourceLink: input.sourceLink,
+          statement: input.statement,
+          inputFormat: input.inputFormat,
+          outputFormat: input.outputFormat,
+          // inputs: input.inputs,
+          // outputs: input.outputs,
+          notes: input.notes,
+          tags: input.tags,
+          difficulty: input.difficulty,
+          timeLimitMs: input.timeLimitMs,
+          memLimitBytes: input.memLimitBytes,
+          // tests: {
+          //   create: input.tests,
+          // }
+          draft: true,
+        },
+      });
     }),
 });

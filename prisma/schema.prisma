@@ -112,15 +112,16 @@ model Problem {
     statement     String
     inputFormat   String
     outputFormat  String
-    inputs        String[]
-    outputs       String[]
+    inputs        String[] @default([])
+    outputs       String[] @default([])
     notes         String
     tags          String[] @default([])
     solvedBy      Int      @default(0)
-    diffuculty    String
+    difficulty    String   @default("")
     timeLimitMs   Int
     memLimitBytes Int
     tests         Test[]
+    draft         Boolean  @default(true)
 }
 
 model Test {

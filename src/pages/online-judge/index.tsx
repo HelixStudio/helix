@@ -27,7 +27,7 @@ const OnlineJudgePage: NextPage = () => {
       <Head>
         <title>Helix | Online Judge</title>
       </Head>
-      <main className="min-h-screen bg-secondary-700 text-white">
+      <main className="bg-secondary-700 text-white">
         <div className="m-3 ml-auto mr-auto max-w-5xl p-3">
           <h2 className="items-center text-3xl font-bold tracking-tight sm:text-4xl">
             Problem Set
@@ -43,7 +43,7 @@ const OnlineJudgePage: NextPage = () => {
                   <th className="px-6 py-3 text-left">ID</th>
                   <th className="px-6 py-3 text-left">Title</th>
                   <th className="px-6 py-3 text-left">Source</th>
-                  <th className="px-6 py-3 text-left">Author / Publisher</th>
+                  <th className="px-6 py-3 text-left">Author</th>
                   <th className="hidden px-6 py-3 text-left md:table-cell">
                     Difficulty
                   </th>
@@ -53,32 +53,35 @@ const OnlineJudgePage: NextPage = () => {
                 </tr>
               </thead>
               <tbody className="text-sm text-gray-100">
-                {problems.data?.map((problem) => (
-                  <tr key={problem.id} className="hover:bg-secondary-800">
-                    <td className="whitespace-nowrap px-6 py-3 text-left">
-                      {problem.id}
-                    </td>
-                    <td className="px-6 py-3 text-left text-accent-400 hover:underline">
-                      <Link href={`/online-judge/${problem.id}`}>
-                        {problem.title}
-                      </Link>
-                    </td>
-                    <td className="px-6 py-3 text-left hover:underline">
-                      <Link href={problem.sourceLink}>{problem.source}</Link>
-                    </td>
-                    <td className="px-6 py-3 text-left hover:underline">
-                      <Link href={`/user/${problem.author.id}`}>
-                        {problem.author.name}
-                      </Link>
-                    </td>
-                    <td className="hidden px-6 py-3 text-left md:table-cell">
-                      {problem.diffuculty}
-                    </td>
-                    <td className="hidden px-6 py-3 text-left md:table-cell">
-                      {problem.tags.toString()}
-                    </td>
-                  </tr>
-                ))}
+                {problems.data?.map((problem) => {
+                  if (problem.draft) return;
+                  return (
+                    <tr key={problem.id} className="hover:bg-secondary-800">
+                      <td className="whitespace-nowrap px-6 py-3 text-left">
+                        {problem.id}
+                      </td>
+                      <td className="px-6 py-3 text-left text-accent-400 hover:underline">
+                        <Link href={`/online-judge/${problem.id}`}>
+                          {problem.title}
+                        </Link>
+                      </td>
+                      <td className="px-6 py-3 text-left hover:underline">
+                        <Link href={problem.sourceLink}>{problem.source}</Link>
+                      </td>
+                      <td className="px-6 py-3 text-left hover:underline">
+                        <Link href={`/user/${problem.author.id}`}>
+                          {problem.author.name}
+                        </Link>
+                      </td>
+                      <td className="hidden px-6 py-3 text-left md:table-cell">
+                        {problem.difficulty}
+                      </td>
+                      <td className="hidden px-6 py-3 text-left md:table-cell">
+                        {problem.tags.toString()}
+                      </td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           </div>
