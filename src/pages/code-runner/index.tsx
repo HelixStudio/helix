@@ -25,7 +25,9 @@ import {
   SelectContent,
   SelectItem,
 } from "~/components/ui/Select";
+import { Textarea } from "~/components/ui/Textarea";
 import { api } from "~/utils/api";
+import { cn } from "~/utils/cn";
 import { getLanguage, supportedLanguages } from "~/utils/code";
 import { registerThemes, type Theme } from "~/utils/monaco-themes";
 
@@ -43,6 +45,9 @@ const CodeRunnerPage: NextPage = () => {
   const [vim, setVim] = useState<{ dispose: () => void } | undefined>(
     undefined
   );
+
+  const [currentTab, setCurrentTab] = useState<"output" | "input">("output");
+  const [input, setInput] = useState("");
 
   const monaco = useMonaco();
   useEffect(() => {
@@ -305,7 +310,8 @@ const CodeRunnerPage: NextPage = () => {
 
   const run = () => {
     setExecuting(true);
-    runCode.mutate({ code: code, language: lang });
+    setCurrentTab("output");
+    runCode.mutate({ code: code, language: lang, input: input });
   };
 
   return (
@@ -461,19 +467,62 @@ const CodeRunnerPage: NextPage = () => {
                 />
               </Panel>
               <PanelResizeHandle className="h-1 bg-secondary-800 focus:bg-secondary-600" />
-              <Panel defaultSize={20} minSize={10} maxSize={30}>
-                <div className="h-full overflow-y-auto whitespace-pre rounded-md bg-secondary-800 p-2 font-mono text-sm">
-                  {!executing ? (
-                    <span>
-                      {output != ""
-                        ? output
-                        : "Run your code to see the output!"}
-                    </span>
+              <Panel
+                defaultSize={20}
+                minSize={10}
+                maxSize={30}
+                className="flex h-full flex-col"
+              >
+                <div className="h-full overflow-y-auto whitespace-pre bg-secondary-800 p-2 font-mono text-sm">
+                  {currentTab == "output" ? (
+                    !executing ? (
+                      <span>
+                        {output != ""
+                          ? output
+                          : "Run your code to see the output!"}
+                      </span>
+                    ) : (
+                      <div className="flex min-h-full items-center justify-center">
+                        <LoadingSpinner size={50} />
+                      </div>
+                    )
                   ) : (
-                    <div className="flex min-h-full items-center justify-center">
-                      <LoadingSpinner size={50} />
+                    <></>
+                  )}
+                  {currentTab == "input" && (
+                    <div>
+                      <Textarea
+                        value={input}
+                        onChange={(e) => setInput(e.target.value)}
+                        placeholder="Write your input data here!"
+                        className="border-none ring-0"
+                      ></Textarea>
                     </div>
                   )}
+                </div>
+                <div className="flex max-h-10 w-full flex-row gap-5 bg-secondary-700 transition-all">
+                  <button
+                    className={cn(
+                      "rounded-sm border-2 p-1 transition-all hover:bg-secondary-600",
+                      currentTab == "output"
+                        ? "border-secondary-600"
+                        : "border-secondary-700"
+                    )}
+                    onClick={() => setCurrentTab("output")}
+                  >
+                    output
+                  </button>
+                  <button
+                    className={cn(
+                      "rounded-sm border-2 p-1 transition-all hover:bg-secondary-600",
+                      currentTab == "input"
+                        ? "border-secondary-600"
+                        : "border-secondary-700"
+                    )}
+                    onClick={() => setCurrentTab("input")}
+                  >
+                    input
+                  </button>
                 </div>
               </Panel>
             </PanelGroup>

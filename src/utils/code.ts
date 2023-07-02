@@ -33,7 +33,8 @@ export const getLanguage = (lang: string): Language => {
 
 export const runCode = async (
   code: string,
-  lang: string
+  lang: string,
+  input?: string
 ): Promise<Output | undefined> => {
   const version = getLanguageVersion(lang);
   if (version == "") return undefined;
@@ -47,6 +48,7 @@ export const runCode = async (
         content: code,
       },
     ],
+    stdin: input,
   });
 
   return res.data as Output;
