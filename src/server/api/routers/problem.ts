@@ -21,7 +21,10 @@ export const problemRouter = createTRPCRouter({
     .query(async ({ ctx, input }) => {
       const problem = await ctx.prisma.problem.findUnique({
         where: { id: input.id },
-        include: { author: { select: { name: true, id: true } } },
+        include: {
+          author: { select: { name: true, id: true } },
+          tests: { select: { input: true, output: true } },
+        },
       });
       return problem;
     }),
@@ -35,21 +38,11 @@ export const problemRouter = createTRPCRouter({
         statement: z.string(),
         inputFormat: z.string(),
         outputFormat: z.string(),
-        // inputs: z.array(z.string()), //
-        // outputs: z.array(z.string()), //
         notes: z.string(),
         tags: z.array(z.string()),
         difficulty: z.string(),
         timeLimitMs: z.number(),
         memLimitBytes: z.number(),
-        // tests: z.array(
-        //   z.object({
-        //     input: z.string(),
-        //     output: z.string(),
-        //     points: z.number(),
-        //   })
-        // ),
-        // editorial: z.string(),
       })
     )
     .mutation(async ({ ctx, input }) => {
@@ -62,17 +55,67 @@ export const problemRouter = createTRPCRouter({
           statement: input.statement,
           inputFormat: input.inputFormat,
           outputFormat: input.outputFormat,
-          // inputs: input.inputs,
-          // outputs: input.outputs,
           notes: input.notes,
           tags: input.tags,
           difficulty: input.difficulty,
           timeLimitMs: input.timeLimitMs,
           memLimitBytes: input.memLimitBytes,
-          // tests: {
-          //   create: input.tests,
-          // }
           draft: true,
+        },
+      });
+    }),
+  addTestsToDraft: protectedProcedure
+    .input(
+      z.object({
+        id: z.number(),
+        input: z.string(),
+        output: z.string(),
+        points: z.number(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      await ctx.prisma.problem.update({
+        where: { id: input.id },
+        data: {
+          tests: {
+            create: {
+              input: input.input,
+              output: input.output,
+              points: input.points,
+            },
+          },
+        },
+      });
+    }),
+  addExampleToDraft: protectedProcedure
+    .input(
+      z.object({
+        id: z.number(),
+        input: z.string(),
+        output: z.string(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      await ctx.prisma.problem.update({
+        where: { id: input.id },
+        data: {
+          inputs: { push: input.input },
+          outputs: { push: input.output },
+        },
+      });
+    }),
+  submitToReview: protectedProcedure
+    .input(
+      z.object({
+        id: z.number(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      // TODO: actually submit for review in the future...
+      await ctx.prisma.problem.update({
+        where: { id: input.id },
+        data: {
+          draft: false,
         },
       });
     }),

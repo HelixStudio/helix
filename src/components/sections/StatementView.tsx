@@ -43,24 +43,26 @@ export const StatementView = (props: { problem: ProblemMetadata }) => {
       </div>
       <div className="my-2">
         <p className="text-2xl">Examples</p>
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>Input</TableHead>
-              <TableHead>Output</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {props.problem.inputs.map((input, index) => (
-              <TableRow key={input}>
-                <TableCell className="font-mono">{input}</TableCell>
-                <TableCell className="font-mono">
-                  {props.problem.outputs[index]}
-                </TableCell>
+        {props.problem.inputs.length > 0 && (
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Input</TableHead>
+                <TableHead>Output</TableHead>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+            </TableHeader>
+            <TableBody>
+              {props.problem.inputs.map((input, index) => (
+                <TableRow key={input}>
+                  <TableCell className="font-mono">{input}</TableCell>
+                  <TableCell className="font-mono">
+                    {props.problem.outputs[index]}
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        )}
       </div>
       <div className="my-2">
         <p className="text-2xl">Notes</p>
