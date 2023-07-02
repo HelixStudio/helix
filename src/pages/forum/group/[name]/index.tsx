@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-non-null-asserted-optional-chain */
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { type NextPage } from "next";
 import { useRouter } from "next/router";
 import AppShell from "~/components/ui/AppShell";
@@ -54,11 +56,17 @@ const GroupPage: NextPage = () => {
             {dayjs(group.data?.createdAt).fromNow()}
           </p>
           <p className="pb-2">{group.data?.description}</p>
-          <div>
-            {group.data?.rules.map((rule) => (
-              <p key={rule}>{rule}</p>
-            ))}
-          </div>
+          {group.data?.rules.length! > 0 && (
+            <div>
+              <p>Rules:</p>
+              <ul className="ml-3 list-disc">
+                {group.data?.rules.map((rule) => {
+                  if (rule.trim().length < 1) return;
+                  return <li key={rule}>{rule}</li>;
+                })}
+              </ul>
+            </div>
+          )}
         </div>
         <div className="my-3">
           {group.data?.posts?.map((post) => (

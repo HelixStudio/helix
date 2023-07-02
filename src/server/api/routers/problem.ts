@@ -1,3 +1,4 @@
+import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 
 import {
@@ -14,7 +15,7 @@ export const problemRouter = createTRPCRouter({
         take: input.limit,
         include: { author: { select: { name: true, id: true } } },
       });
-      return problems;
+      return problems.filter((problem) => problem.draft == false);
     }),
   getProblemById: publicProcedure
     .input(z.object({ id: z.number() }))
@@ -26,6 +27,11 @@ export const problemRouter = createTRPCRouter({
           tests: { select: { input: true, output: true } },
         },
       });
+      if (problem?.draft && ctx.session?.user.id != problem.authorId)
+        throw new TRPCError({
+          code: "FORBIDDEN",
+          message: "You do not have access to this draft.",
+        });
       return problem;
     }),
   postProblemDraft: protectedProcedure

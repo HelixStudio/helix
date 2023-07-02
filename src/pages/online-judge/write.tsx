@@ -7,7 +7,6 @@ import { Button } from "~/components/ui/Button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -21,6 +20,7 @@ import AppShell from "~/components/ui/AppShell";
 import { LoadingSection } from "~/components/ui/Loading";
 import { api } from "~/utils/api";
 import { toastSuccess } from "~/utils/toast";
+import Link from "next/link";
 
 const WriteNewProblemPage: NextPage = () => {
   const session = useSession();
@@ -89,7 +89,19 @@ const WriteNewProblemPage: NextPage = () => {
             </h1>
             <p>
               This can be a hard process, take your time and fill the form
-              carefully.
+              carefully. Helpful paths:{" "}
+              <Link href="/write" className="text-accent-400 hover:underline">
+                /write
+              </Link>
+              ,{" "}
+              <Link href="/write" className="text-accent-400 hover:underline">
+                /draft/[id]
+              </Link>{" "}
+              and{" "}
+              <Link href="/write" className="text-accent-400 hover:underline">
+                /draft/tests?id=[id]
+              </Link>
+              . Where [id] is the id of the problem draft.
             </p>
           </div>
           <Form {...form}>
