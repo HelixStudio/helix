@@ -13,11 +13,15 @@ import CodeEditor, {
   codeEditorDefaults,
 } from "~/components/functional/CodeEditor";
 import EditorSettings from "~/components/functional/EditorSettings";
+import { api } from "~/utils/api";
+import { toastSuccess } from "~/utils/toast";
 
-const Editor = () => {
+const Editor = ({ problemId }: { problemId: number }) => {
   const [settings, setSettings] = useState(codeEditorDefaults);
   const [lang, setLang] = useState(settings.lang);
   const [code, setCode] = useState(settings.initialCode);
+
+  const sendSubmission = api.problem.sendSubmission.useMutation();
 
   return (
     <div className="h-full">
@@ -58,12 +62,12 @@ const Editor = () => {
             <Button
               variant={"outline"}
               onClick={() => {
-                alert(
-                  JSON.stringify({
-                    code: code,
-                    lang: lang,
-                  })
-                );
+                sendSubmission.mutate({
+                  language: lang,
+                  source: code,
+                  problemId: problemId,
+                });
+                toastSuccess("Submission sent!");
               }}
             >
               Submit

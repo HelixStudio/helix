@@ -6,6 +6,7 @@ import {
   protectedProcedure,
   publicProcedure,
 } from "~/server/api/trpc";
+import { TestOutput, testCode } from "~/utils/code";
 
 export const problemRouter = createTRPCRouter({
   getProblems: publicProcedure
@@ -124,5 +125,59 @@ export const problemRouter = createTRPCRouter({
           draft: false,
         },
       });
+    }),
+  getSubmissions: protectedProcedure
+    .input(
+      z.object({
+        problemId: z.number(),
+      })
+    )
+    .query(async ({ ctx, input }) => {
+      return await ctx.prisma.submission.findMany({
+        where: { problemId: input.problemId, userId: ctx.session.user.id },
+      });
+    }),
+  sendSubmission: protectedProcedure
+    .input(
+      z.object({
+        source: z.string(),
+        language: z.string(),
+        problemId: z.number(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      const tests = await ctx.prisma.test.findMany({
+        where: { problemId: input.problemId },
+      });
+
+      // refactor to do this on the client
+      // if it takes > 10 seconds
+      // known problems: compile errors in client's code
+      const res = await testCode(input.source, input.language, tests);
+      if (res == undefined)
+        throw new TRPCError({
+          code: "PARSE_ERROR",
+          message: "Error while parsing request on the server",
+        });
+
+      const submission = await ctx.prisma.submission.create({
+        data: {
+          problemId: input.problemId,
+          userId: ctx.session.user.id,
+          source: input.source,
+          language: input.language,
+          tests: {
+            createMany: {
+              data: res.map((test) => {
+                return {
+                  passed: test.points != 0,
+                  points: test.points,
+                };
+              }),
+            },
+          },
+        },
+      });
+      return submission;
     }),
 });

@@ -20,6 +20,13 @@ export interface Output {
   version: string;
 }
 
+export interface TestOutput {
+  input: string;
+  output: string;
+  points: number;
+  passed: boolean;
+}
+
 export const getLanguageVersion = (lang: string) => {
   const ver = supportedLanguages.find((l) => l.name == lang);
   if (ver != undefined) return ver.version;
@@ -52,6 +59,47 @@ export const runCode = async (
   });
 
   return res.data as Output;
+};
+
+export const testCode = async (
+  code: string,
+  lang: string,
+  tests: {
+    input: string;
+    output: string;
+    points: number;
+  }[]
+): Promise<TestOutput[] | undefined> => {
+  const endpoint = "https://exec-4lir.onrender.com/api/v1";
+  const res = await axios.post(
+    endpoint + "/test",
+    {
+      language: lang,
+      files: [
+        {
+          name: `file.${getLanguage(lang).extension}`,
+          content: code,
+        },
+      ],
+      tests: tests.map((test) => {
+        return {
+          input: test.input,
+          output: test.output,
+          points: test.points,
+          run_timeout: -1,
+          run_memory_limit: -1, // TODO
+        };
+      }),
+    },
+    {
+      headers: {
+        Accept: "*/*",
+        "Content-Type": "application/json",
+      },
+    }
+  );
+  console.log(res.data as TestOutput[]);
+  return res.data as TestOutput[];
 };
 
 // https://emkc.org/api/v2/piston/runtimes

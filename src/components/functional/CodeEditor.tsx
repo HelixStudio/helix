@@ -284,7 +284,7 @@ const CodeEditor = ({
         value={code}
         onChange={(value, _) => {
           setCode(value as string);
-          onCodeChange(code);
+          onCodeChange(value as string);
         }}
         onMount={() => {
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
