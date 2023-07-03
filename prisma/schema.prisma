@@ -1,72 +1,157 @@
 generator client {
-  provider        = "prisma-client-js"
-  previewFeatures = ["jsonProtocol"]
+    provider        = "prisma-client-js"
+    previewFeatures = ["jsonProtocol"]
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+}
+
+model Account {
+    id                String  @id @default(cuid())
+    userId            String
+    type              String
+    provider          String
+    providerAccountId String
+    refresh_token     String?
+    access_token      String?
+    expires_at        Int?
+    token_type        String?
+    scope             String?
+    id_token          String?
+    session_state     String?
+    user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    @@unique([provider, providerAccountId])
+}
+
+model Session {
+    id           String   @id @default(cuid())
+    sessionToken String   @unique
+    userId       String
+    expires      DateTime
+    user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+    identifier String
+    token      String   @unique
+    expires    DateTime
+
+    @@unique([identifier, token])
 }
 
 model User {
-  id        String    @id @default(uuid())
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @default(now()) @updatedAt
-  username  String    @unique
-  email     String    @unique
-  password  String
-  posts     Post[]
-  theme     String    @default("zinc green")
-  problems  Problem[]
-  solved    Json?
+    id               String       @id @default(cuid())
+    created_at       DateTime     @default(now())
+    updated_at       DateTime     @default(now()) @updatedAt
+    name             String?      @unique
+    email            String?      @unique
+    emailVerified    DateTime?
+    image            String?
+    bio              String?
+    accounts         Account[]
+    sessions         Session[]
+    created_groups   Group[]
+    created_posts    Post[]
+    created_comments Comment[]
+    created_problems Problem[]
+    bookmarks        String[]     @default([])
+    uploaded_images  String[]     @default([])
+    submissions      Submission[]
 }
 
-model Community {
-  id          String   @id @default(uuid())
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @default(now()) @updatedAt
-  name        String   @unique
-  description String
-  posts       Post[]
+model Group {
+    id          String   @id @default(uuid())
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @default(now()) @updatedAt
+    name        String   @unique
+    description String
+    rules       String[]
+    author      User     @relation(fields: [authorId], references: [id])
+    authorId    String
+    posts       Post[]
+    private     Boolean
+    joined      String[] @default([])
 }
 
 model Post {
-  id          String    @id @default(uuid())
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @default(now()) @updatedAt
-  author      User      @relation(fields: [authorId], references: [id])
-  authorId    String
-  community   Community @relation(fields: [communityId], references: [id])
-  communityId String
-  title       String
-  content     String
-  score       Int       @default(0)
-  likedBy     String[]  @default([])
-  dislikedBy  String[]  @default([])
+    id        String    @id @default(uuid())
+    createdAt DateTime  @default(now())
+    updatedAt DateTime  @default(now()) @updatedAt
+    author    User      @relation(fields: [authorId], references: [id])
+    authorId  String
+    group     Group     @relation(fields: [groupId], references: [id])
+    groupId   String
+    comments  Comment[]
+    title     String
+    content   String
+    likedBy   String[]  @default([])
+}
+
+model Comment {
+    id        String   @id @default(uuid())
+    createdAt DateTime @default(now())
+    updatedAt DateTime @default(now()) @updatedAt
+    author    User     @relation(fields: [authorId], references: [id])
+    authorId  String
+    post      Post     @relation(fields: [postId], references: [id])
+    postId    String
+    message   String
 }
 
 model Problem {
-  id         Int      @id @default(autoincrement())
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @default(now()) @updatedAt
-  author     User     @relation(fields: [authorId], references: [id])
-  authorId   String
-  title      String
-  source     String
-  sourceLink String
-  statement  String
-  input      String
-  output     String
-  samples    Json
-  notes      String
-  tests      Test[]
+    id            Int          @id @default(autoincrement())
+    createdAt     DateTime     @default(now())
+    updatedAt     DateTime     @default(now()) @updatedAt
+    author        User         @relation(fields: [authorId], references: [id])
+    authorId      String
+    title         String
+    source        String
+    sourceLink    String
+    statement     String
+    inputFormat   String
+    outputFormat  String
+    inputs        String[]     @default([])
+    outputs       String[]     @default([])
+    notes         String
+    tags          String[]     @default([])
+    solvedBy      Int          @default(0)
+    difficulty    String       @default("")
+    timeLimitMs   Int
+    memLimitBytes Int
+    tests         Test[]
+    draft         Boolean      @default(true)
+    submissions   Submission[]
 }
 
 model Test {
-  id        String  @id @default(uuid())
-  problem   Problem @relation(fields: [problemId], references: [id])
-  problemId Int
-  input     String
-  output    String
-  points    Int
+    id        String  @id @default(uuid())
+    problem   Problem @relation(fields: [problemId], references: [id])
+    problemId Int
+    input     String
+    output    String
+    points    Int
+}
+
+model SubmissionTest {
+    id           String      @id @default(uuid())
+    passed       Boolean
+    points       Int
+    failReason   String      @default("")
+    submission   Submission? @relation(fields: [submissionId], references: [id])
+    submissionId String?
+}
+
+model Submission {
+    id        String           @id @default(uuid())
+    createdAt DateTime         @default(now())
+    problem   Problem          @relation(fields: [problemId], references: [id])
+    problemId Int
+    user      User             @relation(fields: [userId], references: [id])
+    userId    String
+    source    String
+    language  String
+    tests     SubmissionTest[]
 }

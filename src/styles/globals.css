@@ -1,0 +1,142 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+body,
+html {
+  font-family: "Poppins", sans-serif;
+}
+
+::selection {
+  color: rgb(208, 214, 224);
+  background: rgb(180, 79, 138);
+}
+
+.thicc svg {
+  stroke-width: 4px !important;
+  stroke: var(--primary-400) !important;
+}
+
+#vim-bar input {
+  background: var(--secondary-700);
+}
+
+#vim-bar input:enabled {
+  outline: none;
+}
+
+pre {
+  padding: 0 !important;
+}
+
+@layer base {
+  .red {
+    --accent-400: 0 91% 71%;
+    --accent-500: 0 84% 60%;
+    --accent-600: 0 72% 51%;
+  }
+
+  .orange {
+    --accent-400: 27 96% 61%;
+    --accent-500: 25 95% 53%;
+    --accent-600: 21 90% 48%;
+  }
+
+  .amber {
+    --accent-400: 43 96% 56%;
+    --accent-500: 38 92% 50%;
+    --accent-600: 32 95% 44%;
+  }
+
+  .green {
+    --accent-400: 142 69% 58%;
+    --accent-500: 142 71% 45%;
+    --accent-600: 142 76% 36%;
+  }
+
+  .teal {
+    --accent-400: 172 66% 50%;
+    --accent-500: 173 80% 40%;
+    --accent-600: 175 84% 32%;
+  }
+
+  .blue {
+    --accent-400: 213 94% 68%;
+    --accent-500: 199 89% 48%;
+    --accent-600: 200 98% 39%;
+  }
+
+  .indigo {
+    --accent-400: 234 89% 74%;
+    --accent-500: 239 84% 67%;
+    --accent-600: 243 75% 59%;
+  }
+
+  .pink {
+    --accent-400: 329 86% 70%;
+    --accent-500: 330 81% 60%;
+    --accent-600: 333 71% 51%;
+  }
+
+  :root {
+    --background: 224 71% 4%;
+    --foreground: 213 31% 91%;
+
+    --primary-400: 0 0% 98%;
+    --primary-500: 240 5% 96%;
+    --primary-600: 220 13% 91%;
+
+    --secondary-600: 240 5% 34%;
+    --secondary-700: 240 4% 16%;
+    --secondary-800: 240 6% 10%;
+    --secondary-900: 240 10% 4%;
+
+    /* --accent-400: 329 86% 70%;
+    --accent-500: 330 81% 60%;
+    --accent-600: 333 71% 51%; */
+
+    --popover: 224 71% 4%;
+    --popover-foreground: 215 20.2% 65.1%;
+
+    --card: 224 71% 4%;
+    --card-foreground: 213 31% 91%;
+
+    --border: 240 5% 34%;
+    --input: 240 5% 34%;
+
+    --muted: 216 34% 17%;
+    --muted-foreground: 210 8% 79%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 84% 60%;
+
+    --ring: 240 5% 26%;
+
+    --radius: 0.5rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+.custom-excalidraw .excalidraw {
+  --color-primary: #fcc6d9;
+  --color-primary-darker: #f783ac;
+  --color-primary-darkest: #e64980;
+  --color-primary-light: #f2a9c4;
+}
+
+.custom-excalidraw.excalidraw.theme--dark {
+  --color-primary: #aed494;
+  --color-primary-darker: #51d64c;
+  --color-primary-darkest: #e86e99;
+  --color-primary-light: #dcbec9;
+}

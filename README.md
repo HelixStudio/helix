@@ -1,62 +1,28 @@
-# Helix 👨‍💻
+# Create T3 App
 
-Helix is an open-source website to help you learn & practice programming.
+This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
 
-# Required dependencies
+## What's next? How do I make an app with this?
 
-Besides the specified node packages, you need to have the following software to host the frontend:
+We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
 
-- git (any version)
-- nodejs >= 16
+If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
 
-# How to run
+- [Next.js](https://nextjs.org)
+- [NextAuth.js](https://next-auth.js.org)
+- [Prisma](https://prisma.io)
+- [Tailwind CSS](https://tailwindcss.com)
+- [tRPC](https://trpc.io)
 
-Firstly, clone the repository. Use the recursive argument so it also clones the backend, you can always skip this and clone the backend separately:
+## Learn More
 
-```bash
-git clone https://github.com/NikolaTesla13/helix.git --recursively
-```
+To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
 
-Go to the newly created directory:
+- [Documentation](https://create.t3.gg/)
+- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
 
-```bash
-cd helix
-```
+You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
 
-You can use any nodejs package manager to manage the dependencies (such as npm, yarn or pnpm). During development, yarn was used:
+## How do I deploy this?
 
-```bash
-# install required packages
-yarn
-```
-
-Provide the required environment variables in a `.env` file, refer to the `.env.example` file for example usage:
-
-```bash
-# postgresql database url
-DATABASE_URL=
-# random secret to be used for sessions
-VITE_SECRET=
-# backend api endpoint
-VITE_API_ENDPOINT=
-```
-
-And now you can start the services:
-
-```bash
-# starts frontend on localhost:3000
-yarn dev
-
-# starts the prisma studio on localhost:5555
-yarn prisma studio
-
-# starts the cypress testing server on localhost:59664, may depend
-yarn test
-```
-
-Most common errors when running the frontend:
-
-- database connection error: check your connection url and if the db is up and running
-- dependencies error: check if a `node_modules` was created with the required libraries
-- backend not running: note that some features require the backend server to be running on port 4000, please refer to its repository for more instructions
-- feel free to open a new issue if you have discovered a bug
+Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
