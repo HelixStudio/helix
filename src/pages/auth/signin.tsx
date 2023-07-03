@@ -82,6 +82,13 @@ const SignInPage = ({
             .
           </p>
         </div>
+        <p className="mt-3">
+          Please keep in mind:{" "}
+          <span className="underline">
+            Helix is still in active development
+          </span>
+          . The website is not done and bugs may be present.
+        </p>
       </main>
     </>
   );

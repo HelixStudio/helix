@@ -5,7 +5,9 @@ const PrivacyPolicy: NextPage = () => {
   return (
     <div className="bg-gradient-to-b from-slate-900 to-zinc-900">
       <div className="mx-auto flex min-h-screen max-w-5xl flex-col gap-3 p-5">
-        <h1 className="mb-3 text-3xl font-bold">Helix Privacy Policy</h1>
+        <h1 className="mb-3 text-3xl font-bold">
+          Helix Privacy Policy - Work in progress
+        </h1>
         <p>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur
           tristique orci quam, vitae gravida nulla volutpat non. Phasellus eu

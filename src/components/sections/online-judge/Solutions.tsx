@@ -12,11 +12,15 @@ const Solutions = ({ problemId }: { problemId: number }) => {
           },
           {
             name: "Your tests",
-            component: <p>your tests</p>,
+            component: <p>Your custom tests will be here. Work in progress.</p>,
           },
           {
             name: "Results",
-            component: <p>results</p>,
+            component: (
+              <p>
+                Results from the custom tests will be here. Work in progress.
+              </p>
+            ),
           },
         ]}
         controls={<></>}

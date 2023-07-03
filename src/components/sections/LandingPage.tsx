@@ -27,10 +27,11 @@ const LandingPage = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const navigation = [
-    { name: "Online Judge", href: "/online-judge" },
-    { name: "Courses", href: "/courses" },
-    { name: "Forum", href: "/forum" },
-    { name: "About", href: "/about" },
+    // { name: "Courses", href: "/courses" },
+    { name: "Code Runner", href: "/code-runner" },
+    { name: "Online Judge", href: "/online-judge" }, // forum instead later
+    // { name: "About", href: "/about" },
+    { name: "About", href: "https://github.com/nikolatesla13/helix" },
   ];
 
   return (
@@ -126,7 +127,10 @@ const LandingPage = () => {
                   to-pink-600 opacity-25 blur"
                 ></div>
                 We&apos;re launching!{" "}
-                <a href="#" className="text-accent-400">
+                <a
+                  href="https://github.com/nikolatesla13/helix"
+                  className="text-accent-400"
+                >
                   <span className="absolute inset-0" aria-hidden="true" />
                   Read more <span aria-hidden="true">&rarr;</span>
                 </a>
@@ -305,7 +309,7 @@ const LandingPage = () => {
                 <TableCell>✅</TableCell>
               </TableRow>
               <TableRow>
-                <TableCell>Free courses</TableCell>
+                <TableCell>Free courses (work in progress)</TableCell>
                 <TableCell>❌</TableCell>
                 {/* <TableCell>❌</TableCell> */}
                 <TableCell>❌</TableCell>
@@ -338,9 +342,10 @@ const LandingPage = () => {
 
         <div className="flex h-full max-w-5xl flex-col justify-center gap-2 px-4 lg:mx-auto">
           <h1 className="text-2xl lg:text-4xl">So what are you waiting for?</h1>
-          <div className="flex flex-row gap-5">
+          <div className="flex flex-col gap-5">
             <h1 className="text-2xl lg:text-4xl">
-              It&apos;s <span className="text-accent-400">free</span>.
+              It&apos;s <span className="text-accent-400">free</span> and{" "}
+              <span className="text-accent-400">open source</span>.
             </h1>{" "}
             <Button onClick={() => void signIn()}>Get started</Button>
           </div>

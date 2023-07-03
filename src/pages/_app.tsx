@@ -23,7 +23,9 @@ const MyApp: AppType<{ session: Session | null }> = ({
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Toaster position="bottom-center" />
-      <Component {...pageProps} />
+      <div className="pink">
+        <Component {...pageProps} />
+      </div>
     </SessionProvider>
   );
 };

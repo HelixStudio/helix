@@ -18,6 +18,14 @@ const Home: NextPage = () => {
 
   return (
     <AppShell>
+      <div className="pb-5">
+        <p className="text-3xl">Work in progress!</p>
+        <p>
+          This page and other ones are still in active development. Loading
+          errors and other bugs may be present. Website is scheduled to launch
+          on 24 July.
+        </p>
+      </div>
       <p>Signed in as {session?.user?.name}</p>
       <button onClick={() => void signOut()}>Sign out</button>
     </AppShell>

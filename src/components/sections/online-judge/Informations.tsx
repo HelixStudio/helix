@@ -18,7 +18,7 @@ const Informations = (props: { problem: ProblemMetadata }) => {
           // },
           {
             name: "Editorial",
-            component: <p>Editorial</p>,
+            component: <p>No editorial published yet for this problem.</p>,
           },
         ]}
         controls={
