@@ -1,28 +1,79 @@
-# Create T3 App
+# Helix 👨‍💻
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+Helix is an open-source website to help you learn & practice programming.
 
-## What's next? How do I make an app with this?
+# Required dependencies
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+Besides the specified node packages, you need to have the following software to host the frontend:
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+- git (any version)
+- nodejs >= 16
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+# How to run
 
-## Learn More
+Firstly, clone the repository:
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
+```bash
+git clone https://github.com/NikolaTesla13/helix.git
+```
 
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
+Go to the newly created directory:
 
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
+```bash
+cd helix
+```
 
-## How do I deploy this?
+You can use any nodejs package manager to manage the dependencies (such as npm, yarn or pnpm). During development, npm was used:
 
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+```bash
+# install required packages
+npm install
+```
+
+Provide the required environment variables in a `.env` file, refer to the `.env.example` file for example usage:
+
+```bash
+NODE_ENV="development"
+
+NEXTAUTH_URL="http://localhost:3000"
+NEXTAUTH_SECRET=""
+
+DATABASE_URL=""
+
+UPLOADTHING_SECRET=""
+UPLOADTHING_APP_ID=""
+
+HUGGINGFACE_API_KEY=""
+
+DISCORD_CLIENT_ID=""
+DISCORD_CLIENT_SECRET=""
+
+GITHUB_CLIENT_ID=""
+GITHUB_CLIENT_SECRET=""
+
+GOOGLE_CLIENT_ID=""
+GOOGLE_CLIENT_SECRET=""
+
+TWITTER_CLIENT_ID=""
+TWITTER_CLIENT_SECRET=""
+```
+
+And now you can start the services:
+
+```bash
+# starts frontend on localhost:3000
+npm run dev
+
+# starts the prisma studio on localhost:5555
+npx prisma studio
+
+# starts the storybook testing server on localhost:6006
+npm run storybook
+```
+
+Most common errors when running the frontend:
+
+- database connection error: check your connection url and if the db is up and running
+- dependencies error: check if a `node_modules` was created with the required libraries
+- backend not running: note that some features require the backend server to be running
+- feel free to open a new issue if you have discovered a bug
