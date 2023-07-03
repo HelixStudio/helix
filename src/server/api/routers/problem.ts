@@ -6,7 +6,7 @@ import {
   protectedProcedure,
   publicProcedure,
 } from "~/server/api/trpc";
-import { TestOutput, testCode } from "~/utils/code";
+import { testCode } from "~/utils/code";
 
 export const problemRouter = createTRPCRouter({
   getProblems: publicProcedure
@@ -135,6 +135,12 @@ export const problemRouter = createTRPCRouter({
     .query(async ({ ctx, input }) => {
       return await ctx.prisma.submission.findMany({
         where: { problemId: input.problemId, userId: ctx.session.user.id },
+        include: {
+          problem: { select: { id: true, title: true } },
+          user: { select: { id: true, name: true } },
+          tests: true,
+        },
+        orderBy: { createdAt: "desc" },
       });
     }),
   sendSubmission: protectedProcedure

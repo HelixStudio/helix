@@ -41,12 +41,12 @@ const OnlineJudgePage: NextPage = () => {
           <PanelResizeHandle className="w-1 bg-secondary-700 focus:bg-secondary-600" />
           <Panel defaultSize={56} minSize={30} maxSize={58}>
             <PanelGroup direction="vertical" className="min-h-screen">
-              <Panel defaultSize={80} minSize={20} maxSize={85}>
+              <Panel defaultSize={75} minSize={20} maxSize={85}>
                 <Editor problemId={problem.data?.id as number} />
               </Panel>
               <PanelResizeHandle className="h-1 bg-secondary-700 focus:bg-secondary-600" />
-              <Panel defaultSize={20} minSize={15} maxSize={80}>
-                <Solutions />
+              <Panel defaultSize={25} minSize={15} maxSize={80}>
+                <Solutions problemId={problem.data?.id as number} />
               </Panel>
             </PanelGroup>
           </Panel>

@@ -20,6 +20,7 @@ import { api } from "~/utils/api";
 import { toastSuccess } from "~/utils/toast";
 import { Textarea } from "~/components/ui/Textarea";
 import { Checkbox } from "~/components/ui/Checkbox";
+import { Input } from "~/components/ui/Input";
 
 const zip = <T,>(a: T[], b: T[]) => a.map((k, i) => [k, b[i]]);
 
@@ -52,14 +53,14 @@ const OnlineJudgePage: NextPage = () => {
   const formSchema = z.object({
     input: z.string(),
     output: z.string(),
-    points: z.number(),
+    points: z.string(),
     is_example: z.boolean().optional(),
   });
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      points: 0,
+      points: "0",
     },
   });
 
@@ -69,7 +70,7 @@ const OnlineJudgePage: NextPage = () => {
         id: problem.data?.id as number,
         input: values.input,
         output: values.output,
-        points: values.points,
+        points: parseInt(values.points),
       });
     } else {
       addExample.mutate({
@@ -81,7 +82,7 @@ const OnlineJudgePage: NextPage = () => {
     form.reset({
       input: "",
       output: "",
-      points: 0,
+      points: "0",
       is_example: false,
     });
     toastSuccess("Test added");
@@ -162,12 +163,12 @@ const OnlineJudgePage: NextPage = () => {
                     <FormItem>
                       <FormLabel>Points</FormLabel>
                       <FormControl>
-                        <Textarea
+                        <Input
                           placeholder={
                             "The points gained for passing this test."
                           }
                           {...field}
-                        ></Textarea>
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
