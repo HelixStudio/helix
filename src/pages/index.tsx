@@ -9,7 +9,8 @@ const Home: NextPage = () => {
   const { data: session, status } = useSession();
 
   if (status === "loading") {
-    return <LoadingPage />;
+    // return <LoadingPage />;
+    return <LandingPage />;
   }
 
   if (status === "unauthenticated" || session == null) {

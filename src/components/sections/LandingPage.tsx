@@ -22,6 +22,7 @@ import { Button } from "~/components/ui/Button";
 import Link from "next/link";
 import { signIn } from "next-auth/react";
 import Footer from "../ui/Footer";
+import { motion } from "framer-motion";
 
 const LandingPage = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -37,7 +38,19 @@ const LandingPage = () => {
   return (
     <>
       <div className="flex min-h-screen flex-col bg-gradient-to-b from-slate-900 to-zinc-950">
-        <header className="sticky top-0 z-50 max-w-5xl items-center bg-slate-800/70 backdrop-blur-lg lg:top-[0.75rem] lg:mx-auto lg:mt-3 lg:w-[60rem] lg:rounded-lg">
+        <motion.div
+          initial={{
+            opacity: 0,
+          }}
+          animate={{
+            opacity: 1,
+          }}
+          transition={{
+            duration: 1,
+            ease: "easeInOut",
+          }}
+          className="sticky top-0 z-50 max-w-5xl items-center bg-slate-800/70 backdrop-blur-lg lg:top-[0.75rem] lg:mx-auto lg:mt-3 lg:w-[60rem] lg:rounded-lg"
+        >
           <nav
             className="flex items-center justify-between p-2 lg:px-8"
             aria-label="Global"
@@ -74,7 +87,7 @@ const LandingPage = () => {
               </Button>
             </div>
           </nav>
-        </header>
+        </motion.div>
         <Show when={mobileMenuOpen}>
           <div className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-slate-800 px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
             <div className="flex items-center justify-between">
@@ -114,7 +127,21 @@ const LandingPage = () => {
         </Show>
 
         <div className="relative isolate px-6 pb-20 lg:px-8">
-          <div className="mx-auto max-w-2xl py-32 sm:py-48 lg:py-16">
+          <motion.div
+            initial={{
+              opacity: 0,
+              y: 50,
+            }}
+            animate={{
+              opacity: 1,
+              y: 0,
+            }}
+            transition={{
+              delay: 0.3,
+              duration: 0.5,
+            }}
+            className="mx-auto max-w-2xl py-32 sm:py-48 lg:py-16"
+          >
             <div className="hidden p-3 sm:mb-16 sm:flex sm:justify-center">
               <div
                 className="relative rounded-full bg-gray-800 px-3 py-1 text-sm 
@@ -153,7 +180,7 @@ const LandingPage = () => {
                 </Button>
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
 
         <div className="relative mx-auto flex max-w-6xl items-center justify-center overflow-hidden rounded-lg px-10 py-10">
