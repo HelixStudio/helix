@@ -2,7 +2,6 @@
 // @ts-ignore
 /* eslint no-use-before-define: 0 */
 import { Editor, useMonaco } from "@monaco-editor/react";
-import { type editor } from "monaco-editor";
 import { type NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
@@ -263,7 +262,7 @@ const CodeRunnerPage: NextPage = () => {
     if (vimMode) {
       const enableVim = (MonacoVim: {
         initVimMode: (
-          arg0: editor.ICodeEditor | undefined,
+          arg0: unknown | undefined,
           arg1: HTMLElement | null
         ) => { dispose: () => void };
       }) => {

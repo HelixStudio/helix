@@ -80,6 +80,9 @@ dependencies:
   '@uploadthing/react':
     specifier: ^4.1.3
     version: 4.1.3(react-dropzone@14.2.3)(react@18.2.0)(uploadthing@4.1.3)(zod@3.21.4)
+  '@webgpu/types':
+    specifier: ^0.1.34
+    version: 0.1.34
   ai:
     specifier: ^2.0.1
     version: 2.0.1(react@18.2.0)(svelte@3.59.2)
@@ -6251,6 +6254,10 @@ packages:
       '@webassemblyjs/ast': 1.11.6
       '@xtuc/long': 4.2.2
     dev: true
+
+  /@webgpu/types@0.1.34:
+    resolution: {integrity: sha512-9mXtH+CC8q+Ku7Z+1XazNIte81FvfdXwR2lLRO7Ykzjd/hh1J1krJa0gtnkF1kvP11psUmKEPKo7iMTeEcUpNA==}
+    dev: false
 
   /@xtuc/ieee754@1.2.0:
     resolution: {integrity: sha512-DX8nKgqcGwsc0eJSqYt5lwP4DH5FlHnmuWWBRy7X0NcaGR0ZtuyeESgMwTYVEtxmsNGY+qit4QYT/MIYTOTPeA==}

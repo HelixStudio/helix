@@ -37,6 +37,7 @@
     "@trpc/server": "^10.18.0",
     "@types/marked": "^5.0.0",
     "@uploadthing/react": "^4.1.3",
+    "@webgpu/types": "^0.1.34",
     "ai": "^2.0.1",
     "axios": "^1.4.0",
     "class-variance-authority": "^0.6.0",

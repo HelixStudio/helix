@@ -30,7 +30,8 @@
       {
         "name": "next"
       }
-    ]
+    ],
+    "typeRoots": [ "./node_modules/@webgpu/types", "./node_modules/@types"]
   },
   "include": [
     ".eslintrc.cjs",

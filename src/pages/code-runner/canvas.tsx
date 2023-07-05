@@ -1,327 +1,174 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+/* eslint no-use-before-define: 0 */
 import { Editor, useMonaco } from "@monaco-editor/react";
 import { type NextPage } from "next";
-import { useEffect } from "react";
+import Head from "next/head";
+import { useEffect, useState } from "react";
+import { PanelGroup, PanelResizeHandle, Panel } from "react-resizable-panels";
+import EditorSettings, {
+  getDefaultEditorSettings,
+} from "~/components/functional/EditorSettings";
+import PreviewShader from "~/components/sections/PreviewShader";
 import AppShell from "~/components/ui/AppShell";
 import { LoadingSpinner } from "~/components/ui/Loading";
+import { api } from "~/utils/api";
+import { getLanguage } from "~/utils/code";
+import { registerThemes, type Theme } from "~/utils/monaco-themes";
+import { WGSLlanguage } from "~/utils/wgsl";
 
-const CodeRunnerPage: NextPage = () => {
+const shader = `struct VertexOutput {
+  @builtin(position) position: vec4f,
+  @location(0) coord: vec2f,
+};
+ 
+@vertex
+fn vertexMain(@location(0) coord: vec2f) -> VertexOutput {
+  var out: VertexOutput;
+  out.coord = coord;
+  out.position = vec4f(coord, 0.0, 1.0);
+      
+  return out;
+}
+ 
+@fragment
+fn fragmentMain(in: VertexOutput) -> @location(0) vec4f {
+  let normalized = (in.coord + vec2f(1.0, 1.0)) / 2.0;
+ 
+  return vec4f(normalized.xy, 0.0, 1.0);
+}
+`;
+
+const CanvasPage: NextPage = () => {
+  const [code, setCode] = useState(shader);
+  const [fontSize, setFontSize] = useState(getDefaultEditorSettings().fontSize);
+  const [fontFamily, setFontFamily] = useState(
+    getDefaultEditorSettings().fontFamily
+  );
+  const [theme, setTheme] = useState<Theme>(getDefaultEditorSettings().theme);
+  const [vimMode, setVimMode] = useState<boolean>(false);
+  const [vim, setVim] = useState<{ dispose: () => void } | undefined>(
+    undefined
+  );
+
   const monaco = useMonaco();
-
   useEffect(() => {
-    if (!monaco) {
-      return;
+    if (!monaco) return;
+
+    registerThemes(monaco);
+
+    setFontSize(getDefaultEditorSettings().fontSize);
+    setFontFamily(getDefaultEditorSettings().fontFamily);
+    setTheme(getDefaultEditorSettings().theme);
+    setVimMode(getDefaultEditorSettings().vimMode);
+
+    monaco.languages.register({ id: "wgsl" });
+    monaco.languages.setMonarchTokensProvider(
+      "wgsl",
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-explicit-any
+      WGSLlanguage as any
+    );
+
+    monaco.editor.setTheme(theme);
+
+    if (localStorage.getItem("shaderCode") != null) {
+      setCode(localStorage.getItem("shaderCode") as string);
     }
-    monaco.languages.register({ id: "glsl" });
-    monaco.languages.setMonarchTokensProvider("glsl", {
-      keywords: [
-        "const",
-        "uniform",
-        "break",
-        "continue",
-        "do",
-        "for",
-        "while",
-        "if",
-        "else",
-        "switch",
-        "case",
-        "in",
-        "out",
-        "inout",
-        "true",
-        "false",
-        "invariant",
-        "discard",
-        "return",
-        "sampler2D",
-        "samplerCube",
-        "sampler3D",
-        "struct",
-        "radians",
-        "degrees",
-        "sin",
-        "cos",
-        "tan",
-        "asin",
-        "acos",
-        "atan",
-        "pow",
-        "sinh",
-        "cosh",
-        "tanh",
-        "asinh",
-        "acosh",
-        "atanh",
-        "exp",
-        "log",
-        "exp2",
-        "log2",
-        "sqrt",
-        "inversesqrt",
-        "abs",
-        "sign",
-        "floor",
-        "ceil",
-        "round",
-        "roundEven",
-        "trunc",
-        "fract",
-        "mod",
-        "modf",
-        "min",
-        "max",
-        "clamp",
-        "mix",
-        "step",
-        "smoothstep",
-        "length",
-        "distance",
-        "dot",
-        "cross ",
-        "determinant",
-        "inverse",
-        "normalize",
-        "faceforward",
-        "reflect",
-        "refract",
-        "matrixCompMult",
-        "outerProduct",
-        "transpose",
-        "lessThan ",
-        "lessThanEqual",
-        "greaterThan",
-        "greaterThanEqual",
-        "equal",
-        "notEqual",
-        "any",
-        "all",
-        "not",
-        "packUnorm2x16",
-        "unpackUnorm2x16",
-        "packSnorm2x16",
-        "unpackSnorm2x16",
-        "packHalf2x16",
-        "unpackHalf2x16",
-        "dFdx",
-        "dFdy",
-        "fwidth",
-        "textureSize",
-        "texture",
-        "textureProj",
-        "textureLod",
-        "textureGrad",
-        "texelFetch",
-        "texelFetchOffset",
-        "textureProjLod",
-        "textureLodOffset",
-        "textureGradOffset",
-        "textureProjLodOffset",
-        "textureProjGrad",
-        "intBitsToFloat",
-        "uintBitsToFloat",
-        "floatBitsToInt",
-        "floatBitsToUint",
-        "isnan",
-        "isinf",
-        "vec2",
-        "vec3",
-        "vec4",
-        "ivec2",
-        "ivec3",
-        "ivec4",
-        "uvec2",
-        "uvec3",
-        "uvec4",
-        "bvec2",
-        "bvec3",
-        "bvec4",
-        "mat2",
-        "mat3",
-        "mat2x2",
-        "mat2x3",
-        "mat2x4",
-        "mat3x2",
-        "mat3x3",
-        "mat3x4",
-        "mat4x2",
-        "mat4x3",
-        "mat4x4",
-        "mat4",
-        "float",
-        "int",
-        "uint",
-        "void",
-        "bool",
-      ],
-      typeKeywords: [
-        "vec2",
-        "vec3",
-        "vec4",
-        "ivec2",
-        "ivec3",
-        "ivec4",
-        "uvec2",
-        "uvec3",
-        "uvec4",
-        "bvec2",
-        "bvec3",
-        "bvec4",
-        "mat2",
-        "mat3",
-        "mat2x2",
-        "mat2x3",
-        "mat2x4",
-        "mat3x2",
-        "mat3x3",
-        "mat3x4",
-        "mat4x2",
-        "mat4x3",
-        "mat4x4",
-        "mat4",
-        "float",
-        "int",
-        "uint",
-        "void",
-        "bool",
-      ],
-      operators: [
-        "=",
-        ">",
-        "<",
-        "!",
-        "~",
-        "?",
-        ":",
-        "==",
-        "<=",
-        ">=",
-        "!=",
-        "&&",
-        "||",
-        "++",
-        "--",
-        "+",
-        "-",
-        "*",
-        "/",
-        "&",
-        "|",
-        "^",
-        "%",
-        "<<",
-        ">>",
-        ">>>",
-        "+=",
-        "-=",
-        "*=",
-        "/=",
-        "&=",
-        "|=",
-        "^=",
-        "%=",
-        "<<=",
-        ">>=",
-        ">>>=",
-      ],
-      symbols: /[=><!~?:&|+\-*\/\^%]+/,
-      escapes:
-        /\\(?:[abfnrtv\\"']|x[0-9A-Fa-f]{1,4}|u[0-9A-Fa-f]{4}|U[0-9A-Fa-f]{8})/,
-      integersuffix: /([uU](ll|LL|l|L)|(ll|LL|l|L)?[uU]?)/,
-      floatsuffix: /[fFlL]?/,
-      encoding: /u|u8|U|L/,
-      tokenizer: {
-        root: [
-          // identifiers and keywords
-          [
-            /[a-zA-Z_]\w*/,
-            {
-              cases: {
-                "@keywords": { token: "keyword.$0" },
-                "@default": "identifier",
-              },
-            },
-          ],
 
-          // Preprocessor directive (#define)
-          [/^\s*#\s*\w+/, "keyword.directive"],
+    if (vimMode) {
+      const enableVim = (MonacoVim: {
+        initVimMode: (
+          arg0: unknown | undefined,
+          arg1: HTMLElement | null
+        ) => { dispose: () => void };
+      }) => {
+        setVim(
+          MonacoVim.initVimMode(
+            monaco.editor.getEditors()[0],
+            document.getElementById("vim-bar")
+          ) as { dispose: () => void }
+        );
+      };
 
-          // whitespace
-          { include: "@whitespace" },
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
+      window.require(["monaco-vim"], enableVim);
+    } else {
+      if (vim != undefined) {
+        vim.dispose();
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [monaco, theme, vimMode]);
 
-          // delimiters and operators
-          [/[{}()\[\]]/, "@brackets"],
-          [
-            /@symbols/,
-            {
-              cases: {
-                "@operators": "operator",
-                "@default": "",
-              },
-            },
-          ],
+  const handleEditorChange = (value: string | undefined, _: unknown) => {
+    setCode(value as string);
+    localStorage.setItem("shaderCode", value as string);
+  };
 
-          // numbers
-          [/\d*\d+[eE]([\-+]?\d+)?(@floatsuffix)/, "number.float"],
-          [/\d*\.\d+([eE][\-+]?\d+)?(@floatsuffix)/, "number.float"],
-          [/0[xX][0-9a-fA-F']*[0-9a-fA-F](@integersuffix)/, "number.hex"],
-          [/0[0-7']*[0-7](@integersuffix)/, "number.octal"],
-          [/0[bB][0-1']*[0-1](@integersuffix)/, "number.binary"],
-          [/\d[\d']*\d(@integersuffix)/, "number"],
-          [/\d(@integersuffix)/, "number"],
-
-          // delimiter: after number because of .\d floats
-          [/[;,.]/, "delimiter"],
-        ],
-
-        comment: [
-          [/[^\/*]+/, "comment"],
-          [/\/\*/, "comment", "@push"],
-          ["\\*/", "comment", "@pop"],
-          [/[\/*]/, "comment"],
-        ],
-
-        // Does it have strings?
-        string: [
-          [/[^\\"]+/, "string"],
-          [/@escapes/, "string.escape"],
-          [/\\./, "string.escape.invalid"],
-          [
-            /"/,
-            {
-              token: "string.quote",
-              bracket: "@close",
-              next: "@pop",
-            },
-          ],
-        ],
-
-        whitespace: [
-          [/[ \t\r\n]+/, "white"],
-          [/\/\*/, "comment", "@comment"],
-          [/\/\/.*$/, "comment"],
-        ],
+  const handleEditorMount = (_editor: unknown, _monaco: unknown) => {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+    window.require.config({
+      paths: {
+        "monaco-vim": "https://unpkg.com/monaco-vim@0.4.0/dist/monaco-vim.js",
       },
     });
-  }, [monaco]);
+  };
 
   return (
     <AppShell>
-      <div className="flex flex-row overflow-hidden">
-        <div className="bg-secondary-800 p-3">
-          <Editor
-            height="100vh"
-            width="50vw"
-            theme="vs-dark"
-            loading={<LoadingSpinner />}
-            defaultLanguage="glsl"
-            options={{ smoothScrolling: true }}
-            defaultValue="void main(void) { gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0); }"
-          />
-        </div>
-        <div className="block h-screen w-[45vw] bg-red-500"></div>
+      <Head>
+        <title>Helix | Code Runner</title>
+      </Head>
+      <div>
+        <PanelGroup direction="horizontal" className="min-h-screen">
+          <Panel defaultSize={50} minSize={30} maxSize={70} className="h-full">
+            <div className="flex w-full flex-row items-center justify-between">
+              <p className="pl-3">WebGPU Shading Language</p>
+              <div className="mr-5 flex flex-row items-center gap-3">
+                <div>
+                  {vimMode && (
+                    <div
+                      className="mr-3 bg-secondary-700 font-mono text-primary-500"
+                      id="vim-bar"
+                    ></div>
+                  )}
+                </div>
+                <EditorSettings
+                  callback={(args) => {
+                    setFontSize(args.fontSize);
+                    setFontFamily(args.fontFamily);
+                    setTheme(args.theme);
+                    setVimMode(args.vimMode);
+                  }}
+                />
+              </div>
+            </div>
+            <Editor
+              height="94vh"
+              loading={<LoadingSpinner />}
+              defaultLanguage={"wgsl"}
+              theme={theme as string}
+              options={{
+                smoothScrolling: true,
+                fontSize: fontSize,
+                fontFamily: fontFamily,
+                fontLigatures: true,
+              }}
+              defaultValue={code}
+              value={code}
+              onChange={handleEditorChange}
+              onMount={handleEditorMount}
+            />
+          </Panel>
+          {/* <PanelResizeHandle className="w-1 bg-secondary-800 focus:bg-secondary-600" /> */}
+          <PreviewShader shader={code} />
+        </PanelGroup>
       </div>
     </AppShell>
   );
 };
 
-export default CodeRunnerPage;
+export default CanvasPage;

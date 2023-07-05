@@ -3,7 +3,7 @@ import { signOut, useSession } from "next-auth/react";
 
 import LandingPage from "~/components/sections/LandingPage";
 import AppShell from "~/components/ui/AppShell";
-import { LoadingPage } from "~/components/ui/Loading";
+// import { LoadingPage } from "~/components/ui/Loading";
 
 const Home: NextPage = () => {
   const { data: session, status } = useSession();
