@@ -7,7 +7,6 @@ import {
   getDefaultEditorSettings,
 } from "./EditorSettings";
 import { registerThemes } from "~/utils/monaco-themes";
-import { type editor } from "monaco-editor";
 
 export type CodeEditorSettings = {
   lang: string;
@@ -244,7 +243,8 @@ const CodeEditor = ({
     if (settings.vimMode) {
       const enableVim = (MonacoVim: {
         initVimMode: (
-          arg0: editor.ICodeEditor | undefined,
+          // this is a mess anyway :)
+          arg0: unknown,
           arg1: HTMLElement | null
         ) => { dispose: () => void };
       }) => {

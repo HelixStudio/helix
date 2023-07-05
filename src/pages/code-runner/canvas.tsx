@@ -5,15 +5,13 @@ import { Editor, useMonaco } from "@monaco-editor/react";
 import { type NextPage } from "next";
 import Head from "next/head";
 import { useEffect, useState } from "react";
-import { PanelGroup, PanelResizeHandle, Panel } from "react-resizable-panels";
+import { PanelGroup, Panel } from "react-resizable-panels";
 import EditorSettings, {
   getDefaultEditorSettings,
 } from "~/components/functional/EditorSettings";
 import PreviewShader from "~/components/sections/PreviewShader";
 import AppShell from "~/components/ui/AppShell";
 import { LoadingSpinner } from "~/components/ui/Loading";
-import { api } from "~/utils/api";
-import { getLanguage } from "~/utils/code";
 import { registerThemes, type Theme } from "~/utils/monaco-themes";
 import { WGSLlanguage } from "~/utils/wgsl";
 

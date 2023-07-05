@@ -10,7 +10,6 @@ const PreviewShader = (props: { shader: string }) => {
   const [context, setContext] = useState<GPUCanvasContext>();
 
   let renderTarget: GPUTexture | undefined = undefined;
-  let renderTargetView: GPUTextureView;
 
   const init = (width: number, resize: boolean) => {
     const canvas = document.querySelector("canvas");
@@ -128,8 +127,6 @@ const PreviewShader = (props: { shader: string }) => {
       format: "bgra8unorm",
       usage: GPUTextureUsage.RENDER_ATTACHMENT,
     });
-
-    renderTargetView = renderTarget.createView();
 
     const encoder = device.createCommandEncoder();
 
