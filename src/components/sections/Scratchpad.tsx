@@ -12,6 +12,7 @@ import {
   type RefAttributes,
 } from "react";
 import { LoadingSpinner } from "../ui/Loading";
+import { type ExcalidrawElement } from "@excalidraw/excalidraw/types/element/types";
 
 declare type PublicExcalidrawProps = Omit<ExcalidrawProps, "forwardedRef">;
 
@@ -25,6 +26,7 @@ export const Scracthpad = () => {
   const [Excalidraw, setExcalidraw] = useState<ExcalidrawEditor | null>(null);
 
   useEffect(() => {
+    // TODO: loads pretty slow...
     import("@excalidraw/excalidraw")
       .then((comp) => setExcalidraw(comp.Excalidraw))
       .catch((reason) => {
@@ -34,11 +36,28 @@ export const Scracthpad = () => {
 
   if (!Excalidraw) return <LoadingSpinner />;
 
+  const getStoredElements = () => {
+    const elements = localStorage.getItem("scratchpadElements");
+    if (elements == null) return [];
+    return JSON.parse(elements) as ExcalidrawElement[];
+  };
+
   return (
     <div className="h-full">
       {Excalidraw && (
         <div className="custom-excalidraw h-full">
-          <Excalidraw theme={"dark"} />
+          <Excalidraw
+            onChange={(newElements: readonly ExcalidrawElement[]) => {
+              localStorage.setItem(
+                "scratchpadElements",
+                JSON.stringify(newElements)
+              );
+            }}
+            initialData={{
+              elements: getStoredElements(),
+            }}
+            theme={"dark"}
+          />
         </div>
       )}
     </div>

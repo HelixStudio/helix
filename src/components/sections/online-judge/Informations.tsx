@@ -1,6 +1,6 @@
 import { Button } from "~/components/ui/Button";
 import UIPanel from "~/components/ui/UIPanel";
-// import { Scracthpad } from "../Scratchpad";
+import { Scracthpad } from "../Scratchpad";
 import { type ProblemMetadata, StatementView } from "../StatementView";
 
 const Informations = (props: { problem: ProblemMetadata }) => {
@@ -12,10 +12,10 @@ const Informations = (props: { problem: ProblemMetadata }) => {
             name: "Statement",
             component: <StatementView problem={props.problem} />,
           },
-          // {
-          //   name: "Scratchpad",
-          //   component: <Scracthpad />,
-          // },
+          {
+            name: "Scratchpad",
+            component: <Scracthpad />,
+          },
           {
             name: "Editorial",
             component: <p>No editorial published yet for this problem.</p>,
