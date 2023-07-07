@@ -7,7 +7,6 @@ import utc from "dayjs/plugin/utc";
 import AppShell from "~/components/ui/AppShell";
 import { LoadingSection } from "~/components/ui/Loading";
 import { api } from "~/utils/api";
-import { Button } from "~/components/ui/Button";
 
 dayjs.extend(utc);
 
@@ -45,7 +44,7 @@ const OnlineJudgePage: NextPage = () => {
                   return (
                     <tr key={contest.id} className="hover:bg-secondary-800">
                       <td className="px-6 py-3 text-left text-accent-400 hover:underline">
-                        <Link href={`/online-judge/contests/${contest.id}`}>
+                        <Link href={`/contests/${contest.id}`}>
                           {contest.title}
                         </Link>
                       </td>

@@ -11,4 +11,12 @@ export const contestRouter = createTRPCRouter({
         include: { author: { select: { name: true, id: true } } },
       });
     }),
+  getContest: publicProcedure
+    .input(z.object({ id: z.string().uuid() }))
+    .query(async ({ ctx, input }) => {
+      return await ctx.prisma.contest.findUnique({
+        where: { id: input.id },
+        include: { author: { select: { name: true, id: true } } },
+      });
+    }),
 });

@@ -19,7 +19,7 @@ export const pages = [
         ></path>
       </svg>
     ),
-    link: "/",
+    link: ["/"],
   },
   {
     name: "forum",
@@ -38,7 +38,7 @@ export const pages = [
         ></path>
       </svg>
     ),
-    link: "/forum",
+    link: ["/forum"],
   },
   {
     name: "online judge",
@@ -57,7 +57,7 @@ export const pages = [
         ></path>
       </svg>
     ),
-    link: "/online-judge",
+    link: ["/online-judge", "/contests"],
   },
   {
     name: "code runner",
@@ -76,7 +76,7 @@ export const pages = [
         ></path>
       </svg>
     ),
-    link: "/code-runner",
+    link: ["/code-runner"],
   },
   {
     name: "ai coach",
@@ -96,7 +96,7 @@ export const pages = [
         ></path>
       </svg>
     ),
-    link: "/ai-coach",
+    link: ["/ai-coach"],
   },
   {
     name: "settings",
@@ -115,7 +115,7 @@ export const pages = [
         ></path>
       </svg>
     ),
-    link: "/settings",
+    link: ["/settings"],
   },
 ];
 
@@ -126,14 +126,16 @@ const NavBar = () => {
     <div className="fixed z-50 m-0 flex h-screen w-16 flex-col justify-between bg-secondary-800 text-primary-400 shadow-lg">
       <div className="fixed flex flex-col [&>*:last-child]:fixed [&>*:last-child]:bottom-0">
         {pages.map((page) => (
-          <Link key={page.name} href={page.link}>
+          <Link key={page.name} href={page.link[0] as string}>
             <li
               className={`relative mx-auto mb-2 ml-2 mt-2 flex h-12 w-12 items-center justify-center 
                       ${
                         (
-                          page.link == "/"
-                            ? pathname === page.link
-                            : pathname.startsWith(page.link)
+                          page.link[0] == "/"
+                            ? pathname === "/"
+                            : page.link.filter((link) =>
+                                pathname.startsWith(link)
+                              ).length > 0
                         )
                           ? "rounded-xl bg-secondary-800 text-primary-400 ring-2 ring-accent-500"
                           : "bg-secondary-700 text-accent-400 hover:rounded-xl hover:bg-accent-500 hover:text-primary-400"
