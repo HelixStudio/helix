@@ -175,13 +175,11 @@ const PostPage: NextPage = () => {
           <div className="w-full">
             <h5
               className={`${
-                post.data.content.length > 250
-                  ? "mb-4 mt-2 text-center"
-                  : "my-2"
+                post.data.content.length ? "mb-4 mt-2 text-center" : "my-2"
               } text-3xl font-bold tracking-tight
           text-secondary-900 text-white`}
             >
-              {post.data.title}
+              {post.data.title} - {post.data.content.length}
             </h5>
             <article
               className="prose prose-neutral min-w-full dark:prose-invert"

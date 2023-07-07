@@ -28,6 +28,12 @@ const OnlineJudgePage: NextPage = () => {
     toastPlain("This page is not finished!");
   }
 
+  if (problem.data == null || problem.isError) {
+    toastPlain("Problem not found!");
+    void router.push("/online-judge");
+    return <></>;
+  }
+
   return (
     <AppShell>
       <Head>
@@ -42,11 +48,11 @@ const OnlineJudgePage: NextPage = () => {
           <Panel defaultSize={56} minSize={30} maxSize={58}>
             <PanelGroup direction="vertical" className="min-h-screen">
               <Panel defaultSize={75} minSize={20} maxSize={85}>
-                <Editor problemId={problem.data?.id as number} />
+                <Editor problemId={problem.data.id} />
               </Panel>
               <PanelResizeHandle className="h-1 bg-secondary-700 focus:bg-secondary-600" />
               <Panel defaultSize={25} minSize={15} maxSize={80}>
-                <Solutions problemId={problem.data?.id as number} />
+                <Solutions problemId={problem.data.id} />
               </Panel>
             </PanelGroup>
           </Panel>

@@ -60,6 +60,8 @@ model User {
     bookmarks        String[]     @default([])
     uploaded_images  String[]     @default([])
     submissions      Submission[]
+    created_contests Contest[]    @relation("contestAuthor")
+    joined_contests  Contest[]
 }
 
 model Group {
@@ -124,6 +126,21 @@ model Problem {
     tests         Test[]
     draft         Boolean      @default(true)
     submissions   Submission[]
+    contest       Contest?     @relation(fields: [contestId], references: [id])
+    contestId     String?
+}
+
+model Contest {
+    id           String    @id @default(uuid())
+    createdAt    DateTime  @default(now())
+    author       User      @relation("contestAuthor", fields: [authorId], references: [id])
+    authorId     String
+    start        DateTime
+    end          DateTime
+    problems     Problem[]
+    title        String
+    description  String
+    participants User[]
 }
 
 model Test {
