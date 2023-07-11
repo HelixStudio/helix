@@ -86,8 +86,8 @@ export const testCode = async (
           input: test.input,
           output: test.output,
           points: test.points,
-          run_timeout: -1,
-          run_memory_limit: -1, // TODO
+          run_timeout: 1000,
+          run_memory_limit: 100000, // TODO
         };
       }),
     },
