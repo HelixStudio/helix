@@ -34,7 +34,7 @@ const CommandMenu = () => {
             <CommandItem
               key={page.name}
               className="flex w-full flex-row gap-3"
-              onSelect={async () => await router.push(page.link)}
+              onSelect={async () => await router.push(page.link[0] ?? "/")}
             >
               {page.icon} <p>{page.name}</p>
             </CommandItem>
