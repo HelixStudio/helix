@@ -123,8 +123,11 @@ const NavBar = () => {
   const pathname = useRouter().pathname;
 
   return (
-    <div className="fixed z-50 m-0 flex h-screen w-16 flex-col justify-between bg-secondary-800 text-primary-400 shadow-lg">
-      <div className="fixed flex flex-col [&>*:last-child]:fixed [&>*:last-child]:bottom-0">
+    <div className="fixed bottom-0 z-50 m-0 flex h-16 w-screen justify-between bg-secondary-800 text-primary-400 shadow-lg md:h-screen md:w-16 md:flex-col">
+      <div
+        className="fixed flex flex-row md:flex-col 
+        [&>*:last-child]:fixed [&>*:last-child]:right-0 md:[&>*:last-child]:bottom-0 md:[&>*:last-child]:left-0"
+      >
         {pages.map((page) => (
           <Link key={page.name} href={page.link[0] as string}>
             <li

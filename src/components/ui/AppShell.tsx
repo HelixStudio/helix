@@ -11,7 +11,7 @@ const AppShell = (props: { children: React.ReactNode }) => {
       <main className={`${theme} dark flex flex-row bg-secondary-700`}>
         <CommandMenu />
         <NavBar />
-        <div className="ml-16 min-h-screen w-full">{props.children}</div>
+        <div className="min-h-screen w-full md:ml-16">{props.children}</div>
       </main>
     </>
   );

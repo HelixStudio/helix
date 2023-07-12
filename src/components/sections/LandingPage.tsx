@@ -30,7 +30,7 @@ const LandingPage = () => {
   const navigation = [
     // { name: "Courses", href: "/courses" },
     { name: "Code Runner", href: "/code-runner" },
-    { name: "Online Judge", href: "/online-judge" }, // forum instead later
+    { name: "Forum", href: "/forum" },
     // { name: "About", href: "/about" },
     { name: "About", href: "https://github.com/nikolatesla13/helix" },
   ];
