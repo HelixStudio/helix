@@ -123,15 +123,15 @@ const NavBar = () => {
   const pathname = useRouter().pathname;
 
   return (
-    <div className="fixed bottom-0 z-50 m-0 flex h-16 w-screen justify-between bg-secondary-800 text-primary-400 shadow-lg md:h-screen md:w-16 md:flex-col">
-      <div
-        className="fixed flex flex-row md:flex-col 
-        [&>*:last-child]:fixed [&>*:last-child]:right-0 md:[&>*:last-child]:bottom-0 md:[&>*:last-child]:left-0"
-      >
-        {pages.map((page) => (
-          <Link key={page.name} href={page.link[0] as string}>
-            <li
-              className={`relative mx-auto mb-2 ml-2 mt-2 flex h-12 w-12 items-center justify-center 
+    <div
+      className="fixed bottom-0 z-50 m-0 flex h-16 w-screen flex-row
+      bg-secondary-800 text-primary-400 md:h-screen md:w-16 md:flex-col 
+      md:[&>*:last-child]:fixed md:[&>*:last-child]:bottom-0 md:[&>*:last-child]:left-0"
+    >
+      {pages.map((page) => (
+        <Link key={page.name} href={page.link[0] as string}>
+          <li
+            className={`relative mx-auto mb-2 ml-2 mt-2 flex h-12 w-12 items-center justify-center 
                       ${
                         (
                           page.link[0] == "/"
@@ -144,21 +144,20 @@ const NavBar = () => {
                           : "bg-secondary-700 text-accent-400 hover:rounded-xl hover:bg-accent-500 hover:text-primary-400"
                       }
                       group rounded-3xl transition-all duration-200`}
-            >
-              {page.icon}
+          >
+            {page.icon}
 
-              <span
-                className="absolute left-14 m-2 w-auto min-w-max origin-left scale-0 rounded-md
+            <span
+              className="absolute left-14 m-2 w-auto min-w-max origin-left scale-0 rounded-md
               bg-secondary-900 p-2 
               text-xs font-bold text-primary-400
               shadow-md transition-all duration-100 group-hover:scale-100"
-              >
-                {page.name}
-              </span>
-            </li>
-          </Link>
-        ))}
-      </div>
+            >
+              {page.name}
+            </span>
+          </li>
+        </Link>
+      ))}
     </div>
   );
 };
