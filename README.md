@@ -9,6 +9,8 @@ Besides the specified node packages, you need to have the following software to 
 - git (any version)
 - nodejs >= 16
 
+The [code execution engine](https://github.com/nikolatesla13/exec) is also part of this project. It is used to run the submitted code.
+
 # How to run
 
 Firstly, clone the repository:
