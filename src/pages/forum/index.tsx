@@ -73,12 +73,14 @@ const ForumPage: NextPage = () => {
               </TabsTrigger>
             </TabsList>
             <div className="flex flex-row gap-5">
-              <IconButton
-                icon={<BsPencilSquare size={20} />}
-                onClick={() => {
-                  void router.push("/forum/write");
-                }}
-              />
+              {user.status == "authenticated" && (
+                <IconButton
+                  icon={<BsPencilSquare size={20} />}
+                  onClick={() => {
+                    void router.push("/forum/write");
+                  }}
+                />
+              )}
               <IconButton
                 icon={<HiMagnifyingGlass size={20} />}
                 onClick={() => {

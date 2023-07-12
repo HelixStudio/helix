@@ -62,14 +62,13 @@ const PostPage: NextPage = () => {
 
   useEffect(() => hljs.highlightAll(), [post]);
 
-  useEffect(
-    () =>
+  useEffect(() => {
+    if (userMetadata != null)
       setIsBookmarked(
         userMetadata.data?.bookmarks.find((value) => value == post.data?.id) !=
           undefined
-      ),
-    [userMetadata.data?.bookmarks, post.data?.id]
-  );
+      );
+  }, [userMetadata.data?.bookmarks, post.data?.id, userMetadata]);
 
   const formSchema = z.object({
     comment: z.string().min(2).max(100),
@@ -94,8 +93,7 @@ const PostPage: NextPage = () => {
   if (
     post.isLoading ||
     post.data == undefined ||
-    post.data == null ||
-    userMetadata.data == null ||
+    userMetadata.isLoading ||
     user.status == "loading"
   ) {
     return <LoadingSection />;
@@ -156,30 +154,34 @@ const PostPage: NextPage = () => {
                 }}
               />
             )}
-            <IconButton
-              icon={
-                isBookmarked ? (
-                  <BookmarkFillIcon size={20} />
-                ) : (
-                  <BookmarkIcon size={20} />
-                )
-              }
-              onClick={() => {
-                setIsBookmarked(!isBookmarked);
-                bookmarkPost.mutate({ id: post.data.id, add: !isBookmarked });
-              }}
-            />
+            {user.status == "authenticated" && (
+              <IconButton
+                icon={
+                  isBookmarked ? (
+                    <BookmarkFillIcon size={20} />
+                  ) : (
+                    <BookmarkIcon size={20} />
+                  )
+                }
+                onClick={() => {
+                  setIsBookmarked(!isBookmarked);
+                  bookmarkPost.mutate({ id: post.data.id, add: !isBookmarked });
+                }}
+              />
+            )}
           </div>
         </div>
         <div className="flex w-full flex-row items-end justify-between border-b-2 border-neutral-600 pb-3">
           <div className="w-full">
             <h5
               className={`${
-                post.data.content.length ? "mb-4 mt-2 text-center" : "my-2"
+                post.data.content.length > 250
+                  ? "mb-4 mt-2 text-center"
+                  : "my-2"
               } text-3xl font-bold tracking-tight
           text-secondary-900 text-white`}
             >
-              {post.data.title} - {post.data.content.length}
+              {post.data.title}
             </h5>
             <article
               className="prose prose-neutral min-w-full dark:prose-invert"
@@ -191,31 +193,33 @@ const PostPage: NextPage = () => {
           </div>
         </div>
         <div className="my-3">
-          <Form {...form}>
-            <form
-              onSubmit={form.handleSubmit(onSubmit)}
-              className="flex w-full flex-row gap-3 space-y-8"
-            >
-              <FormField
-                control={form.control}
-                name="comment"
-                render={({ field }) => (
-                  <FormItem className="w-full">
-                    <FormLabel>Comments</FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="Write a comment"
-                        className="w-full"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <Button type="submit">Submit</Button>
-            </form>
-          </Form>
+          {user.status == "authenticated" && (
+            <Form {...form}>
+              <form
+                onSubmit={form.handleSubmit(onSubmit)}
+                className="flex w-full flex-row gap-3 space-y-8"
+              >
+                <FormField
+                  control={form.control}
+                  name="comment"
+                  render={({ field }) => (
+                    <FormItem className="w-full">
+                      <FormLabel>Comments</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="Write a comment"
+                          className="w-full"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <Button type="submit">Submit</Button>
+              </form>
+            </Form>
+          )}
           <div className="my-2">
             {post.data.comments.map((comment) => (
               <CommentPreview comment={comment} key={comment.id} />
