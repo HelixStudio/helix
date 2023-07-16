@@ -81,12 +81,12 @@ const ForumPage: NextPage = () => {
                   }}
                 />
               )}
-              <IconButton
+              {/* <IconButton
                 icon={<HiMagnifyingGlass size={20} />}
                 onClick={() => {
                   alert("search");
                 }}
-              />
+              /> */}
             </div>
           </div>
           <div className="px-3 sm:px-0">

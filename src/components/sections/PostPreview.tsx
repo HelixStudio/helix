@@ -88,7 +88,7 @@ const PostPreview = (props: {
         <div
           className={cn(
             "mr-5 flex-col items-center gap-1",
-            size == "sm" ? "hidden lg:flex" : ""
+            size == "sm" ? "hidden lg:flex" : "flex"
           )}
         >
           <button
