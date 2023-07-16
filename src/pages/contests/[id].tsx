@@ -7,6 +7,7 @@ import { LoadingSection } from "~/components/ui/Loading";
 import { api } from "~/utils/api";
 import { sanitize } from "isomorphic-dompurify";
 import { Button } from "~/components/ui/Button";
+import dayjs from "dayjs";
 
 const ContestDetailsPage: NextPage = () => {
   const session = useSession();
@@ -22,6 +23,8 @@ const ContestDetailsPage: NextPage = () => {
   const renderedContent = marked.parse(contest.data?.description as string);
   const safeContent = sanitize(renderedContent);
 
+  const canRegister = dayjs(contest.data?.start).diff(Date.now(), "month") <= 1;
+
   return (
     <AppShell>
       <main className="bg-secondary-700 text-white">
@@ -33,13 +36,15 @@ const ContestDetailsPage: NextPage = () => {
             className="prose prose-neutral min-w-full dark:prose-invert"
             dangerouslySetInnerHTML={{ __html: safeContent }}
           />
-          <Button
-            onClick={() => {
-              // TODO: register
-            }}
-          >
-            Register
-          </Button>
+          {canRegister && (
+            <Button
+              onClick={() => {
+                // TODO: register
+              }}
+            >
+              Register
+            </Button>
+          )}
         </div>
       </main>
     </AppShell>

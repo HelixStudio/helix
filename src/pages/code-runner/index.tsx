@@ -396,6 +396,8 @@ const CodeRunnerPage: NextPage = () => {
               </div>
               <div className="flex h-full items-center justify-center text-center">
                 <p>
+                  {" "}
+                  {/* TODO: remove this and allow file sharing */}
                   <Link href="#" className="text-accent-400 underline">
                     Login
                   </Link>{" "}
