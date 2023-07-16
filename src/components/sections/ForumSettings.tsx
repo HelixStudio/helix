@@ -81,7 +81,9 @@ const ForumSettings = () => {
           <TabsTrigger value="your-posts">Your posts</TabsTrigger>
           <TabsTrigger value="bookmarks">Bookmarks</TabsTrigger>
           <TabsTrigger value="your-groups">Your grops</TabsTrigger>
-          <TabsTrigger value="new-group">Create group</TabsTrigger>
+          <TabsTrigger value="new-group" className="hidden md:inline">
+            Create group
+          </TabsTrigger>
         </TabsList>
         <TabsContent value="your-groups">
           {(yourGroups.data?.length as number) > 0 ? (

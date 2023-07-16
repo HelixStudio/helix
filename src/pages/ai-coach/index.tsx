@@ -77,7 +77,7 @@ export default function Chat() {
                 </div>
               ))}
             </div>
-            <div className="mb-16 mt-3 flex w-full flex-row items-center gap-3 md:mb-2">
+            <div className="mt-3 flex w-full flex-row items-center gap-3 md:mb-2">
               <form
                 onSubmit={handleSubmit}
                 className="flex w-full flex-row items-center gap-3"

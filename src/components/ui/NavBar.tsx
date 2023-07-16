@@ -148,10 +148,10 @@ const NavBar = () => {
             {page.icon}
 
             <span
-              className="absolute left-14 m-2 w-auto min-w-max origin-left scale-0 rounded-md
-              bg-secondary-900 p-2 
-              text-xs font-bold text-primary-400
-              shadow-md transition-all duration-100 group-hover:scale-100"
+              className="absolute -top-14 z-10 m-2 w-auto min-w-max origin-left scale-0 rounded-md
+              bg-secondary-900 p-2 text-xs font-bold
+              text-primary-400 shadow-md transition-all
+              duration-100 group-hover:scale-100 md:left-14 md:top-0"
             >
               {page.name}
             </span>
