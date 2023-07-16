@@ -5,7 +5,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "~/components/ui/Select";
-import { supportedLanguages } from "~/utils/code";
 import { Button } from "~/components/ui/Button";
 import UIPanel from "~/components/ui/UIPanel";
 import { type SetStateAction, useState } from "react";
@@ -15,11 +14,17 @@ import CodeEditor, {
 import EditorSettings from "~/components/functional/EditorSettings";
 import { api } from "~/utils/api";
 import { toastSuccess } from "~/utils/toast";
+import { supportedLanguages } from "~/utils/code";
 
 const Editor = ({ problemId }: { problemId: number }) => {
   const [settings, setSettings] = useState(codeEditorDefaults);
   const [lang, setLang] = useState(settings.lang);
   const [code, setCode] = useState(settings.initialCode);
+
+  const ojSupportedLanguages = supportedLanguages.filter((l) => {
+    const oj = ["c", "cpp", "rust", "haskell"];
+    return oj.includes(l.name);
+  });
 
   const sendSubmission = api.problem.sendSubmission.useMutation();
 
@@ -48,7 +53,7 @@ const Editor = ({ problemId }: { problemId: number }) => {
                 <SelectValue placeholder="Language" />
               </SelectTrigger>
               <SelectContent>
-                {supportedLanguages.map((supLang) => (
+                {ojSupportedLanguages.map((supLang) => (
                   <SelectItem value={supLang.name} key={supLang.name}>
                     {supLang.fancyName}
                   </SelectItem>
