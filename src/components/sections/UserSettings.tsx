@@ -28,6 +28,7 @@ import {
 } from "../ui/Select";
 import { colorThemes, themeAtom } from "~/utils/atoms";
 import { useAtom } from "jotai";
+import { signOut } from "next-auth/react";
 
 const UserSettings = () => {
   const { data: user, isLoading } = api.user.getMetadata.useQuery({
@@ -143,7 +144,10 @@ const UserSettings = () => {
               </SelectContent>
             </Select>
           </div>
-          <Button type="submit">Update</Button>
+          <div className="flex flex-row gap-2">
+            <Button type="submit">Update</Button>
+            <Button onClick={() => void signOut()}>Sign out</Button>
+          </div>
         </form>
       </Form>
     </div>
