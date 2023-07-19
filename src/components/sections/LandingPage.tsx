@@ -63,6 +63,7 @@ const LandingPage = () => {
             <div className="flex lg:hidden">
               <button
                 type="button"
+                aria-label="open main menu"
                 className="-my-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-100"
                 onClick={() => setMobileMenuOpen(true)}
               >

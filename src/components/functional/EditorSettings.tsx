@@ -81,7 +81,11 @@ const EditorSettings = (props: {
         }}
       >
         <DialogTrigger asChild>
-          <Button variant="muted" onClick={() => setIsOpened(true)}>
+          <Button
+            variant="muted"
+            onClick={() => setIsOpened(true)}
+            aria-label="open settings"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -171,6 +175,7 @@ const EditorSettings = (props: {
             <Button
               type="submit"
               variant={"outline"}
+              aria-label="reset settings"
               onClick={() => {
                 localStorage.removeItem("editorFontSize");
                 localStorage.removeItem("editorFontFamily");
@@ -193,6 +198,7 @@ const EditorSettings = (props: {
             </Button>
             <Button
               type="submit"
+              aria-label="save new settings"
               onClick={() => {
                 const args = { fontSize, fontFamily, theme, vimMode };
                 props.callback(args);

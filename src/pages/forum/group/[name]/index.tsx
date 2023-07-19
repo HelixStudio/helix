@@ -41,6 +41,7 @@ const GroupPage: NextPage = () => {
             <div className="flex flex-row gap-2">
               {user.data?.user.id == group.data?.authorId && (
                 <IconButton
+                  label={"edit post"}
                   icon={<PencilIcon size={20} />}
                   onClick={() =>
                     router.push(

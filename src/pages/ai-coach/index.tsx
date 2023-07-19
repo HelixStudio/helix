@@ -93,6 +93,7 @@ export default function Chat() {
                   onChange={handleInputChange}
                 />
                 <IconButton
+                  label={"send prompt"}
                   variant={"outline"}
                   icon={
                     <svg
@@ -111,6 +112,7 @@ export default function Chat() {
                     </svg>
                   }
                   onClick={() => {
+                    // submit form
                     return;
                   }}
                 />

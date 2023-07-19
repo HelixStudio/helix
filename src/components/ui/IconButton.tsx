@@ -3,6 +3,7 @@ import { Button } from "./Button";
 
 const IconButton = (props: {
   icon: ReactNode;
+  label: string;
   onClick: () => void;
   variant?: "primary" | "secondary" | "outline" | "muted" | "accent";
 }) => {
@@ -11,6 +12,7 @@ const IconButton = (props: {
       variant={props.variant ?? "secondary"}
       size={"default"}
       onClick={props.onClick}
+      aria-label={props.label}
     >
       {props.icon}
     </Button>

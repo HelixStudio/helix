@@ -45,46 +45,44 @@ const PostPreview = (props: {
           size != "sm" ? "mb-5" : "mb-3"
         )}
       >
-        <Link className="w-full p-3" href={`/forum/post/${props.post.id}`}>
-          <p className="text-sm">
-            <Balancer>
+        <div className="w-full p-3">
+          <div className="text-sm">
+            <Link
+              href={`/forum/group/${props.post.group.name}`}
+              className="hover:underline"
+            >
+              <Balancer>{props.post.group.name}</Balancer>
+            </Link>
+            {` • `}
+            <span className="text-neutral-400">
+              Posted by{" "}
               <Link
-                href={`/forum/group/${props.post.group.name}`}
+                href={`/user/${props.post.author.id}`}
                 className="hover:underline"
               >
-                {props.post.group.name}
+                {props.post.author.name}
               </Link>
-              {` • `}
-              <span className="text-neutral-400">
-                Posted by{" "}
-                <Link
-                  href={`/user/${props.post.author.id}`}
-                  className="hover:underline"
-                >
-                  {props.post.author.name}
-                </Link>
-                <span>{`, ${dayjs(props.post.createdAt).fromNow()}`}</span>
-              </span>
-            </Balancer>
-          </p>
+              <span>{`, ${dayjs(props.post.createdAt).fromNow()}`}</span>
+            </span>
+          </div>
 
-          <Balancer>
-            <h5
+          <Link href={`/forum/post/${props.post.id}`}>
+            <p
               className={cn(
                 `font-bold tracking-tight 
           text-secondary-900 text-white`,
                 size != "sm" ? "my-2 text-3xl" : "my-1 text-xl"
               )}
             >
-              {props.post.title}
-            </h5>
-          </Balancer>
-          <p className="font-normal text-gray-300">
-            {props.post.content.length > maxPreview
-              ? props.post.content.substring(0, maxPreview) + "..."
-              : props.post.content}
-          </p>
-        </Link>
+              <Balancer>{props.post.title}</Balancer>
+            </p>
+            <p className="font-normal text-gray-300">
+              {props.post.content.length > maxPreview
+                ? props.post.content.substring(0, maxPreview) + "..."
+                : props.post.content}
+            </p>
+          </Link>
+        </div>
         <div
           className={cn(
             "mr-5 flex-col items-center gap-1",
@@ -99,6 +97,7 @@ const PostPreview = (props: {
                 likedBy: props.post.likedBy,
               });
             }}
+            aria-label="like this post"
           >
             {props.post.likedBy.includes(props.uid) ? (
               <HeartFillIcon size={20} />

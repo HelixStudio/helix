@@ -123,15 +123,15 @@ const NavBar = () => {
   const pathname = useRouter().pathname;
 
   return (
-    <div
+    <ul
       className="fixed bottom-0 z-50 m-0 flex h-16 w-screen flex-row
       bg-secondary-800 text-primary-400 md:h-screen md:w-16 md:flex-col 
       md:[&>*:last-child]:fixed md:[&>*:last-child]:bottom-0 md:[&>*:last-child]:left-0"
     >
       {pages.map((page) => (
-        <Link key={page.name} href={page.link[0] as string}>
-          <li
-            className={`relative mx-auto mb-2 ml-2 mt-2 flex h-12 w-12 items-center justify-center 
+        <li
+          key={page.name}
+          className={`relative mx-auto mb-2 ml-2 mt-2 flex h-12 w-12 items-center justify-center 
                       ${
                         (
                           page.link[0] == "/"
@@ -144,7 +144,8 @@ const NavBar = () => {
                           : "bg-secondary-700 text-accent-400 hover:rounded-xl hover:bg-accent-500 hover:text-primary-400"
                       }
                       group rounded-3xl transition-all duration-200`}
-          >
+        >
+          <Link href={page.link[0] as string}>
             {page.icon}
 
             <span
@@ -155,10 +156,10 @@ const NavBar = () => {
             >
               {page.name}
             </span>
-          </li>
-        </Link>
+          </Link>
+        </li>
       ))}
-    </div>
+    </ul>
   );
 };
 

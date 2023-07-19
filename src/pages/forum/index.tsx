@@ -75,6 +75,7 @@ const ForumPage: NextPage = () => {
             <div className="flex flex-row gap-5">
               {user.status == "authenticated" && (
                 <IconButton
+                  label={"write post"}
                   icon={<BsPencilSquare size={20} />}
                   onClick={() => {
                     void router.push("/forum/write");

@@ -136,6 +136,7 @@ const PostPage: NextPage = () => {
             {user.data?.user.id == post.data.authorId && (
               <IconButton
                 icon={<PencilIcon size={20} />}
+                label={"edit post"}
                 onClick={() =>
                   router.push(`/forum/post/${router.query.id as string}/edit`)
                 }
@@ -143,6 +144,7 @@ const PostPage: NextPage = () => {
             )}
             {user.data?.user.id == post.data.authorId && (
               <IconButton
+                label={"delete post"}
                 icon={<TrashIcon size={20} />}
                 onClick={() => {
                   deletePost.mutate({
@@ -156,6 +158,7 @@ const PostPage: NextPage = () => {
             )}
             {user.status == "authenticated" && (
               <IconButton
+                label="bookmark post"
                 icon={
                   isBookmarked ? (
                     <BookmarkFillIcon size={20} />
