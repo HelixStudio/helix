@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 import { type NextPage } from "next";
 import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import AppShell from "~/components/ui/AppShell";
 import { LoadingSection } from "~/components/ui/Loading";
 import { api } from "~/utils/api";

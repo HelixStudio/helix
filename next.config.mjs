@@ -9,7 +9,9 @@ const withPWA = (await import('next-pwa')).default({
   dest: 'public',
   register: true,
   skipWaiting: true,
-  disableDevLogs: true
+  disableDevLogs: true,
+  buildExcludes: [/app-build-manifest.json$/],
+  disable: process.env.NODE_ENV === "development"
 });
 
 /** @type {import("next").NextConfig} */

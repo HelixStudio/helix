@@ -1,5 +1,4 @@
 import { type NextPage } from "next";
-import React from "react";
 import AppShell from "~/components/ui/AppShell";
 import IconButton from "~/components/ui/IconButton";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "~/components/ui/Tabs";
