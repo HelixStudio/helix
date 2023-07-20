@@ -8,21 +8,34 @@ import {
   StyleSheet,
   Svg,
 } from "@react-pdf/renderer";
+import { useRouter } from "next/router";
+import dayjs from "dayjs";
 import AppShell from "~/components/ui/AppShell";
+import { LoadingSection } from "~/components/ui/Loading";
 import Table from "~/components/ui/pdf/Table";
+import { api } from "~/utils/api";
+import { zip } from "../draft/tests";
 
-const PdfTest = () => {
-  if (typeof window === "undefined")
+const PDFPreview = () => {
+  const router = useRouter();
+
+  const problem = api.problem.getProblemById.useQuery({
+    id: parseInt(router.query.id as string),
+  });
+
+  if (problem.isLoading) return <LoadingSection />;
+
+  if (problem.data?.draft)
     return (
-      <div>
-        <iframe />
-      </div>
+      <AppShell>
+        <p>PDF is not available yet!</p>
+      </AppShell>
     );
 
   return (
     <AppShell>
       <PDFViewer height={"100%"} width={"100%"}>
-        <Document author="Asandei Stefan-Alexandru" title="hello">
+        <Document author="Asandei Stefan-Alexandru" title={problem.data?.title}>
           <Page size="A4" style={styles.page}>
             <View style={styles.section}>
               <View style={styles.row}>
@@ -33,7 +46,9 @@ const PdfTest = () => {
                   </Text>
                 </View>
                 <View>
-                  <Text style={styles.subheader}>17 Iulie 2023</Text>
+                  <Text style={styles.subheader}>
+                    {dayjs(problem.data?.createdAt).format("DD MMM YYYY")}
+                  </Text>
                 </View>
               </View>
               <Svg height="10" width="600">
@@ -46,33 +61,33 @@ const PdfTest = () => {
                   stroke="black"
                 />
               </Svg>
-              <Text style={styles.h1}>Titlul problemei</Text>
-              <Text style={styles.content}>backstory</Text>
-              <Text style={styles.h2}>Cerinta</Text>
-              <Text style={styles.content}>statement</Text>
-              <Text style={styles.h2}>Date de intrare</Text>
-              <Text style={styles.content}>input format</Text>
-              <Text style={styles.h2}>Date de iesire</Text>
-              <Text style={styles.content}>input data</Text>
-              <Text style={styles.h2}>Restrictii si precizari</Text>
-              <Text style={styles.content}>requirments</Text>
-              <Text style={styles.h2}>Exemplu</Text>
+              <Text style={styles.h1}>{problem.data?.title}</Text>
+              <Text style={styles.content}>{problem.data?.statement}</Text>
+              <Text style={styles.h2}>Input format</Text>
+              <Text style={styles.content}>{problem.data?.inputFormat}</Text>
+              <Text style={styles.h2}>Output format</Text>
+              <Text style={styles.content}>{problem.data?.outputFormat}</Text>
+              <Text style={styles.h2}>Notes</Text>
+              <Text style={styles.content}>{problem.data?.notes}</Text>
+              <Text style={styles.h2}>Example</Text>
               <Table
                 data={{
                   items: [
-                    ["Intrare", "Iesire"],
-                    ["2", "YES"],
-                    ["5", "NO"],
+                    ["Input", "Output"],
+                    ...(zip(
+                      problem.data?.inputs as string[],
+                      problem.data?.outputs as string[]
+                    ) as string[][]),
                   ],
                 }}
               />
             </View>
             <View style={styles.section}>
               <Text style={styles.content}>
-                Timp maxim de execuţie/test: 0.1 secunde
+                Time limit: {problem.data?.timeLimitMs} ms
               </Text>
               <Text style={styles.content}>
-                Memorie totală disponibilă: 8 MB din care 4 MB pentru stivă
+                Total maximum memory: {problem.data?.memLimitBytes} bytes
               </Text>
               <Svg height="10" width="600" style={{ paddingTop: 5 }}>
                 <Line
@@ -136,4 +151,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PdfTest;
+export default PDFPreview;

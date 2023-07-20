@@ -2,6 +2,7 @@ import { Button } from "~/components/ui/Button";
 import UIPanel from "~/components/ui/UIPanel";
 import { Scracthpad } from "../Scratchpad";
 import { type ProblemMetadata, StatementView } from "../StatementView";
+import Link from "next/link";
 
 const Informations = (props: { problem: ProblemMetadata }) => {
   return (
@@ -23,7 +24,9 @@ const Informations = (props: { problem: ProblemMetadata }) => {
         ]}
         controls={
           <div className="flex flex-row gap-3">
-            <Button variant={"outline"}>Download PDF</Button>
+            <Link href={`/online-judge/pdf/${props.problem.id}`}>
+              <Button variant={"outline"}>Download PDF</Button>
+            </Link>
             <Button variant={"outline"}>Ask AI</Button>
           </div>
         }

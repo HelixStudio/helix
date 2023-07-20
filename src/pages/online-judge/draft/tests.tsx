@@ -22,7 +22,7 @@ import { Textarea } from "~/components/ui/Textarea";
 import { Checkbox } from "~/components/ui/Checkbox";
 import { Input } from "~/components/ui/Input";
 
-const zip = <T,>(a: T[], b: T[]) => a.map((k, i) => [k, b[i]]);
+export const zip = <T,>(a: T[], b: T[]) => a.map((k, i) => [k, b[i]]);
 
 const OnlineJudgePage: NextPage = () => {
   const session = useSession();
