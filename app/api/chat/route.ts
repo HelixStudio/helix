@@ -1,38 +1,44 @@
 import { HfInference } from "@huggingface/inference";
 import { HuggingFaceStream, StreamingTextResponse } from "ai";
-
-type Message = { content: string; role: "system" | "user" | "assistant" };
+import {
+  type ChatModel,
+  type Message,
+  goodModels,
+  modelIndex,
+} from "~/utils/ai";
 
 const Hf = new HfInference(process.env.HUGGINGFACE_API_KEY);
 
-function buildOpenAssistantPrompt(messages: Message[]) {
+function buildPrompt(messages: Message[], model: ChatModel) {
   return (
     messages
       .map(({ content, role }) => {
         if (role === "user") {
-          return `<|prompter|>${content}<|endoftext|>`;
-        } else {
-          return `<|assistant|>${content}<|endoftext|>`;
+          return `<|${model.userToken}|>${content}<|${model.endToken}|>\n`;
+        } else if (role === "assistant") {
+          return `<|${model.assistantToken}|>${content}<|${model.endToken}|>\n`;
+        } else if (role === "system") {
+          return `<|${model.systemToken}|>${content}<|${model.endToken}|>\n`;
         }
       })
-      .join("") + "<|assistant|>"
+      .join("") + `<|${model.assistantToken}|>`
   );
 }
 
 export const POST = async (req: Request) => {
   const { messages } = (await req.json()) as { messages: Message[] };
+  const model = goodModels[modelIndex];
+
+  if (model == undefined) {
+    return "Model is not valid";
+  }
 
   const response = Hf.textGenerationStream({
-    model: "OpenAssistant/oasst-sft-4-pythia-12b-epoch-3.5",
-    inputs: buildOpenAssistantPrompt(messages),
+    model: model.name,
+    inputs: buildPrompt(messages, model),
     parameters: {
       temperature: 0.5,
       max_new_tokens: 200,
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      typical_p: 0.2,
-      repetition_penalty: 1,
-      truncate: 1000,
       return_full_text: false,
     },
   });

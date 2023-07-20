@@ -1,17 +1,28 @@
 "use client";
 
 import { useChat } from "ai/react";
-import hljs from "highlight.js";
 import { sanitize } from "isomorphic-dompurify";
 import { marked } from "marked";
 import Head from "next/head";
+import { useRouter } from "next/router";
 import AppShell from "~/components/ui/AppShell";
 import IconButton from "~/components/ui/IconButton";
 
 export default function Chat() {
+  const router = useRouter();
+
   const { messages, input, handleInputChange, handleSubmit } = useChat({
     api: "/api/chat",
-    onFinish: () => hljs.highlightAll(),
+    initialMessages:
+      router.query.prompt !== undefined
+        ? [
+            {
+              id: Date.now().toString(),
+              role: "system",
+              content: router.query.prompt as string,
+            },
+          ]
+        : [],
   });
 
   const renderHTML = (markdown: string) => {
@@ -64,7 +75,9 @@ export default function Chat() {
                     className={`max-w-fit rounded-lg p-2 ${
                       m.role == "user"
                         ? "bg-accent-500"
-                        : "prose bg-secondary-800 dark:prose-invert"
+                        : m.role == "assistant"
+                        ? "prose bg-secondary-800 dark:prose-invert"
+                        : "bg-secondary-700"
                     }`}
                     dangerouslySetInnerHTML={{
                       __html: renderHTML(m.content),

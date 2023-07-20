@@ -27,7 +27,9 @@ const Informations = (props: { problem: ProblemMetadata }) => {
             <Link href={`/online-judge/pdf/${props.problem.id}`}>
               <Button variant={"outline"}>Download PDF</Button>
             </Link>
-            <Button variant={"outline"}>Ask AI</Button>
+            <Link href={`/ai-coach?prompt=${props.problem.statement}`}>
+              <Button variant={"outline"}>Ask AI</Button>
+            </Link>
           </div>
         }
       >
