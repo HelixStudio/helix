@@ -15,7 +15,7 @@ const HomePage = (props: { session: Session }) => {
 
   return (
     <AppShell>
-      <div className="m-1 grid h-full grid-flow-row md:grid-flow-col md:grid-cols-3">
+      <div className="grid h-full grid-flow-row md:grid-flow-col md:grid-cols-3">
         <div className="flex h-full flex-col justify-evenly px-2 md:col-span-2 md:justify-between md:py-2">
           <div className="space-y-2">
             <div className="col-span-1 flex flex-col">

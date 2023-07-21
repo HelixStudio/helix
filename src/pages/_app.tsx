@@ -26,7 +26,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
         <meta name="theme-color" content="#ec4899" />
       </Head>
       <Toaster position="bottom-center" />
-      <div className="pink">
+      <div>
         <Component {...pageProps} />
       </div>
     </SessionProvider>

@@ -122,16 +122,23 @@ pre {
   }
 }
 
-body::-webkit-scrollbar {
+#main-container {
+  scrollbar-width: 0.25rem;
+  scrollbar-color: pink black;
+}
+
+::-webkit-scrollbar {
   width: 0.25rem;
 }
 
-body::-webkit-scrollbar-track {
-  background: var(--secondary-800);
+::-webkit-scrollbar-track {
+  /* background: hsl(var(--secondary-800)); */
+  background: hsl(var(--secondary-800));
 }
 
-body::-webkit-scrollbar-thumb {
-  background: var(--accent-500);
+::-webkit-scrollbar-thumb {
+  /* background: hsl(var(--accent-500)); */
+  background: whitesmoke;
 }
 
 ::selection {

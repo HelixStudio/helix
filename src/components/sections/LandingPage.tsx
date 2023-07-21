@@ -37,7 +37,10 @@ const LandingPage = () => {
 
   return (
     <>
-      <div className="flex min-h-screen flex-col bg-gradient-to-b from-slate-900 to-zinc-950">
+      <div
+        id="main-container"
+        className="pink flex min-h-screen flex-col bg-gradient-to-b from-slate-900 to-zinc-950"
+      >
         <motion.div
           initial={{
             opacity: 0,

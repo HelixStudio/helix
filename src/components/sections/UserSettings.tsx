@@ -29,8 +29,10 @@ import {
 import { colorThemes, themeAtom } from "~/utils/atoms";
 import { useAtom } from "jotai";
 import { signOut } from "next-auth/react";
+import { useRouter } from "next/router";
 
 const UserSettings = () => {
+  const router = useRouter();
   const { data: user, isLoading } = api.user.getMetadata.useQuery({
     id: undefined,
   });
@@ -146,7 +148,21 @@ const UserSettings = () => {
           </div>
           <div className="flex flex-row gap-2">
             <Button type="submit">Update</Button>
-            <Button onClick={() => void signOut()}>Sign out</Button>
+            <Button
+              onClick={() => {
+                router
+                  .push("/")
+                  .then(async () => {
+                    await signOut();
+                  })
+                  .catch((e) => {
+                    console.log(e);
+                  });
+              }}
+              type="button"
+            >
+              Sign out
+            </Button>
           </div>
         </form>
       </Form>
