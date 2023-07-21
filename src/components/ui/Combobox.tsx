@@ -21,6 +21,7 @@ import {
 export interface ComboboxProps {
   placeholder: string;
   options: string[];
+  label: string;
   onSelect: (newValue: string) => void;
 }
 
@@ -34,6 +35,7 @@ const Combobox = (props: ComboboxProps) => {
         <Button
           variant="outline"
           role="combobox"
+          aria-label={props.label}
           aria-expanded={open}
           className="w-[200px] justify-between"
         >

@@ -101,6 +101,7 @@ const WritePage: NextPage = () => {
         <div className="pb-3">
           <Combobox
             onSelect={(newValue) => setGroup(newValue)}
+            label="Choose a group"
             placeholder="Choose a group"
             options={[...getNames()]}
           />

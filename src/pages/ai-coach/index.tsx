@@ -62,7 +62,7 @@ export default function Chat() {
             </div>
           </div>
         )}
-        <div className="h-full w-full overflow-y-scroll p-2 md:p-0">
+        <div className="h-full w-full p-2 md:p-0">
           {messages.map((m) => (
             <div key={m.id}>
               <div className="mr-2">
@@ -71,18 +71,29 @@ export default function Chat() {
                     m.role == "user" ? "justify-end" : "justify-start"
                   }`}
                 >
-                  <div
-                    className={`max-w-fit rounded-lg p-2 ${
-                      m.role == "user"
-                        ? "bg-accent-500"
-                        : m.role == "assistant"
-                        ? "prose bg-secondary-800 dark:prose-invert"
-                        : "bg-secondary-700"
-                    }`}
-                    dangerouslySetInnerHTML={{
-                      __html: renderHTML(m.content),
-                    }}
-                  ></div>
+                  <div className="flex flex-col py-2">
+                    {m.role == "system" && (
+                      <p className="text-accent-400">Context:</p>
+                    )}
+                    <div
+                      className={`max-w-fit rounded-lg p-2 ${
+                        m.role == "user"
+                          ? "bg-accent-500"
+                          : m.role == "assistant"
+                          ? "prose bg-secondary-800 dark:prose-invert"
+                          : "bg-secondary-700"
+                      }`}
+                      dangerouslySetInnerHTML={{
+                        __html: renderHTML(m.content),
+                      }}
+                    ></div>
+                    {m.role == "system" && (
+                      <p className="text-accent-400">
+                        You can ask the assitant anything, based on the provided
+                        context!
+                      </p>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>

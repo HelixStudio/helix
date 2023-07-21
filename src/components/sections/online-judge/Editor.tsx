@@ -49,7 +49,10 @@ const Editor = ({ problemId }: { problemId: number }) => {
                 });
               }}
             >
-              <SelectTrigger className="min-w-[8rem] max-w-[180px]">
+              <SelectTrigger
+                className="min-w-[8rem] max-w-[180px]"
+                aria-label="Choose a language"
+              >
                 <SelectValue placeholder="Language" />
               </SelectTrigger>
               <SelectContent>

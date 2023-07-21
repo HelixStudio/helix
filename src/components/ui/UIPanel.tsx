@@ -14,7 +14,7 @@ const UIPanel = (props: {
   controls?: React.ReactNode;
   children: React.ReactNode;
 }) => {
-  const PAGE_LENGTH = 107;
+  const PAGE_LENGTH = 125;
 
   for (let i = 0; i < props.pages.length; i++)
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -32,14 +32,14 @@ const UIPanel = (props: {
                 x: activePage?.x,
                 y: 5,
               }}
-              className="absolute z-10 h-10 w-24 rounded-md bg-secondary-800"
+              className="absolute z-10 h-10 w-28 rounded-md bg-secondary-800"
             />
             {props.pages.map((page) => (
               <button
                 key={page.name}
                 onClick={() => setActivePage(page)}
                 className={cn(
-                  "z-20 my-1 h-10 w-24 rounded-md p-2 transition-all hover:cursor-pointer",
+                  "z-20 my-1 h-10 w-28 rounded-md p-2 transition-all hover:cursor-pointer",
                   page.name == activePage?.name
                     ? "text-accent-400"
                     : "hover:bg-secondary-600 hover:bg-opacity-70"
