@@ -3,6 +3,7 @@
 /* eslint no-use-before-define: 0 */
 import { Editor, useMonaco } from "@monaco-editor/react";
 import { type NextPage } from "next";
+import { useSession } from "next-auth/react";
 import Head from "next/head";
 import Link from "next/link";
 import { type SetStateAction, useEffect, useState } from "react";
@@ -31,6 +32,8 @@ import { getLanguage, supportedLanguages } from "~/utils/code";
 import { registerThemes, type Theme } from "~/utils/monaco-themes";
 
 const CodeRunnerPage: NextPage = () => {
+  const session = useSession();
+
   const [output, setOutput] = useState("");
   const [lang, setLang] = useState("cpp");
   const [code, setCode] = useState(getLanguage(lang).defaultCode);
@@ -394,16 +397,30 @@ const CodeRunnerPage: NextPage = () => {
                   </SelectContent>
                 </Select>
               </div>
-              <div className="flex h-full items-center justify-center text-center">
-                <p>
-                  {" "}
-                  {/* TODO: remove this and allow file sharing */}
-                  <Link href="#" className="text-accent-400 underline">
-                    Login
-                  </Link>{" "}
-                  to be able to edit multiple files and save your projects.
-                </p>
-              </div>
+              {session.status == "loading" ? (
+                <div className="flex h-full items-center justify-center text-center">
+                  <LoadingSpinner size={40} />
+                </div>
+              ) : (
+                <></>
+              )}
+              {session.status == "unauthenticated" ? (
+                <div className="flex h-full items-center justify-center text-center">
+                  <p>
+                    <Link
+                      href="/auth/signin"
+                      className="text-accent-400 underline"
+                    >
+                      Login
+                    </Link>{" "}
+                    to be able to edit multiple files and save your projects.
+                  </p>
+                </div>
+              ) : (
+                session.status == "authenticated" && (
+                  <div>authed content here</div>
+                )
+              )}
             </div>
           </Panel>
           <PanelResizeHandle className="w-1 bg-secondary-800 focus:bg-secondary-600" />

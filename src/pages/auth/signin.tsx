@@ -44,7 +44,7 @@ const SignInPage = ({
         <title>Sign in</title>
       </Head>
 
-      <main className="flex h-screen flex-col items-center justify-center bg-zinc-900 ">
+      <main className="pink flex h-screen flex-col items-center justify-center bg-zinc-900 ">
         <h1 className="pb-8 text-7xl font-bold leading-normal">
           Helix<span className="text-accent-400">.</span>
         </h1>
