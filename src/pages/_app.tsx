@@ -23,7 +23,6 @@ const MyApp: AppType<{ session: Session | null }> = ({
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="apple-touch-icon" href="/assets/icon-48x48.png" />
         <link rel="manifest" href="/manifest.json" />
-        <meta name="theme-color" content="#ec4899" />
       </Head>
       <Toaster position="bottom-center" />
       <div>

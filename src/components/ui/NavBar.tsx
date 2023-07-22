@@ -130,12 +130,12 @@ const NavBar = () => {
     >
       {pages.map((page) => (
         <button
-          className="mx-auto"
+          className="mx-auto ml-2"
           key={page.name}
           onClick={async () => await router.push(page.link[0] as string)}
         >
           <div
-            className={`relative mb-2 ml-2 mt-2 flex h-12 w-12 items-center justify-center 
+            className={`relative my-2 flex h-12 w-12 items-center justify-center 
                       ${
                         (
                           page.link[0] == "/"

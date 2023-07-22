@@ -39,7 +39,7 @@ const UserPage: NextPage = () => {
             <img
               src={user.data?.image as string}
               alt="profile picture"
-              className="aspect-square h-24 w-24"
+              className="aspect-square h-24 w-24 rounded-lg"
             />
             <div className="flex flex-col justify-start gap-3">
               <div>
