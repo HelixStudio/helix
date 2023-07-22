@@ -1,6 +1,7 @@
 import UIPanel from "~/components/ui/UIPanel";
 import SubmissionsView from "./SubmissionsView";
 
+// TODO: use atom to manage loading state
 const Solutions = ({ problemId }: { problemId: number }) => {
   return (
     <div className="h-full">

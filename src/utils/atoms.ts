@@ -1,3 +1,4 @@
+import { atom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 
 export const colorThemes = [
@@ -13,3 +14,5 @@ export const colorThemes = [
 export type ColorTheme = (typeof colorThemes)[number];
 
 export const themeAtom = atomWithStorage<ColorTheme>("colorTheme", "pink");
+
+export const submissionLoadingAtom = atom(false);

@@ -425,7 +425,11 @@ const CodeRunnerPage: NextPage = () => {
         </div>
       ) : (
         session.status == "authenticated" && (
-          <Button className="my-2" onClick={() => alert("work in progress!")}>
+          <Button
+            className="my-2"
+            variant={"outline"}
+            onClick={() => alert("work in progress!")}
+          >
             Copy file link
           </Button>
         )

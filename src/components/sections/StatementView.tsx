@@ -20,7 +20,9 @@ export const StatementView = (props: { problem: ProblemMetadata }) => {
     <div className="min-h-full overflow-y-scroll">
       <div className="flex flex-row items-end gap-2">
         <h1 className="text-2xl">{props.problem.title}</h1>
-        <h1 className="text-xl">by {props.problem.author.name}</h1>
+        <h1 className="hidden text-xl md:inline">
+          by {props.problem.author.name}
+        </h1>
       </div>
       <div className="mb-3 flex w-fit flex-row items-center gap-1 bg-secondary-600">
         <p className="hidden bg-secondary-800 pr-2 md:inline">

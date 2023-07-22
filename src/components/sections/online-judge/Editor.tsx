@@ -15,18 +15,32 @@ import EditorSettings from "~/components/functional/EditorSettings";
 import { api } from "~/utils/api";
 import { toastSuccess } from "~/utils/toast";
 import { supportedLanguages } from "~/utils/code";
+import { useAtom } from "jotai";
+import { submissionLoadingAtom } from "~/utils/atoms";
 
 const Editor = ({ problemId }: { problemId: number }) => {
   const [settings, setSettings] = useState(codeEditorDefaults);
   const [lang, setLang] = useState(settings.lang);
   const [code, setCode] = useState(settings.initialCode);
 
+  const [, setSubmissionLoading] = useAtom(submissionLoadingAtom);
+
   const ojSupportedLanguages = supportedLanguages.filter((l) => {
     const oj = ["c", "cpp", "rust", "haskell"];
     return oj.includes(l.name);
   });
 
-  const sendSubmission = api.problem.sendSubmission.useMutation();
+  const context = api.useContext();
+
+  const sendSubmission = api.problem.sendSubmission.useMutation({
+    onMutate: () => {
+      setSubmissionLoading(true);
+    },
+    onSuccess: async () => {
+      setSubmissionLoading(false);
+      await context.problem.getSubmissions.invalidate({ problemId: problemId });
+    },
+  });
 
   return (
     <div className="h-full">
