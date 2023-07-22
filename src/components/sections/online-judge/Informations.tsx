@@ -24,10 +24,16 @@ const Informations = (props: { problem: ProblemMetadata }) => {
         ]}
         controls={
           <div className="flex flex-row gap-3">
-            <Link href={`/online-judge/pdf/${props.problem.id}`}>
+            <Link
+              href={`/online-judge/pdf/${props.problem.id}`}
+              target={"_blank"}
+            >
               <Button variant={"outline"}>Download PDF</Button>
             </Link>
-            <Link href={`/ai-coach?prompt=${props.problem.statement}`}>
+            <Link
+              href={`/ai-coach?prompt=${props.problem.statement}`}
+              target={"_blank"}
+            >
               <Button variant={"outline"}>Ask AI</Button>
             </Link>
           </div>

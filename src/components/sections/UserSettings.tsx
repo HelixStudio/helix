@@ -124,7 +124,14 @@ const UserSettings = () => {
             <p>Color theme:</p>
             <Select
               defaultValue={theme}
-              onValueChange={(newTheme) => setTheme(newTheme)}
+              onValueChange={(newTheme) => {
+                setTheme(newTheme);
+                if (typeof window !== "undefined") {
+                  const body = document.querySelector("body") as HTMLElement;
+                  body.classList.remove(theme);
+                  body.classList.add(newTheme);
+                }
+              }}
             >
               <SelectTrigger className="max-w-[150px]">
                 <SelectValue placeholder="color theme" />

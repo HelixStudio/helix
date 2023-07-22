@@ -85,6 +85,8 @@ export default function Chat() {
                       }`}
                       dangerouslySetInnerHTML={{
                         __html: renderHTML(m.content),
+                        // also applies to "system" prompt, which allows the user to insert html
+                        // which is sanitized :)
                       }}
                     ></div>
                     {m.role == "system" && (

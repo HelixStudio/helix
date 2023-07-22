@@ -13,10 +13,18 @@ const poppins = Poppins({
 const AppShell = (props: { children: React.ReactNode }) => {
   const [theme] = useAtom(themeAtom);
 
+  // a bit of a hack
+  if (typeof window !== "undefined") {
+    const body = document.querySelector("body") as HTMLElement;
+    if (theme != "pink") body.classList.remove("pink");
+    body.classList.add(theme);
+  }
+
+  // hope the overflow-hidden won't break something in the future
   return (
     <>
       <main
-        className={`${poppins.variable} font-sans ${theme} dark flex flex-row bg-secondary-700`}
+        className={`${poppins.variable} font-sans ${theme} dark flex flex-row overflow-hidden bg-secondary-700`}
       >
         <CommandMenu />
         <NavBar />
