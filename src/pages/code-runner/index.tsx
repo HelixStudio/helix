@@ -8,6 +8,7 @@ import Head from "next/head";
 import Link from "next/link";
 import { type SetStateAction, useEffect, useState } from "react";
 import { PanelGroup, PanelResizeHandle, Panel } from "react-resizable-panels";
+import { useWindowSize } from "usehooks-ts";
 import EditorSettings, {
   getDefaultEditorSettings,
 } from "~/components/functional/EditorSettings";
@@ -51,9 +52,10 @@ const CodeRunnerPage: NextPage = () => {
   );
 
   const [isLeftSide, setIsLeftSide] = useState(true);
-  const [sidebarSize, setSidebarSize] = useState(20);
   const [currentTab, setCurrentTab] = useState<"output" | "input">("output");
   const [input, setInput] = useState("");
+
+  const size = useWindowSize();
 
   const monaco = useMonaco();
   useEffect(() => {
@@ -422,7 +424,11 @@ const CodeRunnerPage: NextPage = () => {
           </p>
         </div>
       ) : (
-        session.status == "authenticated" && <div>authed content here</div>
+        session.status == "authenticated" && (
+          <Button className="my-2" onClick={() => alert("work in progress!")}>
+            Copy file link
+          </Button>
+        )
       )}
     </div>
   );
@@ -556,9 +562,9 @@ const CodeRunnerPage: NextPage = () => {
         {isLeftSide ? (
           <>
             <Panel
-              defaultSize={sidebarSize}
-              onResize={(newSize) => setSidebarSize(newSize)}
+              className="hidden md:block"
               collapsible={true}
+              defaultSize={20}
               minSize={10}
               maxSize={30}
             >
@@ -571,15 +577,16 @@ const CodeRunnerPage: NextPage = () => {
           <>
             <Panel minSize={70}>{editor}</Panel>
             <PanelResizeHandle className="w-1 bg-secondary-800 focus:bg-secondary-600" />
-            <Panel
-              defaultSize={sidebarSize}
-              collapsible={true}
-              onResize={(newSize) => setSidebarSize(newSize)}
-              minSize={10}
-              maxSize={30}
-            >
-              {sidebar}
-            </Panel>
+            {size.width > 768 && (
+              <Panel
+                collapsible={true}
+                defaultSize={20}
+                minSize={10}
+                maxSize={30}
+              >
+                {sidebar}
+              </Panel>
+            )}
           </>
         )}
       </PanelGroup>

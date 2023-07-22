@@ -1,6 +1,4 @@
-import Link from "next/link";
 import { useRouter } from "next/router";
-import { Button } from "./Button";
 
 export const pages = [
   {
@@ -132,11 +130,12 @@ const NavBar = () => {
     >
       {pages.map((page) => (
         <button
+          className="relative mx-auto"
           key={page.name}
           onClick={async () => await router.push(page.link[0] as string)}
         >
           <div
-            className={`relative mx-auto mb-2 ml-2 mt-2 flex h-12 w-12 items-center justify-center 
+            className={` mb-2 ml-2 mt-2 flex h-12 w-12 items-center justify-center 
                       ${
                         (
                           page.link[0] == "/"
