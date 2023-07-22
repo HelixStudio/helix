@@ -23,7 +23,7 @@ const Informations = (props: { problem: ProblemMetadata }) => {
           },
         ]}
         controls={
-          <div className="flex flex-row gap-3">
+          <div className="hidden flex-row  gap-3 md:flex">
             <Link
               href={`/online-judge/pdf/${props.problem.id}`}
               target={"_blank"}

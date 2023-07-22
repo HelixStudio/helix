@@ -23,12 +23,16 @@ export const StatementView = (props: { problem: ProblemMetadata }) => {
         <h1 className="text-xl">by {props.problem.author.name}</h1>
       </div>
       <div className="mb-3 flex w-fit flex-row items-center gap-1 bg-secondary-600">
-        <p className="bg-secondary-800 pr-2">{props.problem.difficulty}</p>
-        <p className="bg-secondary-800 px-2">{props.problem.timeLimitMs} ms</p>
-        <p className="bg-secondary-800 px-2">
+        <p className="hidden bg-secondary-800 pr-2 md:inline">
+          {props.problem.difficulty}
+        </p>
+        <p className="hidden bg-secondary-800 px-2 md:inline">
+          {props.problem.timeLimitMs} ms
+        </p>
+        <p className="hidden bg-secondary-800 px-2 md:inline">
           {props.problem.memLimitBytes} bytes
         </p>
-        <p className="bg-secondary-800 pl-2">
+        <p className="hidden bg-secondary-800 pl-2 md:inline">
           solved by {props.problem.solvedBy}
         </p>
       </div>
