@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 import {
   Select,
   SelectContent,
@@ -104,6 +107,9 @@ const Editor = ({ problemId }: { problemId: number }) => {
             <Button
               variant={"outline"}
               onClick={async () => {
+                toastSuccess("Custom tests are running!");
+                setCustomTestResults([{ input: "", output: "loading" }]);
+
                 const res = await testCode(
                   code,
                   lang,
@@ -115,7 +121,6 @@ const Editor = ({ problemId }: { problemId: number }) => {
                     };
                   })
                 );
-                toastSuccess("Custom tests are running!");
                 if (res != undefined) {
                   setCustomTestResults(res);
                 }

@@ -1,14 +1,16 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 import { useAtomValue } from "jotai";
 import { yourTestsResultsAtom } from "~/utils/atoms";
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
   TableRow,
 } from "~/components/ui/Table";
+import { LoadingSpinner } from "~/components/ui/Loading";
 
 export const Results = () => {
   const yourTestsResults = useAtomValue(yourTestsResultsAtom);
@@ -21,6 +23,11 @@ export const Results = () => {
             <p>No custom tests ran yet.</p>
           </div>
         </div>
+      ) : yourTestsResults.length == 1 &&
+        yourTestsResults[0]?.output == "loading" ? (
+        <div className="flex h-full items-center justify-center">
+          <LoadingSpinner size={40} />
+        </div>
       ) : (
         <Table>
           <TableHeader>
@@ -31,13 +38,15 @@ export const Results = () => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {yourTestsResults.map((test, index) => (
-              <TableRow key={test.input}>
-                <TableCell>{index}</TableCell>
-                <TableCell>{test.input}</TableCell>
-                <TableCell>{test.output}</TableCell>
-              </TableRow>
-            ))}
+            {yourTestsResults.map(
+              (test: { input: string; output: string }, index) => (
+                <TableRow key={test.input}>
+                  <TableCell>{index}</TableCell>
+                  <TableCell>{test.input}</TableCell>
+                  <TableCell>{test.output}</TableCell>
+                </TableRow>
+              )
+            )}
           </TableBody>
         </Table>
       )}
