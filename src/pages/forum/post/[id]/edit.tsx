@@ -83,7 +83,7 @@ const EditPostPage: NextPage = () => {
   return (
     <AppShell>
       <div className="mx-auto max-w-5xl px-3">
-        <h1 className="py-3 text-2xl">Edit</h1>
+        <h1 className="py-3 text-2xl">Edit post</h1>
         <Tabs defaultValue="text">
           <TabsList>
             <TabsTrigger value="text">Text</TabsTrigger>
@@ -115,7 +115,7 @@ const EditPostPage: NextPage = () => {
                     <FormItem>
                       <FormControl>
                         <Textarea
-                          rows={10}
+                          rows={20}
                           placeholder={"Content"}
                           {...field}
                         ></Textarea>
