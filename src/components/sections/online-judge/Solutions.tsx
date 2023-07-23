@@ -1,7 +1,8 @@
 import UIPanel from "~/components/ui/UIPanel";
 import SubmissionsView from "./SubmissionsView";
+import { YourTests } from "./YourTests";
+import { Results } from "./Results";
 
-// TODO: use atom to manage loading state
 const Solutions = ({ problemId }: { problemId: number }) => {
   return (
     <div className="h-full">
@@ -13,15 +14,11 @@ const Solutions = ({ problemId }: { problemId: number }) => {
           },
           {
             name: "Your tests",
-            component: <p>Your custom tests will be here. Work in progress.</p>,
+            component: <YourTests />,
           },
           {
             name: "Results",
-            component: (
-              <p>
-                Results from the custom tests will be here. Work in progress.
-              </p>
-            ),
+            component: <Results />,
           },
         ]}
         controls={<></>}

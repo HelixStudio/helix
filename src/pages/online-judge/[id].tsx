@@ -27,7 +27,7 @@ const OnlineJudgePage: NextPage = () => {
 
   if (session.status === "unauthenticated") {
     void router.push("/");
-    toastPlain("This page is not finished!");
+    toastPlain("You need to be logged in to access this page!");
   }
 
   if (problem.data == null || problem.isError) {

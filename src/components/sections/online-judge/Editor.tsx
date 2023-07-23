@@ -14,9 +14,13 @@ import CodeEditor, {
 import EditorSettings from "~/components/functional/EditorSettings";
 import { api } from "~/utils/api";
 import { toastSuccess } from "~/utils/toast";
-import { supportedLanguages } from "~/utils/code";
-import { useAtom } from "jotai";
-import { submissionLoadingAtom } from "~/utils/atoms";
+import { supportedLanguages, testCode } from "~/utils/code";
+import { useAtom, useAtomValue, useSetAtom } from "jotai";
+import {
+  submissionLoadingAtom,
+  yourTestsAtom,
+  yourTestsResultsAtom,
+} from "~/utils/atoms";
 
 const Editor = ({ problemId }: { problemId: number }) => {
   const [settings, setSettings] = useState(codeEditorDefaults);
@@ -24,6 +28,9 @@ const Editor = ({ problemId }: { problemId: number }) => {
   const [code, setCode] = useState(settings.initialCode);
 
   const [, setSubmissionLoading] = useAtom(submissionLoadingAtom);
+
+  const customTests = useAtomValue(yourTestsAtom);
+  const setCustomTestResults = useSetAtom(yourTestsResultsAtom);
 
   const ojSupportedLanguages = supportedLanguages.filter((l) => {
     const oj = ["c", "cpp", "rust", "haskell"];
@@ -93,6 +100,28 @@ const Editor = ({ problemId }: { problemId: number }) => {
               }}
             >
               Submit
+            </Button>
+            <Button
+              variant={"outline"}
+              onClick={async () => {
+                const res = await testCode(
+                  code,
+                  lang,
+                  customTests.map((test) => {
+                    return {
+                      input: test,
+                      output: "",
+                      points: 0,
+                    };
+                  })
+                );
+                toastSuccess("Custom tests are running!");
+                if (res != undefined) {
+                  setCustomTestResults(res);
+                }
+              }}
+            >
+              Custom tests
             </Button>
             <EditorSettings
               callback={(args) => {

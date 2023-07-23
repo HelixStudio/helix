@@ -86,8 +86,8 @@ export const testCode = async (
           input: test.input,
           output: test.output,
           points: test.points,
-          run_timeout: 1000,
-          run_memory_limit: 100000, // TODO
+          run_timeout: 1000, // TODO pretty important I would say
+          run_memory_limit: 100000, // TODO ¯\_(ツ)_/¯
         };
       }),
     },
@@ -98,7 +98,6 @@ export const testCode = async (
       },
     }
   );
-  console.log(res.data as TestOutput[]);
   return res.data as TestOutput[];
 };
 
@@ -173,5 +172,12 @@ export const supportedLanguages: Language[] = [
     version: "1.32.3",
     defaultCode: `console.log("Hello world from JavaScript");`,
     extension: "js",
+  },
+  {
+    name: "typescript",
+    fancyName: "TypeScript",
+    version: "5.0.3",
+    defaultCode: `console.log("Hello world from TypeScript");`,
+    extension: "ts",
   },
 ];
