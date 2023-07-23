@@ -6,6 +6,7 @@ export const tips = [
   "Did you know you can upload and share images on Helix?",
   "Helix is fully free and open source!",
   "Our code execution engine is called Exec, you can find it on GitHub",
+  "Press CTRL + / to open the navigation window!",
 ];
 
 export const getRandomTip = () => {

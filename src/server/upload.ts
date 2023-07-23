@@ -12,11 +12,13 @@ const auth = async (req: NextApiRequest, res: NextApiResponse) => {
 };
 
 export const ourFileRouter = {
-  imageUploader: f({ image: { maxFileSize: "4MB", maxFileCount: 3 } })
+  imageUploader: f({ image: { maxFileSize: "8MB", maxFileCount: 3 } })
     .middleware(async (req, res) => {
       const user = await auth(req, res);
 
-      if (!user) throw new Error("Unauthorized");
+      // might not work on the deployed version for some reason
+      // debug later...
+      if (!user) throw new Error("Unauthorized! User not logged in.");
 
       return { userId: user.id };
     })

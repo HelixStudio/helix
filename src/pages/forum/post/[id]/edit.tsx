@@ -87,7 +87,7 @@ const EditPostPage: NextPage = () => {
         <Tabs defaultValue="text">
           <TabsList>
             <TabsTrigger value="text">Text</TabsTrigger>
-            <TabsTrigger value="images">Images</TabsTrigger>
+            {/* <TabsTrigger value="images">Images</TabsTrigger> */}
             <TabsTrigger value="preview">Preview</TabsTrigger>
           </TabsList>
           <TabsContent value="text" className="w-full">
@@ -131,7 +131,7 @@ const EditPostPage: NextPage = () => {
               </form>
             </Form>
           </TabsContent>
-          <TabsContent value="images">Upload your images here.</TabsContent>
+          {/* <TabsContent value="images">Upload your images here.</TabsContent> */}
           <TabsContent value="preview">
             <PostPreviewLarge
               title={watchAllFields.title}
