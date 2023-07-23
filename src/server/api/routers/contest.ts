@@ -9,6 +9,7 @@ export const contestRouter = createTRPCRouter({
       return await ctx.prisma.contest.findMany({
         take: input.limit,
         include: { author: { select: { name: true, id: true } } },
+        orderBy: { start: "asc" },
       });
     }),
   getContest: publicProcedure
