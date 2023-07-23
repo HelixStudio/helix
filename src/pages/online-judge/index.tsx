@@ -66,7 +66,9 @@ const OnlineJudgePage: NextPage = () => {
                         </Link>
                       </td>
                       <td className="px-6 py-3 text-left hover:underline">
-                        <Link href={problem.sourceLink}>{problem.source}</Link>
+                        <Link href={problem.sourceLink} target={"_blank"}>
+                          {problem.source}
+                        </Link>
                       </td>
                       <td className="px-6 py-3 text-left hover:underline">
                         <Link href={`/user/${problem.author.id}`}>
