@@ -23,6 +23,7 @@ import Link from "next/link";
 import { signIn } from "next-auth/react";
 import Footer from "../ui/Footer";
 import { motion } from "framer-motion";
+import { Balancer } from "react-wrap-balancer";
 
 const LandingPage = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -169,11 +170,13 @@ const LandingPage = () => {
             </div>
             <div className="text-center">
               <h1 className="bg-gradient-to-br from-zinc-50 to-zinc-400 bg-clip-text pb-2 text-5xl font-semibold tracking-tight text-transparent sm:text-6xl">
-                Helix is a better way to learn programming
+                <Balancer>Helix is a better way to learn programming</Balancer>
               </h1>
               <p className="mt-6 text-xl leading-8 text-gray-300">
-                Meet the new standard for computer science learning. {<br />}
-                Built by students for students.
+                <Balancer>
+                  Meet the new standard for computer science learning. Built by
+                  students for students.
+                </Balancer>
               </p>
               <div className="mt-10 flex items-center justify-center gap-x-6">
                 <Button variant={"accent"} onClick={() => void signIn()}>
@@ -203,7 +206,20 @@ const LandingPage = () => {
           </div>
         </div>
 
-        <div>
+        <motion.div
+          initial={{
+            opacity: 0,
+            y: 50,
+          }}
+          whileInView={{
+            opacity: 1,
+            y: 0,
+          }}
+          transition={{
+            delay: 0.3,
+            duration: 0.5,
+          }}
+        >
           <div className="overflow-hiddem relative isolate px-6 py-24 sm:py-32 lg:overflow-visible lg:px-0">
             <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 lg:mx-0 lg:max-w-none lg:grid-cols-2 lg:items-start lg:gap-y-10">
               <div className="lg:col-span-2 lg:col-start-1 lg:row-start-1 lg:mx-auto lg:grid lg:w-full lg:max-w-7xl lg:grid-cols-2 lg:gap-x-8 lg:px-8">
@@ -302,74 +318,91 @@ const LandingPage = () => {
               </div>
             </div>
           </div>
-        </div>
+        </motion.div>
 
-        <div className="mb-44 w-full max-w-6xl px-4 pt-12 lg:mx-auto ">
-          <h1 className="mb-5 text-2xl">What makes us different?</h1>
-          <Table>
-            <TableCaption>A comparison between similar websites.</TableCaption>
-            <TableHeader>
-              <TableRow>
-                <TableHead></TableHead>
-                <TableHead>PbInfo</TableHead>
-                {/* <TableHead>InfoArena</TableHead> */}
-                <TableHead>CodeForces</TableHead>
-                <TableHead>Helix</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              <TableRow>
-                <TableCell>Algorithm problems</TableCell>
-                <TableCell>✅</TableCell>
-                {/* <TableCell>✅</TableCell> */}
-                <TableCell>✅</TableCell>
-                <TableCell>✅</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>Forum</TableCell>
-                <TableCell>❌</TableCell>
-                {/* <TableCell>✅</TableCell> */}
-                <TableCell>✅</TableCell>
-                <TableCell>✅</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>Contests</TableCell>
-                <TableCell>❌</TableCell>
-                {/* <TableCell>❌</TableCell> */}
-                <TableCell>✅</TableCell>
-                <TableCell>✅</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>Free courses (work in progress)</TableCell>
-                <TableCell>❌</TableCell>
-                {/* <TableCell>❌</TableCell> */}
-                <TableCell>❌</TableCell>
-                <TableCell>✅</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>Custom help</TableCell>
-                <TableCell>❌</TableCell>
-                {/* <TableCell>❌</TableCell> */}
-                <TableCell>❌</TableCell>
-                <TableCell>✅</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>Full personalization</TableCell>
-                <TableCell>❌</TableCell>
-                {/* <TableCell>❌</TableCell> */}
-                <TableCell>❌</TableCell>
-                <TableCell>✅</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>Integrated modern editor</TableCell>
-                <TableCell>❌</TableCell>
-                {/* <TableCell>❌</TableCell> */}
-                <TableCell>❌</TableCell>
-                <TableCell>✅</TableCell>
-              </TableRow>
-            </TableBody>
-          </Table>
-        </div>
+        <motion.div
+          initial={{
+            opacity: 0,
+            y: 50,
+          }}
+          whileInView={{
+            opacity: 1,
+            y: 0,
+          }}
+          transition={{
+            delay: 0.3,
+            duration: 0.5,
+          }}
+        >
+          <div className="mb-44 w-full max-w-6xl px-4 pt-12 lg:mx-auto ">
+            <h1 className="mb-5 text-2xl">What makes us different?</h1>
+            <Table>
+              <TableCaption>
+                A comparison between similar websites.
+              </TableCaption>
+              <TableHeader>
+                <TableRow>
+                  <TableHead></TableHead>
+                  <TableHead>PbInfo</TableHead>
+                  {/* <TableHead>InfoArena</TableHead> */}
+                  <TableHead>CodeForces</TableHead>
+                  <TableHead>Helix</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                <TableRow>
+                  <TableCell>Algorithm problems</TableCell>
+                  <TableCell>✅</TableCell>
+                  {/* <TableCell>✅</TableCell> */}
+                  <TableCell>✅</TableCell>
+                  <TableCell>✅</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>Forum</TableCell>
+                  <TableCell>❌</TableCell>
+                  {/* <TableCell>✅</TableCell> */}
+                  <TableCell>✅</TableCell>
+                  <TableCell>✅</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>Contests</TableCell>
+                  <TableCell>❌</TableCell>
+                  {/* <TableCell>❌</TableCell> */}
+                  <TableCell>✅</TableCell>
+                  <TableCell>✅</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>Free courses (work in progress)</TableCell>
+                  <TableCell>❌</TableCell>
+                  {/* <TableCell>❌</TableCell> */}
+                  <TableCell>❌</TableCell>
+                  <TableCell>✅</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>Custom help</TableCell>
+                  <TableCell>❌</TableCell>
+                  {/* <TableCell>❌</TableCell> */}
+                  <TableCell>❌</TableCell>
+                  <TableCell>✅</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>Full personalization</TableCell>
+                  <TableCell>❌</TableCell>
+                  {/* <TableCell>❌</TableCell> */}
+                  <TableCell>❌</TableCell>
+                  <TableCell>✅</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>Integrated modern editor</TableCell>
+                  <TableCell>❌</TableCell>
+                  {/* <TableCell>❌</TableCell> */}
+                  <TableCell>❌</TableCell>
+                  <TableCell>✅</TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
+          </div>
+        </motion.div>
 
         <div className="flex h-full max-w-5xl flex-col justify-center gap-2 px-4 lg:mx-auto">
           <h1 className="text-2xl lg:text-4xl">So what are you waiting for?</h1>
