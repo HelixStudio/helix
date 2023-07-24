@@ -2,6 +2,8 @@
 
 Helix is an open-source website to help you learn & practice programming.
 
+InfoEducatie 2023: [Documentatie](/docs/DocumentatieNationala.pdf)
+
 # Required dependencies
 
 Besides the specified node packages, you need to have the following software to host the frontend:
