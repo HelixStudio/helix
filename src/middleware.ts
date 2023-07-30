@@ -1,4 +1,4 @@
 export { default } from "next-auth/middleware";
 
-// TODO: fix
+// TODO: don't fix, it works :)
 export const config = { matcher: [] };
