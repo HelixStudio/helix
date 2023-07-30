@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 
 export const pages = [
   {
-    name: "home",
+    name: "Home",
     icon: (
       <svg
         fill="currentColor"
@@ -21,7 +21,7 @@ export const pages = [
     link: ["/"],
   },
   {
-    name: "forum",
+    name: "Forum",
     icon: (
       <svg
         fill="currentColor"
@@ -40,7 +40,7 @@ export const pages = [
     link: ["/forum"],
   },
   {
-    name: "online judge",
+    name: "Online Judge",
     icon: (
       <svg
         fill="currentColor"
@@ -59,7 +59,7 @@ export const pages = [
     link: ["/online-judge", "/contests"],
   },
   {
-    name: "code runner",
+    name: "Code Runner",
     icon: (
       <svg
         fill="currentColor"
@@ -78,7 +78,7 @@ export const pages = [
     link: ["/code-runner"],
   },
   {
-    name: "ai coach",
+    name: "AI Coach",
     icon: (
       <svg
         fill="currentColor"
@@ -98,7 +98,7 @@ export const pages = [
     link: ["/ai-coach"],
   },
   {
-    name: "settings",
+    name: "Settings",
     icon: (
       <svg
         fill="currentColor"
