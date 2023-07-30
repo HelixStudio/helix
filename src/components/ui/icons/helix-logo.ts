@@ -1,11 +1,10 @@
-const HelixLogo = (props) => {
+const HelixLogo = () => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       height={92}
       viewBox="0 0 249 92"
       className="text-accent-400"
-      {...props}
     >
       <path
         fill="currentColor"
