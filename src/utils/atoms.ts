@@ -13,6 +13,9 @@ export const colorThemes = [
 ];
 export type ColorTheme = (typeof colorThemes)[number];
 
+export const homepageLayouts = ["informative", "spacious"];
+export type HomePageLayouts = (typeof homepageLayouts)[number];
+
 export type YourTestsEvent = {
   tests: {
     input: string;
@@ -20,6 +23,11 @@ export type YourTestsEvent = {
 };
 
 export const themeAtom = atomWithStorage<ColorTheme>("colorTheme", "pink");
+
+export const homepageLayoutAtom = atomWithStorage<HomePageLayouts>(
+  "homepageLayout",
+  "spacious"
+);
 
 export const submissionLoadingAtom = atom(false);
 
