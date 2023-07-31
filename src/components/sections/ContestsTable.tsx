@@ -2,10 +2,11 @@ import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import Link from "next/link";
 import { api } from "~/utils/api";
+import { cn } from "~/utils/cn";
 
 dayjs.extend(utc);
 
-export const ContestsTable = () => {
+export const ContestsTable = ({ isSmall }: { isSmall: boolean }) => {
   const contests = api.contest.getContests.useQuery({ limit: 100 });
 
   if (contests.isLoading) return <></>;
@@ -14,10 +15,18 @@ export const ContestsTable = () => {
     <table className="min-w-full table-auto">
       <thead>
         <tr className="bg-secondary-800 text-sm uppercase leading-normal text-white">
-          <th className="px-6 py-3 text-left">Title</th>
+          <th className="px-10 py-3 text-left">Title</th>
           <th className="hidden px-6 py-3 text-left md:table-cell">Authors</th>
           <th className="px-6 py-3 text-left">Start</th>
-          <th className="px-6 py-3 text-left">Duration</th>
+          <th
+            className={cn(
+              "px-6 py-3 text-left",
+              isSmall ? "hidden xl:inline-flex" : ""
+            )}
+          >
+            Duration
+          </th>
+          {/* kinda bad solution but whatever */}
         </tr>
       </thead>
       <tbody className="text-sm text-gray-100">
@@ -35,7 +44,12 @@ export const ContestsTable = () => {
               <td className="px-6 py-3 text-left">
                 {dayjs(contest.start).utc().format("DD.MM.YYYY, HH:mm")}
               </td>
-              <td className="px-6 py-3 text-left">
+              <td
+                className={cn(
+                  "px-6 py-3 text-left",
+                  isSmall ? "hidden xl:table-cell" : ""
+                )}
+              >
                 {dayjs(dayjs(contest.end).diff(dayjs(contest.start)))
                   .utc()
                   .format("HH:mm")}

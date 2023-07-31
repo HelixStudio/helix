@@ -80,7 +80,7 @@ const ForumSettings = () => {
         <TabsList>
           <TabsTrigger value="your-posts">Your posts</TabsTrigger>
           <TabsTrigger value="bookmarks">Bookmarks</TabsTrigger>
-          <TabsTrigger value="your-groups">Your grops</TabsTrigger>
+          <TabsTrigger value="your-groups">Your groups</TabsTrigger>
           <TabsTrigger value="new-group" className="hidden md:inline">
             Create group
           </TabsTrigger>
