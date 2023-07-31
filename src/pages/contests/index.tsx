@@ -22,7 +22,7 @@ const OnlineJudgePage: NextPage = () => {
           </h2>
           {/* <p className="text-secondary-100 mt-4 pb-6">todo: write text</p> */}
           <div className="overflow-x-auto rounded-lg pt-4">
-            <ContestsTable />
+            <ContestsTable isSmall={false} />
           </div>
         </div>
       </main>
