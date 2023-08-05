@@ -6,7 +6,13 @@ import { cn } from "~/utils/cn";
 
 dayjs.extend(utc);
 
-export const ContestsTable = ({ isSmall }: { isSmall: boolean }) => {
+export const ContestsTable = ({
+  isSmall,
+  isDark,
+}: {
+  isSmall: boolean;
+  isDark?: boolean;
+}) => {
   const contests = api.contest.getContests.useQuery({ limit: 100 });
 
   if (contests.isLoading) return <></>;
@@ -14,7 +20,11 @@ export const ContestsTable = ({ isSmall }: { isSmall: boolean }) => {
   return (
     <table className="min-w-full table-auto">
       <thead>
-        <tr className="bg-secondary-800 text-sm uppercase leading-normal text-white">
+        <tr
+          className={`${
+            isDark ? "bg-secondary-600/50" : "bg-secondary-800"
+          } text-sm uppercase leading-normal text-white`}
+        >
           <th className="px-10 py-3 text-left">Title</th>
           <th className="hidden px-6 py-3 text-left md:table-cell">Authors</th>
           <th className="px-6 py-3 text-left">Start</th>
@@ -32,7 +42,12 @@ export const ContestsTable = ({ isSmall }: { isSmall: boolean }) => {
       <tbody className="text-sm text-gray-100">
         {contests.data?.map((contest) => {
           return (
-            <tr key={contest.id} className="hover:bg-secondary-800">
+            <tr
+              key={contest.id}
+              className={`${
+                isDark ? "hover:bg-secondary-600/50" : "hover:bg-secondary-800"
+              } transition-all`}
+            >
               <td className="px-6 py-3 text-left text-accent-400 hover:underline">
                 <Link href={`/contests/${contest.id}`}>{contest.title}</Link>
               </td>

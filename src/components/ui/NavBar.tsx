@@ -40,7 +40,7 @@ export const pages = [
     link: ["/forum"],
   },
   {
-    name: "Online Judge",
+    name: "Training & Contests",
     icon: (
       <svg
         fill="currentColor"
@@ -56,7 +56,7 @@ export const pages = [
         ></path>
       </svg>
     ),
-    link: ["/online-judge", "/contests"],
+    link: ["/training", "/online-judge", "/contests"],
   },
   {
     name: "Code Runner",
