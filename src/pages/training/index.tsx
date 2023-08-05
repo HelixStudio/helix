@@ -26,13 +26,13 @@ const TrainingPage: NextPage = () => {
       <Head>
         <title>Helix | Training</title>
       </Head>
-      <main className="mx-auto max-w-7xl bg-secondary-700 text-white">
-        <div className="rounded-lg bg-secondary-800 p-3 ring-secondary-600 lg:mt-3 lg:ring-4">
+      <main className="mx-auto h-full max-w-7xl bg-secondary-700 text-white">
+        <div className="rounded-lg bg-secondary-700 p-3 ring-secondary-600 lg:mt-5 lg:ring-4">
           <h2 className="items-center pb-4 text-3xl font-bold tracking-tight sm:text-4xl">
             Upcoming contests
           </h2>
           <div className="overflow-x-auto rounded-lg">
-            <ContestsTable isSmall={false} isDark={true} />
+            <ContestsTable isSmall={false} isDark={false} />
           </div>
           {/* <div className="py-3">
             <p>write some text idk</p>
@@ -89,6 +89,9 @@ const TrainingPage: NextPage = () => {
               <p>55% of challenges solved</p>
             </CardFooter>
           </Card>
+        </div>
+        <div className="flex h-[20vh] items-center justify-center">
+          <p>more content coming soon!</p>
         </div>
       </main>
     </AppShell>
