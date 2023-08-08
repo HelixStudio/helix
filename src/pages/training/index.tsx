@@ -16,16 +16,20 @@ import {
 import { LoadingSection } from "~/components/ui/Loading";
 import { Progress } from "~/components/ui/Progress";
 import { api } from "~/utils/api";
-import { CategoryProgress } from "~/utils/code";
+import { type CategoryProgress } from "~/utils/code";
 
 const TrainingPage: NextPage = () => {
   const session = useSession();
 
   const cpProgress = api.problem.getProgress.useQuery();
-  const ctfProgress: CategoryProgress = { count: 0, progress: 0.0 };
+  const ctfProgress = api.ctf.getProgress.useQuery();
   const eulerProgress: CategoryProgress = { count: 0, progress: 0.0 };
 
-  if (session.status === "loading" || cpProgress.isLoading)
+  if (
+    session.status === "loading" ||
+    cpProgress.isLoading ||
+    ctfProgress.isLoading
+  )
     return <LoadingSection />;
 
   return (
@@ -55,11 +59,13 @@ const TrainingPage: NextPage = () => {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <Button>See challenges</Button>
+              <Link href="/ctf">
+                <Button>See challenges</Button>
+              </Link>
             </CardContent>
             <CardFooter className="flex flex-col justify-center gap-3">
-              <Progress value={ctfProgress.progress} />
-              <p>{ctfProgress.count} challenges solved</p>
+              <Progress value={ctfProgress.data?.progress} />
+              <p>{ctfProgress.data?.count} challenges solved</p>
             </CardFooter>
           </Card>
           <Card>

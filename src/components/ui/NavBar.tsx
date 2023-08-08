@@ -56,7 +56,7 @@ export const pages = [
         ></path>
       </svg>
     ),
-    link: ["/training", "/online-judge", "/contests"],
+    link: ["/training", "/online-judge", "/contests", "/ctf"],
   },
   {
     name: "Code Runner",

@@ -10,6 +10,16 @@ export const toastSuccess = (msg: string) => {
   });
 };
 
+export const toastError = (msg: string) => {
+  toast.error(msg, {
+    style: {
+      borderRadius: "10px",
+      background: "#333",
+      color: "#fff",
+    },
+  });
+};
+
 export const toastPlain = (msg: string) => {
   toast(msg, {
     style: {
