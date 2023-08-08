@@ -15,11 +15,18 @@ import {
 } from "~/components/ui/Card";
 import { LoadingSection } from "~/components/ui/Loading";
 import { Progress } from "~/components/ui/Progress";
+import { api } from "~/utils/api";
+import { CategoryProgress } from "~/utils/code";
 
 const TrainingPage: NextPage = () => {
   const session = useSession();
 
-  if (session.status === "loading") return <LoadingSection />;
+  const cpProgress = api.problem.getProgress.useQuery();
+  const ctfProgress: CategoryProgress = { count: 0, progress: 0.0 };
+  const eulerProgress: CategoryProgress = { count: 0, progress: 0.0 };
+
+  if (session.status === "loading" || cpProgress.isLoading)
+    return <LoadingSection />;
 
   return (
     <AppShell>
@@ -51,16 +58,16 @@ const TrainingPage: NextPage = () => {
               <Button>See challenges</Button>
             </CardContent>
             <CardFooter className="flex flex-col justify-center gap-3">
-              <Progress value={33} />
-              <p>33% of challenges solved</p>
+              <Progress value={ctfProgress.progress} />
+              <p>{ctfProgress.count} challenges solved</p>
             </CardFooter>
           </Card>
           <Card>
             <CardHeader>
               <CardTitle>Competitive programming</CardTitle>
               <CardDescription>
-                CP is dumb as hell but here we are anyway lorem ipsum doler mit
-                amet lorem ipsum doler mit amet lorem ipsum doler mit amet
+                TODO: write good test, lorem ipsum doler mit amet lorem ipsum
+                doler mit amet lorem ipsum doler mit amet
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -69,8 +76,8 @@ const TrainingPage: NextPage = () => {
               </Link>
             </CardContent>
             <CardFooter className="flex flex-col justify-center gap-3">
-              <Progress value={90} />
-              <p>90% of challenges solved</p>
+              <Progress value={cpProgress.data?.progress} />
+              <p>{cpProgress.data?.count} challenges solved</p>
             </CardFooter>
           </Card>
           <Card>
@@ -85,8 +92,8 @@ const TrainingPage: NextPage = () => {
               <Button>See challenges</Button>
             </CardContent>
             <CardFooter className="flex flex-col justify-center gap-3">
-              <Progress value={55} />
-              <p>55% of challenges solved</p>
+              <Progress value={eulerProgress.progress} />
+              <p>{eulerProgress.count} challenges solved</p>
             </CardFooter>
           </Card>
         </div>
