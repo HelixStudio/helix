@@ -95,7 +95,7 @@ const TrainingPage: NextPage = () => {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <Button>See challenges</Button>
+              <Button variant={"outline"}>Coming soon!</Button>
             </CardContent>
             <CardFooter className="flex flex-col justify-center gap-3">
               <Progress value={eulerProgress.progress} />

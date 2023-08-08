@@ -18,7 +18,7 @@ import {
 } from "../ui/Dialog";
 import { sanitize } from "isomorphic-dompurify";
 import { marked } from "marked";
-import { Balancer } from "react-wrap-balancer";
+// import { Balancer } from "react-wrap-balancer";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
@@ -92,7 +92,9 @@ export const CTFChallengeCard = ({
           </DialogTrigger>
           <DialogContent>
             <DialogHeader>
-              <DialogTitle className="text-3xl">{challenge.name}</DialogTitle>
+              <DialogTitle className="flex flex-row items-center gap-3 text-3xl">
+                {challenge.name} {solved && <p>✅</p>}
+              </DialogTitle>
               <DialogDescription className="pt-3 text-lg">
                 <div className="flex w-full flex-row justify-between">
                   <p>
@@ -104,12 +106,17 @@ export const CTFChallengeCard = ({
                     {challenge.points}
                   </p>
                 </div>
-                <Balancer>
-                  <div
-                    className="prose prose-invert"
-                    dangerouslySetInnerHTML={{ __html: safeContent }}
-                  ></div>
-                </Balancer>
+                {/* <Balancer> */}
+                <div
+                  className="prose prose-invert w-full py-2"
+                  dangerouslySetInnerHTML={{ __html: safeContent }}
+                ></div>
+                {/* </Balancer> */}
+                <p className="text-sm">
+                  <span className="text-primary-400/50">Note: </span>
+                  if the website responds with an error message, refresh the
+                  page. The error is expected.
+                </p>
                 <div className="w-full pt-3">
                   <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)}>
