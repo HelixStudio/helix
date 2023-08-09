@@ -1,7 +1,6 @@
 import AppShell from "../ui/AppShell";
 
 export const ComingSoonSection = (props: { title: string }) => {
-  // TODO: fix all pages that use this component :)
   return (
     <AppShell>
       <div className="flex h-full w-full flex-col items-center justify-center gap-5 align-middle">
