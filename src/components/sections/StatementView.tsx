@@ -35,7 +35,7 @@ export const StatementView = (props: { problem: ProblemMetadata }) => {
           {props.problem.memLimitBytes} bytes
         </p>
         <p className="hidden bg-secondary-800 pl-2 md:inline">
-          solved by {props.problem.solvedBy}
+          solved by {props.problem.solvedBy} users
         </p>
       </div>
       <p>{props.problem.statement}</p>

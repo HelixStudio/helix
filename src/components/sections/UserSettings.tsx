@@ -26,7 +26,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/Select";
-import { colorThemes, themeAtom } from "~/utils/atoms";
+import {
+  colorThemes,
+  homepageLayoutAtom,
+  homepageLayouts,
+  themeAtom,
+} from "~/utils/atoms";
 import { useAtom } from "jotai";
 import { signOut } from "next-auth/react";
 import { useRouter } from "next/router";
@@ -64,6 +69,7 @@ const UserSettings = () => {
   };
 
   const [theme, setTheme] = useAtom(themeAtom);
+  const [layout, setLayout] = useAtom(homepageLayoutAtom);
 
   useEffect(() => {
     if (user === null || user === undefined) return;
@@ -120,7 +126,7 @@ const UserSettings = () => {
               </FormItem>
             )}
           />
-          <div className="flex flex-row items-center gap-3">
+          <div className="grid max-w-xs grid-flow-row grid-cols-2 content-center items-end space-y-4">
             <p>Color theme:</p>
             <Select
               defaultValue={theme}
@@ -147,6 +153,31 @@ const UserSettings = () => {
                         ></div>
                         <p>{ctheme}</p>
                       </div>
+                    </SelectItem>
+                  ))}
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+            <p>Homepage layout:</p>
+            <Select
+              defaultValue={layout}
+              onValueChange={(newLayout) => {
+                setLayout(newLayout);
+              }}
+            >
+              <SelectTrigger className="max-w-[150px]">
+                <SelectValue placeholder="homepage layout" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectLabel>Layout</SelectLabel>
+                  {homepageLayouts.map((oneLayout) => (
+                    <SelectItem
+                      value={oneLayout}
+                      key={oneLayout}
+                      className="w-full"
+                    >
+                      <p>{oneLayout}</p>
                     </SelectItem>
                   ))}
                 </SelectGroup>

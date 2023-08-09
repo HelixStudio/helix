@@ -59,6 +59,8 @@ model User {
     created_problems Problem[]
     bookmarks        String[]     @default([])
     uploaded_images  String[]     @default([])
+    solved_problems  Int[]        @default([])
+    solved_ctf       Int[]        @default([])
     submissions      Submission[]
     created_contests Contest[]    @relation("contestAuthor")
     joined_contests  Contest[]

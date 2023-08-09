@@ -166,6 +166,8 @@ export const problemRouter = createTRPCRouter({
           message: "Error while parsing request on the server",
         });
 
+      let totalScore = 0;
+
       const submission = await ctx.prisma.submission.create({
         data: {
           problemId: input.problemId,
@@ -175,6 +177,7 @@ export const problemRouter = createTRPCRouter({
           tests: {
             createMany: {
               data: res.map((test) => {
+                totalScore += test.points;
                 return {
                   passed: test.points != 0,
                   points: test.points,
@@ -184,6 +187,45 @@ export const problemRouter = createTRPCRouter({
           },
         },
       });
+
+      if (totalScore == 100) {
+        const solved = await ctx.prisma.user.findUnique({
+          where: { id: ctx.session.user.id },
+          select: { solved_problems: true },
+        });
+        if (!solved?.solved_problems.includes(input.problemId)) {
+          await ctx.prisma.user.update({
+            where: { id: ctx.session.user.id },
+            data: { solved_problems: { push: input.problemId } },
+          });
+          await ctx.prisma.problem.update({
+            where: { id: input.problemId },
+            data: { solvedBy: { increment: 1 } },
+          });
+        }
+      }
+
       return submission;
     }),
+  getProgress: publicProcedure.query(async ({ ctx }) => {
+    if (ctx.session == undefined) {
+      return { count: 0, progress: 0.0 };
+    }
+
+    const userData = await ctx.prisma.user.findUnique({
+      where: { id: ctx.session.user.id },
+      select: { solved_problems: true },
+    });
+
+    if (userData == undefined) {
+      return { count: 0, progress: 0.0 };
+    }
+
+    const problemsCount = await ctx.prisma.problem.count();
+
+    return {
+      count: userData.solved_problems.length,
+      progress: (userData.solved_problems.length / problemsCount) * 100.0,
+    };
+  }),
 });

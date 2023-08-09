@@ -8,6 +8,11 @@ export interface Language {
   extension: string;
 }
 
+export interface CategoryProgress {
+  count: number;
+  progress: number;
+}
+
 export interface Output {
   run: {
     stdout: string;

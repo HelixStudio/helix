@@ -5,7 +5,7 @@ import { ContestsTable } from "~/components/sections/ContestsTable";
 import AppShell from "~/components/ui/AppShell";
 import { LoadingSection } from "~/components/ui/Loading";
 
-const OnlineJudgePage: NextPage = () => {
+const ContestsPage: NextPage = () => {
   const session = useSession();
 
   if (session.status === "loading") return <LoadingSection />;
@@ -13,7 +13,7 @@ const OnlineJudgePage: NextPage = () => {
   return (
     <AppShell>
       <Head>
-        <title>Helix | Online Judge</title>
+        <title>Helix | Contests</title>
       </Head>
       <main className="bg-secondary-700 text-white">
         <div className="m-3 ml-auto mr-auto max-w-5xl p-3">
@@ -30,4 +30,4 @@ const OnlineJudgePage: NextPage = () => {
   );
 };
 
-export default OnlineJudgePage;
+export default ContestsPage;

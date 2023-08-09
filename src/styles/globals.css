@@ -6,6 +6,7 @@
 body,
 html {
   font-family: "Poppins", sans-serif;
+  scroll-behavior: smooth;
 }
 
 .thicc svg {
@@ -100,7 +101,7 @@ pre {
     --border: 240 5% 34%;
     --input: 240 5% 34%;
 
-    --muted: 216 34% 17%;
+    --muted: 250 3% 14%;
     --muted-foreground: 210 8% 79%;
 
     --destructive: 0 84% 60%;

@@ -24,6 +24,7 @@ import { signIn } from "next-auth/react";
 import Footer from "../ui/Footer";
 import { motion } from "framer-motion";
 import { Balancer } from "react-wrap-balancer";
+import Head from "next/head";
 
 const LandingPage = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -33,14 +34,27 @@ const LandingPage = () => {
     { name: "Code Runner", href: "/code-runner" },
     { name: "Forum", href: "/forum" },
     // { name: "About", href: "/about" },
-    { name: "About", href: "https://github.com/nikolatesla13/helix" },
+    { name: "Mission", href: "#mission" },
+    { name: "Source", href: "https://github.com/nikolatesla13/helix" },
   ];
 
   return (
     <>
+      <Head>
+        <title>Helix - Unleash your coding potential</title>
+        <meta
+          key="description"
+          content="Meet the new standard for computer science education. Helix is an open-source platform that combines the best parts of every platform into one."
+        />
+        {/* TODO: find good preview image */}
+        <meta
+          property="og:image"
+          content="https://media.discordapp.net/attachments/833285965019217980/1138861793578590339/Screenshot_2023-08-09_at_18.39.27.png?width=1538&height=1046"
+        />
+      </Head>
       <div
         id="main-container"
-        className="pink flex min-h-screen flex-col bg-gradient-to-b from-slate-900 to-zinc-950"
+        className="pink flex min-h-screen flex-col bg-gradient-to-tr from-zinc-900 via-zinc-900 via-60% to-pink-500 lg:px-10"
       >
         <motion.div
           initial={{
@@ -53,7 +67,7 @@ const LandingPage = () => {
             duration: 1,
             ease: "easeInOut",
           }}
-          className="sticky top-0 z-50 max-w-5xl items-center bg-slate-800/70 backdrop-blur-lg lg:top-[0.75rem] lg:mx-auto lg:mt-3 lg:w-[60rem] lg:rounded-lg"
+          className="md:border-gray-6 sticky top-0 z-50 items-center bg-zinc-900/70 backdrop-blur-lg md:rounded-xl md:border-2 lg:top-[0.75rem] lg:mx-auto lg:mt-3 lg:w-full lg:rounded-lg"
         >
           <nav
             className="flex items-center justify-between p-2 lg:px-8"
@@ -61,7 +75,10 @@ const LandingPage = () => {
           >
             <div className="flex lg:flex-1">
               <a href="#" className="-m-1.5 p-1.5">
-                <span className="text-lg text-white">Helix</span>
+                {/* TODO: Replace me with an SVG, it will look better, trust me! -Michael */}
+                <span className="text-lg font-bold leading-normal text-white">
+                  Helix<span className="text-accent-400">.</span>
+                </span>
               </a>
             </div>
             <div className="flex lg:hidden">
@@ -80,7 +97,7 @@ const LandingPage = () => {
                 <Link
                   key={item.name}
                   href={item.href}
-                  className="rounded-lg px-2 py-1 text-sm leading-6 text-gray-100 transition-colors hover:bg-slate-800"
+                  className="rounded-lg px-2 py-1 text-sm leading-6 text-gray-400 transition-colors hover:text-zinc-200"
                 >
                   {item.name}
                 </Link>
@@ -94,7 +111,7 @@ const LandingPage = () => {
           </nav>
         </motion.div>
         <Show when={mobileMenuOpen}>
-          <div className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-slate-800 px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
+          <div className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-zinc-800 px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
             <div className="flex items-center justify-between">
               <a href="#" className="-m-1.5 p-1.5">
                 <span className="font-bold text-white">Helix</span>
@@ -131,7 +148,7 @@ const LandingPage = () => {
           </div>
         </Show>
 
-        <div className="relative isolate px-6 pb-20 lg:px-8">
+        <div className="relative isolate px-6 lg:px-8">
           <motion.div
             initial={{
               opacity: 0,
@@ -145,13 +162,13 @@ const LandingPage = () => {
               delay: 0.3,
               duration: 0.5,
             }}
-            className="mx-auto max-w-2xl py-32 sm:py-48 lg:py-16"
+            className="mx-auto py-32 sm:py-48 md:max-w-[50%] lg:pb-8 lg:pt-32"
           >
-            <div className="hidden p-3 sm:mb-16 sm:flex sm:justify-center">
+            {/* <div className="hidden p-3 sm:mb-8 sm:flex sm:justify-center">
               <div
-                className="relative rounded-full bg-gray-800 px-3 py-1 text-sm 
-              leading-6 text-gray-100 ring-1 ring-gray-100/10 transition-colors hover:bg-gray-700 
-              hover:ring-gray-200/20"
+                className="relative rounded-full bg-zinc-800 px-3 px-3 py-1 
+              py-2 text-sm leading-6 text-gray-100 ring-1 ring-gray-100/10 
+              transition-colors hover:bg-gray-700 hover:ring-gray-200/20"
               >
                 <div
                   className="absolute -inset-2 -z-30
@@ -167,23 +184,44 @@ const LandingPage = () => {
                   Read more <span aria-hidden="true">&rarr;</span>
                 </a>
               </div>
-            </div>
+            </div> */}
             <div className="text-center">
               <h1 className="bg-gradient-to-br from-zinc-50 to-zinc-400 bg-clip-text pb-2 text-5xl font-semibold tracking-tight text-transparent sm:text-6xl">
-                <Balancer>Helix is a better way to learn programming</Balancer>
+                <div className="flex flex-col items-center">
+                  {/* <Balancer>Helix</Balancer> */}
+                  <Balancer className="text-5xl font-extrabold tracking-tighter md:text-6xl">
+                    Unleash Your Coding Potential
+                  </Balancer>
+                </div>
               </h1>
-              <p className="mt-6 text-xl leading-8 text-gray-300">
+              <p className="text-gray-11 dark:text-graydark-11 mt-6 leading-normal tracking-tight md:text-base md:leading-7">
                 <Balancer>
-                  Meet the new standard for computer science learning. Built by
-                  students for students.
+                  Meet the new standard for computer science education. Helix is
+                  an open-source platform that combines the best parts of every
+                  platform into one. Built{" "}
+                  <span className="italic underline decoration-[#F690C9] underline-offset-4">
+                    by students for students.
+                  </span>
                 </Balancer>
               </p>
               <div className="mt-10 flex items-center justify-center gap-x-6">
-                <Button variant={"accent"} onClick={() => void signIn()}>
-                  Get started
+                <Button
+                  variant={"secondary"}
+                  size={"Homedefault"}
+                  onClick={() => {
+                    window.scrollBy(0, 600);
+                  }}
+                >
+                  Features <span aria-hidden="true"> ↴</span>
                 </Button>
-                <Button variant={"muted"}>
-                  Learn more <span aria-hidden="true"> →</span>
+                <Button
+                  variant={"accent"}
+                  size={"Homedefault"}
+                  onClick={() => void signIn()}
+                >
+                  <span className="hidden sm:inline">Get Started</span>
+                  <span className="inline sm:hidden">Login</span>
+                  <span aria-hidden="true"> →</span>
                 </Button>
               </div>
             </div>
@@ -191,7 +229,7 @@ const LandingPage = () => {
         </div>
 
         <div className="relative mx-auto flex max-w-6xl items-center justify-center overflow-hidden rounded-lg px-10 py-10">
-          <div className="flex h-10 w-10 animate-bounce items-center justify-center rounded-full bg-slate-800 p-2 shadow-lg ring-1 ring-slate-200/20">
+          <div className="flex h-10 w-10 animate-bounce items-center justify-center rounded-full bg-zinc-800 p-2 shadow-lg ring-1 ring-slate-200/20">
             <svg
               className="h-6 w-6 text-slate-300"
               fill="none"
@@ -239,7 +277,7 @@ const LandingPage = () => {
                 </div>
               </div>
               <div className="-ml-12 -mt-12 max-w-5xl p-12 lg:sticky lg:top-12 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:overflow-hidden">
-                <div className="min-h-full overflow-hidden rounded-lg border-2 border-slate-600">
+                <div className="min-h-full overflow-hidden rounded-lg border-2 border-zinc-600">
                   <Image
                     className=""
                     src="https://media.discordapp.net/attachments/739478958118010911/1118188070274088990/Screenshot_2023-06-13_at_17.39.20.png?width=2080&height=1046"
@@ -308,7 +346,7 @@ const LandingPage = () => {
                       No experience? No problem.
                     </h2>
                     <p className="mt-6">
-                      Helix is a platform open to learning. Take our begginer
+                      Helix is a platform open to learning. Take our beginner
                       courses to get started in the world of programming.
                       Designed to take minimal time and get straight to the
                       point. Discuss with other learners on our forum!
@@ -372,7 +410,7 @@ const LandingPage = () => {
                   <TableCell>✅</TableCell>
                 </TableRow>
                 <TableRow>
-                  <TableCell>Free courses (work in progress)</TableCell>
+                  <TableCell>Free courses (WIP)</TableCell>
                   <TableCell>❌</TableCell>
                   {/* <TableCell>❌</TableCell> */}
                   <TableCell>❌</TableCell>
@@ -399,19 +437,101 @@ const LandingPage = () => {
                   <TableCell>❌</TableCell>
                   <TableCell>✅</TableCell>
                 </TableRow>
+                <TableRow>
+                  <TableCell>CTF challenges</TableCell>
+                  <TableCell>❌</TableCell>
+                  <TableCell>❌</TableCell>
+                  <TableCell>✅</TableCell>
+                </TableRow>
               </TableBody>
             </Table>
           </div>
         </motion.div>
 
-        <div className="flex h-full max-w-5xl flex-col justify-center gap-2 px-4 lg:mx-auto">
-          <h1 className="text-2xl lg:text-4xl">So what are you waiting for?</h1>
-          <div className="flex flex-col gap-5">
-            <h1 className="text-2xl lg:text-4xl">
-              It&apos;s <span className="text-accent-400">free</span> and{" "}
-              <span className="text-accent-400">open source</span>.
-            </h1>{" "}
-            <Button onClick={() => void signIn()}>Get started</Button>
+        <div id="mission" />
+        <motion.div
+          initial={{
+            opacity: 0,
+            y: 50,
+          }}
+          whileInView={{
+            opacity: 1,
+            y: 0,
+          }}
+          transition={{
+            delay: 0.3,
+            duration: 0.5,
+          }}
+        >
+          <div className="container mx-auto mt-36 flex flex-col gap-8 lg:mt-56">
+            <h1 className="mx-auto max-w-[20ch] text-center text-5xl font-extrabold tracking-tighter md:text-6xl">
+              <span>Our Mission</span>
+            </h1>
+            <p className="mx-auto leading-7 text-gray-300 lg:max-w-[80ch]">
+              You know that friend that you talk about the future with?
+              <br />
+              <br />
+              Well we&apos;re two friends, Stefan and Mihai that talk about the
+              future.{" "}
+              <span className="text-accent-400">
+                The future of education.
+              </span>{" "}
+              We both came up with a similar idea while talking about how great
+              it would be to have a platform that would emphasize the importance
+              of practical programming in 🇷🇴 Romania.
+              <br />
+              <br />
+              Stefan took it a step further and implemented it for{" "}
+              <a
+                className="text-accent-400"
+                href="https://infoeducatie.ro/rezultate"
+                target="_blank"
+              >
+                #InfoEducatie2023
+              </a>
+              , where the project also won the first place. Later on, Mihai came
+              and started reworking certain aspects and started writing CTF
+              challenges for our contest{" "}
+              <span className="text-accent-400">BitByBit</span>.
+              <br />
+              <br />
+              We wanted a platform that could emphasize{" "}
+              <span className="text-accent-400">practical programming</span> in
+              an easy to use way, give us information about various CS career
+              paths and still teach{" "}
+              <span className="text-accent-400">DS&A</span>. Web based IDEs,
+              Forums, Contests and so much more. What you see as Helix is only
+              the beginning.
+              <br />
+              <br />
+              <span className="text-accent-400">Helix</span> is an attempt at
+              becoming a blend of everything that we needed when we started
+              pursuing our degrees and an attempt at modernizing the education
+              system.
+            </p>
+          </div>
+        </motion.div>
+
+        <div className="text-gray-12 mt-36 flex h-full w-full flex-col justify-center gap-2 rounded-2xl bg-[#ff2dadc4] px-4 py-14 lg:mx-auto lg:mt-56">
+          <div className="container mx-auto flex flex-col items-start gap-6">
+            <h1 className="max-w-[553px] text-5xl font-extrabold tracking-tighter text-black md:text-6xl">
+              <Balancer>So what are you waiting for?</Balancer>
+            </h1>
+            <p className="max-w-[620px] font-semibold tracking-tight text-black">
+              It would mean the world to us if you think Helix will impact your
+              education for the better and would sign up! We are working hard to
+              deliver the best <span className="text-primary-400">free</span>{" "}
+              and <span className="text-primary-400">open source</span>{" "}
+              experience to improve computer science education.
+            </p>{" "}
+            <Button
+              variant={"primary"}
+              className="font-bold"
+              size={"Homedefault"}
+              onClick={() => void signIn()}
+            >
+              Join Helix <span aria-hidden="true"> →</span>
+            </Button>
           </div>
         </div>
 
