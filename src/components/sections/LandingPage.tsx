@@ -67,7 +67,7 @@ const LandingPage = () => {
             duration: 1,
             ease: "easeInOut",
           }}
-          className="md:border-gray-6 sticky top-0 z-50 items-center bg-zinc-900/70 backdrop-blur-lg md:rounded-xl md:border-2 lg:top-[0.75rem] lg:mx-auto lg:mt-3 lg:w-full lg:rounded-lg"
+          className="md:border-gray-6 sticky top-0 z-50 max-w-7xl items-center bg-zinc-900/70 backdrop-blur-lg md:rounded-xl md:border-2 lg:top-[0.75rem] lg:mx-auto lg:mt-3 lg:w-[120rem] lg:rounded-lg"
         >
           <nav
             className="flex items-center justify-between p-2 lg:px-8"
