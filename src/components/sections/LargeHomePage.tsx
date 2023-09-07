@@ -14,7 +14,7 @@ const HomePageLarge = (props: { session: Session; posts: FullPost[] }) => {
     <AppShell>
       <div className="grid h-full grid-cols-2 px-0 pt-10 md:px-4 md:py-14 xl:px-24">
         <div className="col-span-2 flex justify-center md:mb-12">
-          <HelixLogo />
+          <HelixLogo width={400} height={100}/>
         </div>
         <div className="col-span-2 flex flex-col p-8 md:col-span-1 md:p-14 md:py-2">
           <div className="flex flex-col justify-center gap-1">
