@@ -5,13 +5,13 @@
  */
 await import("./src/env.mjs");
 
-const withPWA = (await import('next-pwa')).default({
-  dest: 'public',
+const withPWA = (await import("next-pwa")).default({
+  dest: "public",
   register: true,
   skipWaiting: true,
   disableDevLogs: true,
   buildExcludes: [/app-build-manifest.json$/],
-  disable: process.env.NODE_ENV === "development"
+  disable: process.env.NODE_ENV === "development",
 });
 
 /** @type {import("next").NextConfig} */
@@ -24,8 +24,10 @@ const config = withPWA({
 
   experimental: {
     esmExternals: false,
-    appDir: true
+    appDir: true,
   },
+
+  output: "standalone",
 
   i18n: {
     locales: ["en"],
