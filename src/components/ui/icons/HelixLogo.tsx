@@ -66,7 +66,7 @@ const HelixLogo: React.FC<HelixLogoProps> = ({
           {`
             .cls-1 {
               font-size: 300px;
-              font-family: Amaranth;
+              font-family: 'Amaranth Bold';
               font-weight: 700;
             }
             .cls-1, .cls-3 {
