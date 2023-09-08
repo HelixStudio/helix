@@ -68,11 +68,11 @@ const LandingPage = () => {
             duration: 1,
             ease: "easeInOut",
           }}
-          className="md:border-gray-6 sticky top-0 z-50 max-w-7xl items-center bg-zinc-900/70 backdrop-blur-lg md:rounded-xl md:border-2 lg:top-[0.75rem] lg:mx-auto lg:mt-3 lg:w-[120rem] lg:rounded-lg"
+          className="sticky top-0 z-50 max-w-5xl items-center bg-zinc-900/70 backdrop-blur-lg lg:top-[0.75rem] lg:mx-auto lg:mt-3 lg:w-[60rem] lg:rounded-lg"
         >
           <nav
             className="flex items-center justify-between p-2 lg:px-8"
-            aria-label="Global"
+            aria-label="Logo"
           >
             <div className="flex lg:flex-1">
               <a href="#" className="-m-1.5 p-1.5">
@@ -81,7 +81,7 @@ const LandingPage = () => {
                   {/* Helix<span className="text-accent-400">.</span> */}
                   {/* TODO(@Stefan) 
                   Verify this works evenly throughout resolutions, it should but just to be sure. -Mihai */}
-                  <HelixLogo width={100} height={30}/>
+                  <HelixLogo width={100} height={30} />
                 </span>
               </a>
             </div>
@@ -101,7 +101,7 @@ const LandingPage = () => {
                 <Link
                   key={item.name}
                   href={item.href}
-                  className="rounded-lg px-2 py-1 text-sm leading-6 text-gray-400 transition-colors hover:text-zinc-200"
+                  className="rounded-lg px-2 py-1 text-sm leading-6 text-gray-200 transition-colors hover:text-white"
                 >
                   {item.name}
                 </Link>
