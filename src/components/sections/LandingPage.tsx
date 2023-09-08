@@ -25,6 +25,7 @@ import Footer from "../ui/Footer";
 import { motion } from "framer-motion";
 import { Balancer } from "react-wrap-balancer";
 import Head from "next/head";
+import HelixLogo from "../ui/icons/HelixLogo";
 
 const LandingPage = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -35,7 +36,7 @@ const LandingPage = () => {
     { name: "Forum", href: "/forum" },
     // { name: "About", href: "/about" },
     { name: "Mission", href: "#mission" },
-    { name: "Source", href: "https://github.com/nikolatesla13/helix" },
+    { name: "Source", href: "https://github.com/HelixStudio/helix" },
   ];
 
   return (
@@ -77,7 +78,10 @@ const LandingPage = () => {
               <a href="#" className="-m-1.5 p-1.5">
                 {/* TODO: Replace me with an SVG, it will look better, trust me! -Michael */}
                 <span className="text-lg font-bold leading-normal text-white">
-                  Helix<span className="text-accent-400">.</span>
+                  {/* Helix<span className="text-accent-400">.</span> */}
+                  {/* TODO(@Stefan) 
+                  Verify this works evenly throughout resolutions, it should but just to be sure. -Mihai */}
+                  <HelixLogo width={100} height={30}/>
                 </span>
               </a>
             </div>
@@ -490,7 +494,7 @@ const LandingPage = () => {
                 #InfoEducatie2023
               </a>
               , where the project also won the first place. Later on, Mihai came
-              and started reworking certain aspects and started writing CTF
+              and started reworking its foundations and started writing CTF
               challenges for our contest{" "}
               <span className="text-accent-400">BitByBit</span>.
               <br />

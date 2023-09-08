@@ -1,7 +1,9 @@
 import {
   type InferGetServerSidePropsType,
   type GetServerSidePropsContext,
+
 } from "next";
+import HelixLogo from "~/components/ui/icons/HelixLogo";
 import { getProviders, signIn } from "next-auth/react";
 import Head from "next/head";
 import { Button } from "~/components/ui/Button";
@@ -44,9 +46,10 @@ const SignInPage = ({
         <title>Sign in</title>
       </Head>
 
-      <main className="pink flex h-screen flex-col items-center justify-center bg-zinc-900 ">
+      {/* Check this out when not tired */}
+      <main className="pink flex h-screen flex-col items-center justify-center bg-zinc-900">
         <h1 className="pb-8 text-7xl font-bold leading-normal">
-          Helix<span className="text-accent-400">.</span>
+          <HelixLogo width={350} height={100} />
         </h1>
         <div className="flex w-screen flex-col items-center rounded-none bg-zinc-800 p-4 ring-2 ring-zinc-700 sm:w-fit sm:rounded-lg">
           <p className="mb-4">Sign in with</p>
@@ -70,7 +73,7 @@ const SignInPage = ({
               </div>
             ))}
           </div>
-          <p className="mt-4">
+          <p className="justify-self-end">
             By signing in, you agree to our{" "}
             <Link href="/terms-of-service" className="hover:underline">
               Terms of Service
@@ -82,13 +85,15 @@ const SignInPage = ({
             .
           </p>
         </div>
-        <p className="mt-3">
-          Please keep in mind:{" "}
-          <span className="underline">
-            Helix is still in active development
-          </span>
-          . The website is not done and bugs may be present.
+        <p className="mt-6 text-center text-lg">
+          <span className="font-bold">Please keep in mind:{" "}</span>
         </p>
+        <ul className="text-left marker:text-pink-400 list-inside list-disc">
+          <li><span className="underline">
+            Helix is still in active development
+          </span>.</li>
+          <li><span>The website is not finished and bugs may be present.</span></li>
+        </ul>
       </main>
     </>
   );
